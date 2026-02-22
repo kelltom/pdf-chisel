@@ -5,33 +5,33 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 1 — Electron Foundation
+**Current focus:** Phase 1 — Electron Foundation (COMPLETE)
 
 ## Current Position
 
-Phase: 1 of 5 (Electron Foundation)
-Plan: 2 of ? in current phase
-Status: In progress
-Last activity: 2026-02-22 — Plan 02 complete: contextBridge API + IPC handlers for PDF file operations
+Phase: 1 of 5 (Electron Foundation) — COMPLETE
+Plan: 3 of 3 in current phase
+Status: Phase 1 complete — ready for Phase 2
+Last activity: 2026-02-22 — Plan 03 complete: renderer UI (app shell, nav rail, FileInput, mode stubs); all 7 Phase 1 requirements verified
 
-Progress: [██░░░░░░░░] 10%
+Progress: [███░░░░░░░] 15%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 4 min
-- Total execution time: 0.1 hours
+- Total plans completed: 3
+- Average duration: ~7 min
+- Total execution time: ~0.35 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-electron-foundation | 2 | 8 min | 4 min |
+| 01-electron-foundation | 3 | ~21 min | ~7 min |
 
 **Recent Trend:**
-- Last 5 plans: 6 min, 2 min
-- Trend: Accelerating
+- Last 5 plans: 6 min, 2 min, ~15 min
+- Trend: Steady
 
 *Updated after each plan completion*
 
@@ -51,6 +51,9 @@ Recent decisions affecting current work:
 - [01-02]: ignoreEncryption:false in PDFDocument.load — password-protected PDFs return error field, not crash
 - [01-02]: ipcMain.handle used (not ipcMain.on) to prevent listener accumulation on window recreation
 - [01-02]: webUtils.getPathForFile is the only correct drag-drop path API on Electron 34 (File.path removed in Electron 32)
+- [01-03]: appState exported as $state({}) object — exported $state primitives are read-only from importers in Svelte 5; object reference allows mutations to propagate
+- [01-03]: Mode stubs all import FileInput — consistent file-load UX in every mode from day one
+- [01-03]: handleDragOver must call e.preventDefault() to allow ondrop to fire — browser blocks drop without this
 
 ### Pending Todos
 
@@ -64,5 +67,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-22
-Stopped at: Completed 01-electron-foundation plan 02 — contextBridge API + IPC handlers for dialog:open-pdf and file:get-info
+Stopped at: Completed 01-electron-foundation plan 03 — renderer UI with app shell, NavRail, FileInput; all 7 Phase 1 requirements (APP-01–04, FILE-01–03) verified in running app
 Resume file: None

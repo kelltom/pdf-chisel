@@ -12,7 +12,7 @@ PDF Chisel is built in five phases that follow a strict dependency order. The se
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Electron Foundation** - Secure app shell with mode navigation, file input, and shared UI components
+- [x] **Phase 1: Electron Foundation** - Secure app shell with mode navigation, file input, and shared UI components
 - [ ] **Phase 2: Core PDF Operations** - Extract, Split, and Merge modes fully functional with Worker Thread pattern
 - [ ] **Phase 3: Convert to Images + Review** - PDF-to-image conversion with pdfjs-dist and Copy-and-Next review workflow
 - [ ] **Phase 4: Settings + Persistence** - electron-store integration, settings page, and per-mode persistence
@@ -35,7 +35,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01-PLAN.md — Scaffold electron-vite project, pin Electron 34, configure secure BrowserWindow with custom title bar
 - [x] 01-02-PLAN.md — Wire contextBridge preload API and main-process IPC handlers for PDF file dialog and metadata
-- [ ] 01-03-PLAN.md — Build renderer UI: AppBar, NavRail, app state, mode stubs, FileInput with drag-drop + visual verification checkpoint
+- [x] 01-03-PLAN.md — Build renderer UI: AppBar, NavRail, app state, mode stubs, FileInput with drag-drop + visual verification checkpoint
 
 ### Phase 2: Core PDF Operations
 **Goal**: Users can extract pages, split, and merge PDFs — all operations complete locally with progress feedback, specific error messages, and timestamped output
@@ -87,7 +87,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Electron Foundation | 2/3 | In progress | - |
+| 1. Electron Foundation | 3/3 | Complete | 2026-02-22 |
 | 2. Core PDF Operations | 0/? | Not started | - |
 | 3. Convert to Images + Review | 0/? | Not started | - |
 | 4. Settings + Persistence | 0/? | Not started | - |

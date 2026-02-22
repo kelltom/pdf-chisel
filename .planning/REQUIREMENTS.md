@@ -7,16 +7,16 @@
 
 ### App Shell
 
-- [ ] **APP-01**: App displays top app-bar with "PDF Chisel" title on the left
-- [ ] **APP-02**: App displays a settings gear icon in the top-right of the app-bar that navigates to the settings page
-- [ ] **APP-03**: App displays a vertical mode selector on the left edge with icons for all 4 modes (Extract, Split, Convert, Merge)
-- [ ] **APP-04**: Selecting a mode from the vertical nav renders that mode's view in the main body area
+- [x] **APP-01**: App displays top app-bar with "PDF Chisel" title on the left
+- [x] **APP-02**: App displays a settings gear icon in the top-right of the app-bar that navigates to the settings page
+- [x] **APP-03**: App displays a vertical mode selector on the left edge with icons for all 4 modes (Extract, Split, Convert, Merge)
+- [x] **APP-04**: Selecting a mode from the vertical nav renders that mode's view in the main body area
 
 ### File Input
 
-- [ ] **FILE-01**: User can select PDF file(s) via a native file browser dialog
-- [ ] **FILE-02**: User can drag-and-drop PDF file(s) onto the file input area
-- [ ] **FILE-03**: App displays the selected file name and page count after a file is loaded
+- [x] **FILE-01**: User can select PDF file(s) via a native file browser dialog
+- [x] **FILE-02**: User can drag-and-drop PDF file(s) onto the file input area
+- [x] **FILE-03**: App displays the selected file name and page count after a file is loaded
 
 ### Extract
 
@@ -103,13 +103,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| APP-01 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
-| APP-02 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
-| APP-03 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
-| APP-04 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
-| FILE-01 | Phase 1 | In progress (IPC 01-02 done, UI 01-03 pending) |
-| FILE-02 | Phase 1 | In progress (IPC 01-02 done, UI 01-03 pending) |
-| FILE-03 | Phase 1 | In progress (IPC 01-02 done, UI 01-03 pending) |
+| APP-01 | Phase 1 | Complete (01-03) |
+| APP-02 | Phase 1 | Complete (01-03) |
+| APP-03 | Phase 1 | Complete (01-03) |
+| APP-04 | Phase 1 | Complete (01-03) |
+| FILE-01 | Phase 1 | Complete (01-02, 01-03) |
+| FILE-02 | Phase 1 | Complete (01-02, 01-03) |
+| FILE-03 | Phase 1 | Complete (01-02, 01-03) |
 | EXTR-01 | Phase 2 | Pending |
 | EXTR-02 | Phase 2 | Pending |
 | SPLT-01 | Phase 2 | Pending |
@@ -140,8 +140,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 **Coverage:**
 - v1 requirements: 33 total
 - Mapped to phases: 33
-- Unmapped: 0 ✓
+- Unmapped: 0
+- Complete: 7 (APP-01–04, FILE-01–03)
 
 ---
 *Requirements defined: 2026-02-22*
-*Last updated: 2026-02-22 after 01-02 IPC scaffold complete*
+*Last updated: 2026-02-22 after 01-03 renderer UI complete — Phase 1 all 7 requirements verified*
