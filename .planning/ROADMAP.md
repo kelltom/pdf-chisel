@@ -30,7 +30,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can select a PDF via native file browser dialog or drag-and-drop onto the file input area
   4. After loading a PDF, the app displays the file name and page count
   5. Browser DevTools show contextIsolation is enabled and nodeIntegration is disabled — no console warnings about fake workers or insecure configs
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Scaffold electron-vite project, pin Electron 34, configure secure BrowserWindow with custom title bar
+- [ ] 01-02-PLAN.md — Wire contextBridge preload API and main-process IPC handlers for PDF file dialog and metadata
+- [ ] 01-03-PLAN.md — Build renderer UI: AppBar, NavRail, app state, mode stubs, FileInput with drag-drop + visual verification checkpoint
 
 ### Phase 2: Core PDF Operations
 **Goal**: Users can extract pages, split, and merge PDFs — all operations complete locally with progress feedback, specific error messages, and timestamped output
@@ -82,7 +87,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Electron Foundation | 0/? | Not started | - |
+| 1. Electron Foundation | 0/3 | Not started | - |
 | 2. Core PDF Operations | 0/? | Not started | - |
 | 3. Convert to Images + Review | 0/? | Not started | - |
 | 4. Settings + Persistence | 0/? | Not started | - |
