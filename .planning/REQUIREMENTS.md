@@ -103,10 +103,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| APP-01 | Phase 1 | Pending |
-| APP-02 | Phase 1 | Pending |
-| APP-03 | Phase 1 | Pending |
-| APP-04 | Phase 1 | Pending |
+| APP-01 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
+| APP-02 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
+| APP-03 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
+| APP-04 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
 | FILE-01 | Phase 1 | Pending |
 | FILE-02 | Phase 1 | Pending |
 | FILE-03 | Phase 1 | Pending |
@@ -144,4 +144,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-22*
-*Last updated: 2026-02-22 after roadmap creation*
+*Last updated: 2026-02-22 after 01-01 scaffold complete*

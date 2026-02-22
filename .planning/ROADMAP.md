@@ -33,7 +33,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Scaffold electron-vite project, pin Electron 34, configure secure BrowserWindow with custom title bar
+- [x] 01-01-PLAN.md — Scaffold electron-vite project, pin Electron 34, configure secure BrowserWindow with custom title bar
 - [ ] 01-02-PLAN.md — Wire contextBridge preload API and main-process IPC handlers for PDF file dialog and metadata
 - [ ] 01-03-PLAN.md — Build renderer UI: AppBar, NavRail, app state, mode stubs, FileInput with drag-drop + visual verification checkpoint
 
@@ -87,7 +87,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Electron Foundation | 0/3 | Not started | - |
+| 1. Electron Foundation | 1/3 | In progress | - |
 | 2. Core PDF Operations | 0/? | Not started | - |
 | 3. Convert to Images + Review | 0/? | Not started | - |
 | 4. Settings + Persistence | 0/? | Not started | - |
