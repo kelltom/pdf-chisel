@@ -107,9 +107,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | APP-02 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
 | APP-03 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
 | APP-04 | Phase 1 | In progress (scaffold 01-01, UI 01-03) |
-| FILE-01 | Phase 1 | Pending |
-| FILE-02 | Phase 1 | Pending |
-| FILE-03 | Phase 1 | Pending |
+| FILE-01 | Phase 1 | In progress (IPC 01-02 done, UI 01-03 pending) |
+| FILE-02 | Phase 1 | In progress (IPC 01-02 done, UI 01-03 pending) |
+| FILE-03 | Phase 1 | In progress (IPC 01-02 done, UI 01-03 pending) |
 | EXTR-01 | Phase 2 | Pending |
 | EXTR-02 | Phase 2 | Pending |
 | SPLT-01 | Phase 2 | Pending |
@@ -144,4 +144,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-22*
-*Last updated: 2026-02-22 after 01-01 scaffold complete*
+*Last updated: 2026-02-22 after 01-02 IPC scaffold complete*
