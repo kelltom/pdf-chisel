@@ -1,6 +1,8 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { readFile } from 'fs/promises'
+import { PDFDocument } from 'pdf-lib'
 
 function createWindow(): BrowserWindow {
   const mainWindow = new BrowserWindow({
@@ -50,6 +52,45 @@ app.whenReady().then(() => {
   })
 
   createWindow()
+
+  // FILE-01: Native PDF file picker
+  ipcMain.handle('dialog:open-pdf', async (_event) => {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      title: 'Select PDF File',
+      filters: [{ name: 'PDF Files', extensions: ['pdf'] }],
+      properties: ['openFile']
+    })
+    if (canceled || filePaths.length === 0) return null
+
+    try {
+      const bytes = await readFile(filePaths[0])
+      const doc = await PDFDocument.load(bytes, { ignoreEncryption: false })
+      const fileName = filePaths[0].split(/[\\/]/).pop() ?? filePaths[0]
+      return {
+        filePath: filePaths[0],
+        fileName,
+        pageCount: doc.getPageCount()
+      }
+    } catch (err) {
+      return { filePath: filePaths[0], fileName: filePaths[0].split(/[\\/]/).pop() ?? filePaths[0], pageCount: 0, error: String(err) }
+    }
+  })
+
+  // FILE-02 + FILE-03: Get PDF info for a known path (used by drag-drop flow)
+  ipcMain.handle('file:get-info', async (_event, filePath: string) => {
+    try {
+      const bytes = await readFile(filePath)
+      const doc = await PDFDocument.load(bytes, { ignoreEncryption: false })
+      const fileName = filePath.split(/[\\/]/).pop() ?? filePath
+      return {
+        filePath,
+        fileName,
+        pageCount: doc.getPageCount()
+      }
+    } catch (err) {
+      return { filePath, fileName: filePath.split(/[\\/]/).pop() ?? filePath, pageCount: 0, error: String(err) }
+    }
+  })
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
