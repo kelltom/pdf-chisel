@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { readFile } from 'fs/promises'
 import { PDFDocument } from 'pdf-lib'
+import createPdfWorker from './workers/pdf-worker?nodeWorker'
 
 function createWindow(): BrowserWindow {
   const mainWindow = new BrowserWindow({
@@ -42,6 +43,19 @@ function createWindow(): BrowserWindow {
   }
 
   return mainWindow
+}
+
+function makeOutputFolder(baseDir: string, mode: string): string {
+  const now = new Date()
+  const ts =
+    now.getFullYear().toString() +
+    String(now.getMonth() + 1).padStart(2, '0') +
+    String(now.getDate()).padStart(2, '0') +
+    '-' +
+    String(now.getHours()).padStart(2, '0') +
+    String(now.getMinutes()).padStart(2, '0') +
+    String(now.getSeconds()).padStart(2, '0')
+  return join(baseDir, `${ts}-${mode}`)
 }
 
 app.whenReady().then(() => {
@@ -90,6 +104,71 @@ app.whenReady().then(() => {
     } catch (err) {
       return { filePath, fileName: filePath.split(/[\\/]/).pop() ?? filePath, pageCount: 0, error: String(err) }
     }
+  })
+
+  // EXTR-02: Extract pages operation — spawns Worker Thread
+  ipcMain.handle('pdf:extract', async (event, args) => {
+    const baseDir = join(app.getPath('documents'), 'PDF Chisel')
+    const outputFolder = makeOutputFolder(baseDir, 'extract')
+    return new Promise((resolve) => {
+      const worker = createPdfWorker({ workerData: { ...args, outputFolder } })
+      worker.on('message', (msg) => {
+        if (msg.type === 'progress') event.sender.send('pdf:progress', msg)
+        else if (msg.type === 'complete') resolve(msg.result)
+        else if (msg.type === 'error') resolve({ error: msg.error })
+      })
+      worker.on('error', (err) => resolve({ error: { cause: err.message, fix: 'Try a different PDF file.' } }))
+      worker.on('exit', (code) => { if (code !== 0) resolve({ error: { cause: `Worker exited with code ${code}`, fix: 'Restart the app.' } }) })
+    })
+  })
+
+  // SPLT-03: Split PDF operation — spawns Worker Thread
+  ipcMain.handle('pdf:split', async (event, args) => {
+    const baseDir = join(app.getPath('documents'), 'PDF Chisel')
+    const outputFolder = makeOutputFolder(baseDir, 'split')
+    return new Promise((resolve) => {
+      const worker = createPdfWorker({ workerData: { ...args, outputFolder } })
+      worker.on('message', (msg) => {
+        if (msg.type === 'progress') event.sender.send('pdf:progress', msg)
+        else if (msg.type === 'complete') resolve(msg.result)
+        else if (msg.type === 'error') resolve({ error: msg.error })
+      })
+      worker.on('error', (err) => resolve({ error: { cause: err.message, fix: 'Try a different PDF file.' } }))
+      worker.on('exit', (code) => { if (code !== 0) resolve({ error: { cause: `Worker exited with code ${code}`, fix: 'Restart the app.' } }) })
+    })
+  })
+
+  // MERG-03: Merge PDFs operation — spawns Worker Thread
+  ipcMain.handle('pdf:merge', async (event, args) => {
+    const baseDir = join(app.getPath('documents'), 'PDF Chisel')
+    const outputFolder = makeOutputFolder(baseDir, 'merge')
+    return new Promise((resolve) => {
+      const worker = createPdfWorker({ workerData: { ...args, outputFolder } })
+      worker.on('message', (msg) => {
+        if (msg.type === 'progress') event.sender.send('pdf:progress', msg)
+        else if (msg.type === 'complete') resolve(msg.result)
+        else if (msg.type === 'error') resolve({ error: msg.error })
+      })
+      worker.on('error', (err) => resolve({ error: { cause: err.message, fix: 'Try a different PDF file.' } }))
+      worker.on('exit', (code) => { if (code !== 0) resolve({ error: { cause: `Worker exited with code ${code}`, fix: 'Restart the app.' } }) })
+    })
+  })
+
+  // MERG-03: Multi-file PDF picker for Merge mode
+  ipcMain.handle('dialog:open-pdfs-multi', async () => {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      title: 'Select PDF Files to Merge',
+      filters: [{ name: 'PDF Files', extensions: ['pdf'] }],
+      properties: ['openFile', 'multiSelections']
+    })
+    if (canceled || filePaths.length === 0) return []
+    return filePaths
+  })
+
+  // OUTP-03: Open output folder in Windows Explorer
+  ipcMain.handle('shell:open-folder', async (_event, folderPath: string) => {
+    const err = await shell.openPath(folderPath)
+    if (err) console.error('shell.openPath error:', err)
   })
 
   app.on('activate', function () {

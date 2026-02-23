@@ -8,6 +8,12 @@ export interface PdfFileInfo {
   error?: string
 }
 
+export interface OperationResult {
+  outputFiles?: string[]
+  outputFolder?: string
+  error?: { cause: string; fix: string }
+}
+
 const api = {
   // FILE-01: Open native file dialog filtered to PDF files
   openPdf: (): Promise<PdfFileInfo | null> =>
@@ -23,6 +29,36 @@ const api = {
   // Used by drag-drop flow (path from getPathForFile) and could be used to refresh metadata.
   getFileInfo: (filePath: string): Promise<PdfFileInfo | null> =>
     ipcRenderer.invoke('file:get-info', filePath),
+
+  // Phase 2: PDF operations
+
+  // EXTR-02: Extract selected pages to a new PDF
+  extractPages: (args: { operation: 'extract'; filePath: string; params: { pageIndices: number[] } }): Promise<OperationResult> =>
+    ipcRenderer.invoke('pdf:extract', args),
+
+  // SPLT-03: Split PDF into parts or by max pages per chunk
+  splitPdf: (args: { operation: 'split'; filePath: string; params: { splitMode: 'parts' | 'maxPages'; splitValue: number } }): Promise<OperationResult> =>
+    ipcRenderer.invoke('pdf:split', args),
+
+  // MERG-03: Merge multiple PDFs into one
+  mergePdfs: (args: { operation: 'merge'; filePaths: string[] }): Promise<OperationResult> =>
+    ipcRenderer.invoke('pdf:merge', args),
+
+  // MERG-03: Open multi-file PDF picker dialog
+  openPdfsDialog: (): Promise<string[]> =>
+    ipcRenderer.invoke('dialog:open-pdfs-multi'),
+
+  // OUTP-03: Open output folder in Windows Explorer
+  openOutputFolder: (folderPath: string): Promise<void> =>
+    ipcRenderer.invoke('shell:open-folder', folderPath),
+
+  // UX-01/02: Subscribe to progress events from Worker Thread.
+  // Returns cleanup function — MUST be called in Svelte onDestroy to prevent listener accumulation.
+  onProgress: (callback: (data: { type: string; step: string }) => void): (() => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, data: { type: string; step: string }) => callback(data)
+    ipcRenderer.on('pdf:progress', handler)
+    return () => ipcRenderer.removeListener('pdf:progress', handler)
+  },
 }
 
 // Honor contextIsolation setting: expose via contextBridge if isolated, fall back otherwise.
