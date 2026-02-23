@@ -37,6 +37,7 @@
       title={mode.label}
       aria-label={mode.label}
       aria-pressed={appState.currentMode === mode.id}
+      disabled={appState.isProcessing}
       onclick={() => appState.currentMode = mode.id}
     >
       {@html mode.icon}
@@ -81,5 +82,10 @@
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+  .nav-item:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 </style>
