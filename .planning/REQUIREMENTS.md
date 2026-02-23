@@ -45,8 +45,8 @@
 
 ### Merge
 
-- [ ] **MERG-01**: User can select multiple PDF files to merge
-- [ ] **MERG-02**: User can reorder selected PDFs via drag-and-drop to set the merge order
+- [x] **MERG-01**: User can select multiple PDF files to merge
+- [x] **MERG-02**: User can reorder selected PDFs via drag-and-drop to set the merge order
 - [x] **MERG-03**: User can execute merge to receive a single combined PDF in the output subfolder
 
 ### Output

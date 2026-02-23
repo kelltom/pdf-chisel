@@ -50,11 +50,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — IPC handlers and Worker Thread infrastructure for Extract, Split, Merge
+- [x] 02-01-PLAN.md — IPC handlers and Worker Thread infrastructure for Extract, Split, Merge
 - [x] 02-02-PLAN.md — Shared renderer components: parsePageRange, ProgressSpinner, ResultsSummary, OperationLayout
 - [ ] 02-03-PLAN.md — Extract mode UI
 - [ ] 02-04-PLAN.md — Split mode UI
-- [ ] 02-05-PLAN.md — Merge mode UI
+- [x] 02-05-PLAN.md — Merge mode UI
 
 ### Phase 3: Convert to Images + Review
 **Goal**: Users can convert PDF pages to images at a chosen DPI and format, then cycle through results with clipboard copy via the review workflow
@@ -95,7 +95,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Electron Foundation | 3/3 | Complete | 2026-02-22 |
-| 2. Core PDF Operations | 2/5 | In Progress|  |
+| 2. Core PDF Operations | 4/5 | In Progress|  |
 | 3. Convert to Images + Review | 0/? | Not started | - |
 | 4. Settings + Persistence | 0/? | Not started | - |
 | 5. Distribution + Auto-Update | 0/? | Not started | - |

@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-22)
 ## Current Position
 
 Phase: 2 of 5 (Core PDF Operations) — IN PROGRESS
-Plan: 2 of 5 in current phase
-Status: Plan 02-02 complete — shared UI components ready; proceeding to Plan 02-03
-Last activity: 2026-02-23 — Plan 02-02 complete: page-range parser, ProgressSpinner, ResultsSummary, OperationLayout shared components
+Plan: 5 of 5 in current phase
+Status: Plan 02-05 complete — MergeMode fully implemented; all mode UIs done; awaiting 02-03/02-04 backfill or phase complete
+Last activity: 2026-02-23 — Plan 02-05 complete: MergeMode.svelte with drag-to-reorder, multi-file picker, OperationLayout
 
-Progress: [████░░░░░░] 22%
+Progress: [████████░░] 70%
 
 ## Performance Metrics
 
@@ -28,7 +28,7 @@ Progress: [████░░░░░░] 22%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-electron-foundation | 3 | ~21 min | ~7 min |
-| 02-core-pdf-operations | 3 | ~8 min | ~2.7 min |
+| 02-core-pdf-operations | 4 | ~13 min | ~3.3 min |
 
 **Recent Trend:**
 - Last 5 plans: 6 min, 2 min, ~15 min, ~3 min, ~2 min
@@ -63,6 +63,8 @@ Recent decisions affecting current work:
 - [02-02]: OperationResult interface redeclared locally in renderer components — preload types cross process boundaries; renderer TypeScript does not import from main/preload
 - [02-02]: Reset button rendered unconditionally in ResultsSummary — always visible per locked Phase 2 decision
 - [02-02]: Execute button lives in the actions snippet slot owned by the mode component — keeps label (Extract/Split/Merge) mode-controlled, not layout-controlled
+- [02-05]: crypto.randomUUID() for stable FileItem id — keyed {#each} uses (file.id) not index to prevent Svelte DOM tracking bugs during drag-to-reorder
+- [02-05]: Dual drag handlers (list item reorder + external drop zone) do not conflict — list drag has empty dataTransfer.files; Explorer drag has null dragIndex
 
 ### Pending Todos
 
@@ -76,5 +78,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Completed 02-core-pdf-operations plan 01 (backfill) — Worker Thread PDF engine, IPC handlers, preload API; requirements EXTR-02, SPLT-03, MERG-03, OUTP-01, OUTP-02, OUTP-03, OUTP-04, UX-01, UX-02 wired
+Stopped at: Completed 02-core-pdf-operations plan 05 — MergeMode.svelte fully implemented with drag-to-reorder list, multi-file picker, external drag-drop, OperationLayout integration
 Resume file: None
