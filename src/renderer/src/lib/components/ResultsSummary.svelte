@@ -13,6 +13,13 @@
     onReset: () => void
   } = $props()
 
+  // Auto-open output folder on success (Phase 2 always auto-opens; toggle added in Phase 4 via SETT-02)
+  $effect(() => {
+    if (result?.outputFolder && !result.error) {
+      window.api.openOutputFolder(result.outputFolder)
+    }
+  })
+
   function openOutputFolder() {
     if (result?.outputFolder) {
       window.api.openOutputFolder(result.outputFolder)
