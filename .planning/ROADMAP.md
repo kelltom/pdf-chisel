@@ -95,7 +95,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Electron Foundation | 3/3 | Complete | 2026-02-22 |
-| 2. Core PDF Operations | 1/5 | In progress | - |
+| 2. Core PDF Operations | 2/5 | In Progress|  |
 | 3. Convert to Images + Review | 0/? | Not started | - |
 | 4. Settings + Persistence | 0/? | Not started | - |
 | 5. Distribution + Auto-Update | 0/? | Not started | - |

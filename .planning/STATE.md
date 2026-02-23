@@ -19,7 +19,7 @@ Progress: [████░░░░░░] 22%
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
+- Total plans completed: 6
 - Average duration: ~5 min
 - Total execution time: ~0.43 hours
 
@@ -28,7 +28,7 @@ Progress: [████░░░░░░] 22%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-electron-foundation | 3 | ~21 min | ~7 min |
-| 02-core-pdf-operations | 2 | ~5 min | ~2.5 min |
+| 02-core-pdf-operations | 3 | ~8 min | ~2.7 min |
 
 **Recent Trend:**
 - Last 5 plans: 6 min, 2 min, ~15 min, ~3 min, ~2 min
@@ -55,6 +55,11 @@ Recent decisions affecting current work:
 - [01-03]: appState exported as $state({}) object — exported $state primitives are read-only from importers in Svelte 5; object reference allows mutations to propagate
 - [01-03]: Mode stubs all import FileInput — consistent file-load UX in every mode from day one
 - [01-03]: handleDragOver must call e.preventDefault() to allow ondrop to fire — browser blocks drop without this
+- [02-01]: Output folder path computed in main (makeOutputFolder) — worker receives pre-computed outputFolder via workerData; no __dirname in worker
+- [02-01]: Split zero-padding: 1 digit for <=9 parts, 2 digits for >9 parts — pre-computed from numChunks before write loop
+- [02-01]: Worker spawned fresh per operation via ?nodeWorker factory — no shared worker state between operations
+- [02-01]: onProgress returns cleanup function — callers MUST invoke in Svelte onDestroy to prevent ipcRenderer listener accumulation
+- [02-01]: Progress messages are indeterminate steps (reading/processing/writing) — no percentages per locked Phase 1 decision
 - [02-02]: OperationResult interface redeclared locally in renderer components — preload types cross process boundaries; renderer TypeScript does not import from main/preload
 - [02-02]: Reset button rendered unconditionally in ResultsSummary — always visible per locked Phase 2 decision
 - [02-02]: Execute button lives in the actions snippet slot owned by the mode component — keeps label (Extract/Split/Merge) mode-controlled, not layout-controlled
@@ -71,5 +76,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Completed 02-core-pdf-operations plan 02 — shared renderer components (parsePageRange, ProgressSpinner, ResultsSummary, OperationLayout); requirements OUTP-03, OUTP-04, UX-01, UX-02 satisfied
+Stopped at: Completed 02-core-pdf-operations plan 01 (backfill) — Worker Thread PDF engine, IPC handlers, preload API; requirements EXTR-02, SPLT-03, MERG-03, OUTP-01, OUTP-02, OUTP-03, OUTP-04, UX-01, UX-02 wired
 Resume file: None

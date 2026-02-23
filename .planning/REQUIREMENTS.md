@@ -21,13 +21,13 @@
 ### Extract
 
 - [ ] **EXTR-01**: User can specify pages to extract using text range syntax (e.g. "1-5, 8, 12-15")
-- [ ] **EXTR-02**: User can execute extraction to receive a single new PDF containing only the selected pages
+- [x] **EXTR-02**: User can execute extraction to receive a single new PDF containing only the selected pages
 
 ### Split
 
 - [ ] **SPLT-01**: User can split a PDF by specifying a desired number of output parts (pages divided evenly)
 - [ ] **SPLT-02**: User can split a PDF by specifying a maximum number of pages per output file
-- [ ] **SPLT-03**: User can execute a split to receive multiple PDFs in the output subfolder
+- [x] **SPLT-03**: User can execute a split to receive multiple PDFs in the output subfolder
 
 ### Convert to Images
 
@@ -47,12 +47,12 @@
 
 - [ ] **MERG-01**: User can select multiple PDF files to merge
 - [ ] **MERG-02**: User can reorder selected PDFs via drag-and-drop to set the merge order
-- [ ] **MERG-03**: User can execute merge to receive a single combined PDF in the output subfolder
+- [x] **MERG-03**: User can execute merge to receive a single combined PDF in the output subfolder
 
 ### Output
 
-- [ ] **OUTP-01**: Each execution produces output in a `{timestamp}-{mode}` subfolder within the chosen destination folder
-- [ ] **OUTP-02**: The output destination path persists across uses and sessions (no re-entry required)
+- [x] **OUTP-01**: Each execution produces output in a `{timestamp}-{mode}` subfolder within the chosen destination folder
+- [x] **OUTP-02**: The output destination path persists across uses and sessions (no re-entry required)
 - [x] **OUTP-03**: After execution, user sees a success summary listing what was created (file names, count)
 - [x] **OUTP-04**: App opens the output folder automatically after execution (if auto-open setting is enabled)
 
@@ -111,10 +111,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FILE-02 | Phase 1 | Complete (01-02, 01-03) |
 | FILE-03 | Phase 1 | Complete (01-02, 01-03) |
 | EXTR-01 | Phase 2 | Pending |
-| EXTR-02 | Phase 2 | Pending |
+| EXTR-02 | Phase 2 | Complete |
 | SPLT-01 | Phase 2 | Pending |
 | SPLT-02 | Phase 2 | Pending |
-| SPLT-03 | Phase 2 | Pending |
+| SPLT-03 | Phase 2 | Complete |
 | CONV-01 | Phase 3 | Pending |
 | CONV-02 | Phase 3 | Pending |
 | CONV-03 | Phase 3 | Pending |
@@ -125,9 +125,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REVW-05 | Phase 3 | Pending |
 | MERG-01 | Phase 2 | Pending |
 | MERG-02 | Phase 2 | Pending |
-| MERG-03 | Phase 2 | Pending |
-| OUTP-01 | Phase 2 | Pending |
-| OUTP-02 | Phase 2 | Pending |
+| MERG-03 | Phase 2 | Complete |
+| OUTP-01 | Phase 2 | Complete |
+| OUTP-02 | Phase 2 | Complete |
 | OUTP-03 | Phase 2 | Complete |
 | OUTP-04 | Phase 2 | Complete |
 | SETT-01 | Phase 4 | Pending |
