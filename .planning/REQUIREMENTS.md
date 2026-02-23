@@ -20,13 +20,13 @@
 
 ### Extract
 
-- [ ] **EXTR-01**: User can specify pages to extract using text range syntax (e.g. "1-5, 8, 12-15")
+- [x] **EXTR-01**: User can specify pages to extract using text range syntax (e.g. "1-5, 8, 12-15")
 - [x] **EXTR-02**: User can execute extraction to receive a single new PDF containing only the selected pages
 
 ### Split
 
-- [ ] **SPLT-01**: User can split a PDF by specifying a desired number of output parts (pages divided evenly)
-- [ ] **SPLT-02**: User can split a PDF by specifying a maximum number of pages per output file
+- [x] **SPLT-01**: User can split a PDF by specifying a desired number of output parts (pages divided evenly)
+- [x] **SPLT-02**: User can split a PDF by specifying a maximum number of pages per output file
 - [x] **SPLT-03**: User can execute a split to receive multiple PDFs in the output subfolder
 
 ### Convert to Images
@@ -110,10 +110,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FILE-01 | Phase 1 | Complete (01-02, 01-03) |
 | FILE-02 | Phase 1 | Complete (01-02, 01-03) |
 | FILE-03 | Phase 1 | Complete (01-02, 01-03) |
-| EXTR-01 | Phase 2 | Pending |
+| EXTR-01 | Phase 2 | Complete |
 | EXTR-02 | Phase 2 | Complete |
-| SPLT-01 | Phase 2 | Pending |
-| SPLT-02 | Phase 2 | Pending |
+| SPLT-01 | Phase 2 | Complete |
+| SPLT-02 | Phase 2 | Complete |
 | SPLT-03 | Phase 2 | Complete |
 | CONV-01 | Phase 3 | Pending |
 | CONV-02 | Phase 3 | Pending |
@@ -123,8 +123,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REVW-03 | Phase 3 | Pending |
 | REVW-04 | Phase 3 | Pending |
 | REVW-05 | Phase 3 | Pending |
-| MERG-01 | Phase 2 | Pending |
-| MERG-02 | Phase 2 | Pending |
+| MERG-01 | Phase 2 | Complete |
+| MERG-02 | Phase 2 | Complete |
 | MERG-03 | Phase 2 | Complete |
 | OUTP-01 | Phase 2 | Complete |
 | OUTP-02 | Phase 2 | Complete |
