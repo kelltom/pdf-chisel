@@ -20,8 +20,8 @@ Deliver three functional modes — Extract pages, Split PDF, and Merge PDFs — 
 - Placeholder is a generic hint like "e.g. 1-5, 8, 12-15" — no page count displayed in the field
 
 ### Progress indicator
-- Prefer a determinate progress bar (0–100%) during operations
-- **Note for researcher/planner:** Determinate progress requires knowing page count upfront. If a specific operation (e.g. merge) cannot provide progress granularity, fall back to an indeterminate spinner — the UI should support both patterns. This decision is tentative; research should confirm feasibility per operation.
+- Prefer an indeterminate spinner. In later phases, we may replace this with a custom gif or animation that better fits the app style (like a chisel picking away at a PDF).
+- Consider optionally implementing a determinate progress bar if the Worker Thread can provide progress updates, but fallback to indeterminate if not reasonable.
 
 ### Results summary (after successful operation)
 - Show a list of output filenames
@@ -30,24 +30,26 @@ Deliver three functional modes — Extract pages, Split PDF, and Merge PDFs — 
 
 ### Post-completion UI state
 - A persistent **Reset button** is always visible in every mode — clears all inputs to defaults at any time
-- Summary panel clears when the user starts a new operation (not on mode switch)
+- Summary panel clears when the user starts a new operation
 - Results area (success or error) clears when the user switches modes
 
 ### Error display
 - Errors display inline in the results area (replacing the progress bar), not in a toast or modal
-- Errors stay visible until the user resets or switches modes
+- Errors stay visible until the user resets, switches modes, or starts a new operation
 - Error messages include both the cause and a suggested fix (e.g. "Failed to write output: permission denied. Try saving to a different folder.")
 
-### Action button during processing
-- Action button (Extract / Split / Merge) is disabled while processing
-- No spinner on the button itself — the progress bar communicates state
+### Button state during processing
+- Action button (Extract / Split / Merge) is disabled while processing. No spinner on the button itself — the progress bar communicates state
+- Mode switch buttons are disabled during processing to prevent mid-operation mode changes, which could cause confusion or errors
+
+### UI Consistency
+- The UI layout and controls remain consistent across all three modes. Only the specific inputs and labels change based on the selected operation, but the overall structure (input area, action button, progress/error area, results summary) remains the same to provide a cohesive user experience
+- Prefer shared styling and components across modes to maintain visual consistency and reduce development overhead when possible
 
 ### Cancellation
 - No cancel button — operations run to completion (or fail)
 
 ### Claude's Discretion
-- Exact progress bar component and animation style
-- Determinate vs. indeterminate fallback implementation details (confirm in research)
 - Typography and spacing of the results summary
 - Exact wording of success/error messages (follow the cause + fix pattern)
 
