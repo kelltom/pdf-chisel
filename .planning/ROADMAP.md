@@ -47,7 +47,14 @@ Plans:
   3. User can drag-to-reorder multiple PDFs in Merge mode and receive a single combined PDF reflecting that order
   4. After any operation, a success summary lists the created file names; the output subfolder name follows the `{timestamp}-{mode}` pattern
   5. When an operation fails (corrupt file, password-protected PDF), the app shows a human-readable message identifying the specific cause; a progress indicator is visible during processing
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — IPC handlers and Worker Thread infrastructure for Extract, Split, Merge
+- [x] 02-02-PLAN.md — Shared renderer components: parsePageRange, ProgressSpinner, ResultsSummary, OperationLayout
+- [ ] 02-03-PLAN.md — Extract mode UI
+- [ ] 02-04-PLAN.md — Split mode UI
+- [ ] 02-05-PLAN.md — Merge mode UI
 
 ### Phase 3: Convert to Images + Review
 **Goal**: Users can convert PDF pages to images at a chosen DPI and format, then cycle through results with clipboard copy via the review workflow
@@ -88,7 +95,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Electron Foundation | 3/3 | Complete | 2026-02-22 |
-| 2. Core PDF Operations | 0/? | Not started | - |
+| 2. Core PDF Operations | 1/5 | In progress | - |
 | 3. Convert to Images + Review | 0/? | Not started | - |
 | 4. Settings + Persistence | 0/? | Not started | - |
 | 5. Distribution + Auto-Update | 0/? | Not started | - |

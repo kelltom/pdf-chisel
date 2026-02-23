@@ -5,33 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 1 — Electron Foundation (COMPLETE)
+**Current focus:** Phase 2 — Core PDF Operations (in progress)
 
 ## Current Position
 
-Phase: 1 of 5 (Electron Foundation) — COMPLETE
-Plan: 3 of 3 in current phase
-Status: Phase 1 complete — ready for Phase 2
-Last activity: 2026-02-22 — Plan 03 complete: renderer UI (app shell, nav rail, FileInput, mode stubs); all 7 Phase 1 requirements verified
+Phase: 2 of 5 (Core PDF Operations) — IN PROGRESS
+Plan: 2 of 5 in current phase
+Status: Plan 02-02 complete — shared UI components ready; proceeding to Plan 02-03
+Last activity: 2026-02-23 — Plan 02-02 complete: page-range parser, ProgressSpinner, ResultsSummary, OperationLayout shared components
 
-Progress: [███░░░░░░░] 15%
+Progress: [████░░░░░░] 22%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: ~7 min
-- Total execution time: ~0.35 hours
+- Total plans completed: 5
+- Average duration: ~5 min
+- Total execution time: ~0.43 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-electron-foundation | 3 | ~21 min | ~7 min |
+| 02-core-pdf-operations | 2 | ~5 min | ~2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 6 min, 2 min, ~15 min
-- Trend: Steady
+- Last 5 plans: 6 min, 2 min, ~15 min, ~3 min, ~2 min
+- Trend: Accelerating
 
 *Updated after each plan completion*
 
@@ -54,6 +55,9 @@ Recent decisions affecting current work:
 - [01-03]: appState exported as $state({}) object — exported $state primitives are read-only from importers in Svelte 5; object reference allows mutations to propagate
 - [01-03]: Mode stubs all import FileInput — consistent file-load UX in every mode from day one
 - [01-03]: handleDragOver must call e.preventDefault() to allow ondrop to fire — browser blocks drop without this
+- [02-02]: OperationResult interface redeclared locally in renderer components — preload types cross process boundaries; renderer TypeScript does not import from main/preload
+- [02-02]: Reset button rendered unconditionally in ResultsSummary — always visible per locked Phase 2 decision
+- [02-02]: Execute button lives in the actions snippet slot owned by the mode component — keeps label (Extract/Split/Merge) mode-controlled, not layout-controlled
 
 ### Pending Todos
 
@@ -66,6 +70,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-22
-Stopped at: Completed 01-electron-foundation plan 03 — renderer UI with app shell, NavRail, FileInput; all 7 Phase 1 requirements (APP-01–04, FILE-01–03) verified in running app
+Last session: 2026-02-23
+Stopped at: Completed 02-core-pdf-operations plan 02 — shared renderer components (parsePageRange, ProgressSpinner, ResultsSummary, OperationLayout); requirements OUTP-03, OUTP-04, UX-01, UX-02 satisfied
 Resume file: None

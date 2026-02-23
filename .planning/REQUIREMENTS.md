@@ -53,8 +53,8 @@
 
 - [ ] **OUTP-01**: Each execution produces output in a `{timestamp}-{mode}` subfolder within the chosen destination folder
 - [ ] **OUTP-02**: The output destination path persists across uses and sessions (no re-entry required)
-- [ ] **OUTP-03**: After execution, user sees a success summary listing what was created (file names, count)
-- [ ] **OUTP-04**: App opens the output folder automatically after execution (if auto-open setting is enabled)
+- [x] **OUTP-03**: After execution, user sees a success summary listing what was created (file names, count)
+- [x] **OUTP-04**: App opens the output folder automatically after execution (if auto-open setting is enabled)
 
 ### Settings
 
@@ -65,8 +65,8 @@
 
 ### UX
 
-- [ ] **UX-01**: App shows a progress indicator during PDF processing operations
-- [ ] **UX-02**: App shows clear, human-readable error messages when operations fail (e.g. corrupted file, password-protected PDF, insufficient disk space)
+- [x] **UX-01**: App shows a progress indicator during PDF processing operations
+- [x] **UX-02**: App shows clear, human-readable error messages when operations fail (e.g. corrupted file, password-protected PDF, insufficient disk space)
 
 ## v2 Requirements
 
@@ -128,14 +128,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MERG-03 | Phase 2 | Pending |
 | OUTP-01 | Phase 2 | Pending |
 | OUTP-02 | Phase 2 | Pending |
-| OUTP-03 | Phase 2 | Pending |
-| OUTP-04 | Phase 2 | Pending |
+| OUTP-03 | Phase 2 | Complete |
+| OUTP-04 | Phase 2 | Complete |
 | SETT-01 | Phase 4 | Pending |
 | SETT-02 | Phase 4 | Pending |
 | SETT-03 | Phase 4 | Pending |
 | SETT-04 | Phase 5 | Pending |
-| UX-01 | Phase 2 | Pending |
-| UX-02 | Phase 2 | Pending |
+| UX-01 | Phase 2 | Complete |
+| UX-02 | Phase 2 | Complete |
 
 **Coverage:**
 - v1 requirements: 33 total
