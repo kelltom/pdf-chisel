@@ -64,10 +64,12 @@
   }
 </script>
 
-<FileInput />
+<div class="mode-view">
+  <h1 class="mode-title">Split PDF</h1>
 
-<OperationLayout {isProcessing} result={operationResult} onReset={reset}>
+  <OperationLayout {isProcessing} result={operationResult} onReset={reset}>
   {#snippet inputs()}
+    <FileInput />
     <div class="split-controls">
       <div class="mode-selector" role="group" aria-label="Split mode">
         <button
@@ -117,9 +119,24 @@
       Split
     </button>
   {/snippet}
-</OperationLayout>
+  </OperationLayout>
+</div>
 
 <style>
+  .mode-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .mode-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-text);
+    padding: 20px 20px 0;
+    margin: 0;
+  }
+
   .split-controls {
     display: flex;
     flex-direction: column;

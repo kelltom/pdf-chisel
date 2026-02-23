@@ -108,7 +108,10 @@
   })
 </script>
 
-<OperationLayout {isProcessing} result={operationResult} onReset={reset}>
+<div class="mode-view">
+  <h1 class="mode-title">Merge PDFs</h1>
+
+  <OperationLayout {isProcessing} result={operationResult} onReset={reset}>
   {#snippet inputs()}
     <div class="merge-inputs">
       <button onclick={addFiles} disabled={isProcessing} class="btn-secondary">
@@ -160,9 +163,24 @@
       Merge
     </button>
   {/snippet}
-</OperationLayout>
+  </OperationLayout>
+</div>
 
 <style>
+  .mode-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .mode-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-text);
+    padding: 20px 20px 0;
+    margin: 0;
+  }
+
   .merge-inputs {
     display: flex;
     flex-direction: column;

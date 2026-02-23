@@ -64,10 +64,10 @@
 
 <div class="mode-view">
   <h1 class="mode-title">Extract Pages</h1>
-  <FileInput />
 
   <OperationLayout isProcessing={appState.isProcessing} result={operationResult} onReset={reset}>
     {#snippet inputs()}
+      <FileInput />
       <div class="field">
         <label for="page-range">Page range</label>
         <input
