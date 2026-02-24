@@ -58,9 +58,9 @@
 
 ### Settings
 
-- [ ] **SETT-01**: User can set a default output destination path in settings
-- [ ] **SETT-02**: User can toggle auto-open output folder on/off in settings
-- [ ] **SETT-03**: Settings page displays the current app version
+- [x] **SETT-01**: User can set a default output destination path in settings
+- [x] **SETT-02**: User can toggle auto-open output folder on/off in settings
+- [x] **SETT-03**: Settings page displays the current app version
 - [ ] **SETT-04**: App checks for and installs updates automatically via GitHub Releases (electron-updater)
 
 ### UX
@@ -130,9 +130,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | OUTP-02 | Phase 2 | Complete |
 | OUTP-03 | Phase 2 | Complete |
 | OUTP-04 | Phase 2 | Complete |
-| SETT-01 | Phase 4 | Pending |
-| SETT-02 | Phase 4 | Pending |
-| SETT-03 | Phase 4 | Pending |
+| SETT-01 | Phase 4 | Complete (04-01) |
+| SETT-02 | Phase 4 | Complete (04-01) |
+| SETT-03 | Phase 4 | Complete (04-01) |
 | SETT-04 | Phase 5 | Pending |
 | UX-01 | Phase 2 | Complete |
 | UX-02 | Phase 2 | Complete |
@@ -141,8 +141,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v1 requirements: 33 total
 - Mapped to phases: 33
 - Unmapped: 0
-- Complete: 22 (APP-01–04, FILE-01–03, EXTR-01–02, SPLT-01–03, CONV-01–03, REVW-01–05, MERG-01–03, UX-01–02, OUTP-01–04)
+- Complete: 25 (APP-01–04, FILE-01–03, EXTR-01–02, SPLT-01–03, CONV-01–03, REVW-01–05, MERG-01–03, UX-01–02, OUTP-01–04, SETT-01–03)
 
 ---
 *Requirements defined: 2026-02-22*
-*Last updated: 2026-02-24 after 03-03 review workflow — REVW-02, REVW-03, REVW-04, REVW-05 complete; Phase 3 fully complete*
+*Last updated: 2026-02-24 after 04-01 persistence backend — SETT-01, SETT-02, SETT-03 complete (backend wired; UI in 04-02)*

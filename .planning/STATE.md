@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 3 — Convert to Images + Review Workflow (in progress)
+**Current focus:** Phase 4 — Settings + Persistence (in progress)
 
 ## Current Position
 
-Phase: 3 of 5 (Convert to Images + Review Workflow) — IN PROGRESS
-Plan: 3 of 3 in current phase (phase complete)
-Status: Plan 03-03 complete — Full review workflow delivered: image display, Copy-and-Next with clipboard + flash, Back navigation, Space/Enter shortcuts, completion screen. Phase 3 fully complete (CONV-01–03, REVW-01–05).
-Last activity: 2026-02-24 — Plan 03-03 complete: review workflow, pdfjs-dist v5→v4 downgrade (Uint8Array.toHex fix), ArrayBuffer detach fix, file list scroll cap + mid-review Close button
+Phase: 4 of 5 (Settings + Persistence) — IN PROGRESS
+Plan: 1 of 3 in current phase (plan 04-01 complete)
+Status: Plan 04-01 complete — electron-conf persistence backend wired: two typed Conf stores, getOutputBase() output-path abstraction, 8 new IPC channels + preload bindings. SETT-01, SETT-02, SETT-03 complete.
+Last activity: 2026-02-24 — Plan 04-01 complete: electron-conf installed, settings + feature-state stores, getOutputBase() replaces 4 hardcoded paths, 8 IPC handlers added
 
-Progress: [█████████░] 88%
+Progress: [█████████░] 90%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: ~4.9 min
-- Total execution time: ~0.57 hours
+- Total plans completed: 8
+- Average duration: ~4.6 min
+- Total execution time: ~0.59 hours
 
 **By Phase:**
 
@@ -30,6 +30,7 @@ Progress: [█████████░] 88%
 | 01-electron-foundation | 3 | ~21 min | ~7 min |
 | 02-core-pdf-operations | 4 | ~13 min | ~3.3 min |
 | 03-convert-to-images-review | 2 | ~8 min | ~4 min |
+| 04-settings-persistence | 1 | ~2 min | ~2 min |
 
 **Recent Trend:**
 - Last 5 plans: 2 min, 6 min, 2 min, ~15 min, ~3 min
@@ -76,6 +77,9 @@ Recent decisions affecting current work:
 - [03-03]: PDF loaded once per conversion via loadPdfDocument() + renderPageFromDoc() — pdfjs transfers ArrayBuffer to worker on getDocument(), detaching the original; calling getDocument() in a loop caused 'ArrayBuffer already detached' crash on page 2+
 - [03-03]: file:// image src with backslash-to-forward-slash conversion for Windows paths — path.replace(/\\/g, '/') applied in $derived currentImagePath before 'file://' prefix
 - [03-03]: svelte:window onkeydown guarded by reviewState === 'reviewing' — no focus management required; e.preventDefault() suppresses page scroll (Space) and form submit (Enter)
+- [04-01]: electron-conf Conf instances declared at module scope outside app.whenReady() — single shared instance accessible from all IPC handlers without closure coupling
+- [04-01]: getOutputBase() reads settings.get('outputPath') at call time (not cached) — always reflects live user preference without restart
+- [04-01]: settings:set accepts Partial<AppSettings> patch — live-save UI pattern can write individual fields without a full settings object
 
 ### Pending Todos
 
@@ -89,5 +93,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 03-convert-to-images-review plan 03 — Full review workflow: image display, Copy-and-Next (clipboard + flash animation), Back navigation, Space/Enter shortcuts, completion screen. Phase 3 complete (CONV-01–03, REVW-01–05). Ready for Phase 4: Settings + Persistence.
+Stopped at: Completed 04-settings-persistence plan 01 — electron-conf persistence backend: two typed Conf stores, getOutputBase() output-path abstraction, 8 new IPC channels (settings:get/set/browse-folder, app:get-version, feature-state:get/set-split, feature-state:get/set-convert) with full preload bindings. Ready for Plan 04-02: Settings UI.
 Resume file: None

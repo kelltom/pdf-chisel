@@ -83,7 +83,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Install electron-conf, add IPC handlers, refactor hardcoded output paths in main + preload
+- [x] 04-01-PLAN.md — Install electron-conf, add IPC handlers, refactor hardcoded output paths in main + preload
 - [ ] 04-02-PLAN.md — Settings UI, settingsState store, per-mode persistence, auto-open gating + verification checkpoint
 
 ### Phase 5: Distribution + Auto-Update
@@ -106,5 +106,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Electron Foundation | 3/3 | Complete | 2026-02-22 |
 | 2. Core PDF Operations | 4/5 | In Progress|  |
 | 3. Convert to Images + Review | 3/3 | Complete | 2026-02-24 |
-| 4. Settings + Persistence | 0/? | Not started | - |
+| 4. Settings + Persistence | 1/2 | In Progress | - |
 | 5. Distribution + Auto-Update | 0/? | Not started | - |
