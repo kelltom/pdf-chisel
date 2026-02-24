@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 4 — Settings + Persistence (in progress)
+**Current focus:** Phase 4.1 complete — Developer README added. Ready to resume Phase 4 plan 03 (auto-update scaffold, SETT-04).
 
 ## Current Position
 
-Phase: 4 of 5 (Settings + Persistence) — IN PROGRESS
-Plan: 3 of 3 in current phase (plan 04-02 complete — human-verify approved)
-Status: Plan 04-02 complete — settingsState store, full SettingsMode UI, auto-open gated in ResultsSummary + ConvertMode, SplitMode + ConvertMode persist and restore last-used values. All SETT-01–03 verified. Ready for plan 04-03 (auto-update scaffold).
-Last activity: 2026-02-24 — Plan 04-02 complete: settings UI, per-mode persistence, auto-open toggle, version display — all verified end-to-end
+Phase: 4.1 of 5 (Add Developer README) — COMPLETE
+Plan: 1 of 1 in phase 04.1 (plan 04.1-01 complete)
+Status: README.md created at repository root. All 6 required content strings verified. Phase 4.1 complete. Next: Phase 4 plan 03 — auto-update scaffold (SETT-04).
+Last activity: 2026-02-24 — Plan 04.1-01 complete: developer README with nvm-windows setup, Node 22 LTS, dev/build commands, inline warnings
 
-Progress: [█████████░] 90%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
@@ -37,6 +37,7 @@ Progress: [█████████░] 90%
 - Trend: Accelerating
 
 *Updated after each plan completion*
+| Phase 04.1-add-developer-readme P01 | 1 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,8 @@ Recent decisions affecting current work:
 - [04-02]: settingsState exported as $state object (not primitives) — Svelte 5 exported $state primitives are read-only from importers; object reference allows mutations to propagate across components
 - [04-02]: auto-open gated in both ResultsSummary and ConvertMode — both code paths need the guard; manual Open Folder button always available regardless of toggle
 - [04-02]: per-mode persistence uses onMount load + execute() save — transparent to user; last-used values silently restored each launch without dedicated UI
+- [Phase 04.1-add-developer-readme]: Node 22 LTS pinned via nvm-windows — satisfies electron-vite requirement of ^20.19.0 || >=22.12.0
+- [Phase 04.1-add-developer-readme]: GitHub-flavored [!WARNING] and [!NOTE] callouts chosen — renders natively on GitHub with colored badges
 
 ### Roadmap Evolution
 
@@ -100,5 +103,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Plan 04-02 complete (human-verify approved). Next: plan 04-03 — auto-update scaffold (SETT-04).
+Stopped at: Completed 04.1-add-developer-readme-01-PLAN.md. Next: Phase 4 plan 03 — auto-update scaffold (SETT-04).
 Resume file: None
