@@ -80,7 +80,11 @@ Plans:
   1. User can open settings via the gear icon, set a default output destination path, and that path is pre-filled on next launch without re-entry
   2. User can toggle auto-open output folder on/off; the toggle state persists across restarts and the correct behavior follows (folder opens or does not open after operations)
   3. Settings page displays the current app version number
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Install electron-conf, add IPC handlers, refactor hardcoded output paths in main + preload
+- [ ] 04-02-PLAN.md — Settings UI, settingsState store, per-mode persistence, auto-open gating + verification checkpoint
 
 ### Phase 5: Distribution + Auto-Update
 **Goal**: PDF Chisel ships as a code-signed Windows NSIS installer via GitHub Releases and silently auto-updates itself when new versions are published
