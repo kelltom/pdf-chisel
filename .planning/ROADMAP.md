@@ -65,7 +65,12 @@ Plans:
   2. During conversion, a determinate progress indicator shows "Page N of M" updating in real time
   3. After conversion completes, user can enter the review workflow and see the first image displayed with their position shown (e.g. "1 / 12")
   4. User can click "Copy and Next" (or press Space/Enter) to copy the current image to clipboard and advance; user can also go back one image; the workflow ends naturally after the last image
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Install pdfjs-dist, spike worker config, add IPC channels (file:read-bytes, pdf:write-image, clipboard:write-image)
+- [ ] 03-02-PLAN.md — ConvertMode UI: format selector, DPI presets, conversion loop with live progress, results summary with Start Review
+- [ ] 03-03-PLAN.md — Review workflow: image display, Copy-and-Next with clipboard + flash, Back navigation, keyboard shortcuts, completion screen
 
 ### Phase 4: Settings + Persistence
 **Goal**: Users have a working settings page where output path, auto-open preference, and per-mode last-used values persist across app restarts
