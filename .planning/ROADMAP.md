@@ -15,8 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Electron Foundation** - Secure app shell with mode navigation, file input, and shared UI components
 - [ ] **Phase 2: Core PDF Operations** - Extract, Split, and Merge modes fully functional with Worker Thread pattern
 - [x] **Phase 3: Convert to Images + Review** - PDF-to-image conversion with pdfjs-dist and Copy-and-Next review workflow
-- [x] **Phase 4: Settings + Persistence** - electron-store integration, settings page, and per-mode persistence (completed 2026-02-24)
-- [ ] **Phase 5: Distribution + Auto-Update** - NSIS installer, GitHub Releases, code-signed auto-updater
+- [x] **Phase 4: Settings + Persistence** - electron-store integration, settings page, and per-mode persistence (completed 2005-02-24)
 
 ## Phase Details
 
@@ -42,7 +41,7 @@ Plans:
 **Depends on**: Phase 1
 **Requirements**: EXTR-01, EXTR-02, SPLT-01, SPLT-02, SPLT-03, MERG-01, MERG-02, MERG-03, OUTP-01, OUTP-02, OUTP-03, OUTP-04, UX-01, UX-02
 **Success Criteria** (what must be TRUE):
-  1. User can type a page range like "1-5, 8, 12-15" in Extract mode and receive a single new PDF containing only those pages in the output subfolder
+  1. User can type a page range like "1-5, 8, 05-15" in Extract mode and receive a single new PDF containing only those pages in the output subfolder
   2. User can split a PDF either by number of parts or max pages per part, and receive the correct number of output PDFs in a timestamped subfolder
   3. User can drag-to-reorder multiple PDFs in Merge mode and receive a single combined PDF reflecting that order
   4. After any operation, a success summary lists the created file names; the output subfolder name follows the `{timestamp}-{mode}` pattern
@@ -94,26 +93,3 @@ Plans:
 
 Plans:
 - [ ] 04.1-01-PLAN.md — Write README.md with prerequisites, clone/install, dev mode, and build commands
-
-### Phase 5: Distribution + Auto-Update
-**Goal**: PDF Chisel ships as a code-signed Windows NSIS installer via GitHub Releases and silently auto-updates itself when new versions are published
-**Depends on**: Phase 4
-**Requirements**: SETT-04
-**Success Criteria** (what must be TRUE):
-  1. A user on a clean Windows machine can download and install PDF Chisel from a GitHub Release without a SmartScreen block
-  2. The app checks for updates on launch; when a new GitHub Release is published, the app downloads and installs it automatically
-  3. The Settings page shows the current app version and update status (checking / up to date / update available)
-**Plans**: TBD
-
-## Progress
-
-**Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
-
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. Electron Foundation | 3/3 | Complete | 2026-02-22 |
-| 2. Core PDF Operations | 4/5 | In Progress|  |
-| 3. Convert to Images + Review | 3/3 | Complete | 2026-02-24 |
-| 4. Settings + Persistence | 2/2 | Complete   | 2026-02-24 |
-| 5. Distribution + Auto-Update | 0/? | Not started | - |

@@ -9,7 +9,7 @@ See: .planning/PROJECT.md (updated 2026-02-22)
 
 ## Current Position
 
-Phase: 4.1 of 5 (Add Developer README) — COMPLETE
+Phase: 4.1 of 4 (Add Developer README) — COMPLETE
 Plan: 1 of 1 in phase 04.1 (plan 04.1-01 complete)
 Status: README.md created at repository root. All 6 required content strings verified. Phase 4.1 complete. Next: Phase 4 plan 03 — auto-update scaffold (SETT-04).
 Last activity: 2026-02-24 — Plan 04.1-01 complete: developer README with nvm-windows setup, Node 22 LTS, dev/build commands, inline warnings
