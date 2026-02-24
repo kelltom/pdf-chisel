@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Electron Foundation** - Secure app shell with mode navigation, file input, and shared UI components
 - [ ] **Phase 2: Core PDF Operations** - Extract, Split, and Merge modes fully functional with Worker Thread pattern
-- [ ] **Phase 3: Convert to Images + Review** - PDF-to-image conversion with pdfjs-dist and Copy-and-Next review workflow
+- [x] **Phase 3: Convert to Images + Review** - PDF-to-image conversion with pdfjs-dist and Copy-and-Next review workflow
 - [ ] **Phase 4: Settings + Persistence** - electron-store integration, settings page, and per-mode persistence
 - [ ] **Phase 5: Distribution + Auto-Update** - NSIS installer, GitHub Releases, code-signed auto-updater
 
@@ -70,7 +70,7 @@ Plans:
 Plans:
 - [x] 03-01-PLAN.md — Install pdfjs-dist, spike worker config, add IPC channels (file:read-bytes, pdf:write-image, clipboard:write-image)
 - [x] 03-02-PLAN.md — ConvertMode UI: format selector, DPI presets, conversion loop with live progress, results summary with Start Review
-- [ ] 03-03-PLAN.md — Review workflow: image display, Copy-and-Next with clipboard + flash, Back navigation, keyboard shortcuts, completion screen
+- [x] 03-03-PLAN.md — Review workflow: image display, Copy-and-Next with clipboard + flash, Back navigation, keyboard shortcuts, completion screen
 
 ### Phase 4: Settings + Persistence
 **Goal**: Users have a working settings page where output path, auto-open preference, and per-mode last-used values persist across app restarts
@@ -101,6 +101,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Electron Foundation | 3/3 | Complete | 2026-02-22 |
 | 2. Core PDF Operations | 4/5 | In Progress|  |
-| 3. Convert to Images + Review | 2/3 | In Progress | - |
+| 3. Convert to Images + Review | 3/3 | Complete | 2026-02-24 |
 | 4. Settings + Persistence | 0/? | Not started | - |
 | 5. Distribution + Auto-Update | 0/? | Not started | - |

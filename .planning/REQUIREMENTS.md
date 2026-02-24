@@ -38,10 +38,10 @@
 ### Review Workflow
 
 - [x] **REVW-01**: After image conversion completes, user can enter the review workflow
-- [ ] **REVW-02**: In review mode, the current image is displayed with the user's position shown (e.g. "3 / 12")
-- [ ] **REVW-03**: User can click "Copy and Next" to copy the current image to the clipboard and advance to the next image
-- [ ] **REVW-04**: User can go back one image at a time in review mode (in case of accidental skip)
-- [ ] **REVW-05**: Review workflow ends naturally when the last image has been reached
+- [x] **REVW-02**: In review mode, the current image is displayed with the user's position shown (e.g. "3 / 12")
+- [x] **REVW-03**: User can click "Copy and Next" to copy the current image to the clipboard and advance to the next image
+- [x] **REVW-04**: User can go back one image at a time in review mode (in case of accidental skip)
+- [x] **REVW-05**: Review workflow ends naturally when the last image has been reached
 
 ### Merge
 
@@ -119,10 +119,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONV-02 | Phase 3 | Complete (03-02) |
 | CONV-03 | Phase 3 | Complete (03-02) |
 | REVW-01 | Phase 3 | Complete (03-02: Start Review button + reviewState transition) |
-| REVW-02 | Phase 3 | Pending |
-| REVW-03 | Phase 3 | Pending |
-| REVW-04 | Phase 3 | Pending |
-| REVW-05 | Phase 3 | Pending |
+| REVW-02 | Phase 3 | Complete |
+| REVW-03 | Phase 3 | Complete |
+| REVW-04 | Phase 3 | Complete |
+| REVW-05 | Phase 3 | Complete |
 | MERG-01 | Phase 2 | Complete |
 | MERG-02 | Phase 2 | Complete |
 | MERG-03 | Phase 2 | Complete |
@@ -141,8 +141,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v1 requirements: 33 total
 - Mapped to phases: 33
 - Unmapped: 0
-- Complete: 18 (APP-01–04, FILE-01–03, EXTR-01–02, SPLT-01–03, CONV-01–03, REVW-01, MERG-01–03)
+- Complete: 22 (APP-01–04, FILE-01–03, EXTR-01–02, SPLT-01–03, CONV-01–03, REVW-01–05, MERG-01–03, UX-01–02, OUTP-01–04)
 
 ---
 *Requirements defined: 2026-02-22*
-*Last updated: 2026-02-24 after 03-02 ConvertMode UI — CONV-01, CONV-02, CONV-03, REVW-01 complete*
+*Last updated: 2026-02-24 after 03-03 review workflow — REVW-02, REVW-03, REVW-04, REVW-05 complete; Phase 3 fully complete*

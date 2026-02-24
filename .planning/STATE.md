@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-22)
 ## Current Position
 
 Phase: 3 of 5 (Convert to Images + Review Workflow) — IN PROGRESS
-Plan: 2 of 4 in current phase
-Status: Plan 03-02 complete — ConvertMode.svelte fully implemented: PNG/JPEG toggle, DPI presets (96 default), live Page N of M progress, custom results panel with Start Review button
-Last activity: 2026-02-24 — Plan 03-02 complete: ConvertMode.svelte full form view, Buffer-to-Uint8Array IPC guard, custom results section with Start Review, reviewState machine stub for Plan 03-03
+Plan: 3 of 3 in current phase (phase complete)
+Status: Plan 03-03 complete — Full review workflow delivered: image display, Copy-and-Next with clipboard + flash, Back navigation, Space/Enter shortcuts, completion screen. Phase 3 fully complete (CONV-01–03, REVW-01–05).
+Last activity: 2026-02-24 — Plan 03-03 complete: review workflow, pdfjs-dist v5→v4 downgrade (Uint8Array.toHex fix), ArrayBuffer detach fix, file list scroll cap + mid-review Close button
 
-Progress: [████████░░] 78%
+Progress: [█████████░] 88%
 
 ## Performance Metrics
 
@@ -72,6 +72,10 @@ Recent decisions affecting current work:
 - [03-02]: Custom results section used instead of OperationLayout ResultsSummary — OperationLayout has no slot for Start Review; custom section is self-contained without modifying shared components
 - [03-02]: Buffer-to-Uint8Array instanceof guard applied at IPC boundary — plain object fallback via Object.values prevents silent renderPageToDataUrl failures
 - [03-02]: DPI selector uses two-line segmented buttons (value + hint stacked) matching Split mode CSS pattern extended with flex-column dpi-btn layout
+- [03-03]: pdfjs-dist downgraded v5→v4 (v4.10.38) — v5 calls Uint8Array.prototype.toHex() unconditionally in worker context (ES2024, absent in Electron's Chromium); v4 guards the call with a manual fallback
+- [03-03]: PDF loaded once per conversion via loadPdfDocument() + renderPageFromDoc() — pdfjs transfers ArrayBuffer to worker on getDocument(), detaching the original; calling getDocument() in a loop caused 'ArrayBuffer already detached' crash on page 2+
+- [03-03]: file:// image src with backslash-to-forward-slash conversion for Windows paths — path.replace(/\\/g, '/') applied in $derived currentImagePath before 'file://' prefix
+- [03-03]: svelte:window onkeydown guarded by reviewState === 'reviewing' — no focus management required; e.preventDefault() suppresses page scroll (Space) and form submit (Enter)
 
 ### Pending Todos
 
@@ -85,5 +89,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 03-convert-to-images-review plan 02 — ConvertMode.svelte full form view implemented: PNG/JPEG toggle, four DPI presets (96 default), live Page N of M progress, custom results section with Start Review button, reviewState machine stubs for Plan 03-03
+Stopped at: Completed 03-convert-to-images-review plan 03 — Full review workflow: image display, Copy-and-Next (clipboard + flash animation), Back navigation, Space/Enter shortcuts, completion screen. Phase 3 complete (CONV-01–03, REVW-01–05). Ready for Phase 4: Settings + Persistence.
 Resume file: None
