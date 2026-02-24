@@ -90,6 +90,7 @@ Recent decisions affecting current work:
 ### Roadmap Evolution
 
 - Phase 04.1 inserted after Phase 4: Add Developer README — document prerequisites and steps to clone, install, and run in dev on Windows. (URGENT)
+- Phase 5 added: UI improvement
 
 ### Pending Todos
 
@@ -103,5 +104,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 04.1-add-developer-readme-01-PLAN.md. Next: Phase 4 plan 03 — auto-update scaffold (SETT-04).
-Resume file: None
+Stopped at: Phase 5 context gathered
+Resume file: .planning/phases/05-ui-improvement/05-CONTEXT.md
