@@ -46,6 +46,12 @@ declare global {
 
       // Returns cleanup function — call in Svelte onDestroy to prevent listener accumulation
       onProgress: (callback: (data: { type: string; step: string }) => void) => () => void
+
+      // Phase 3: Convert to Images
+      readFileBytes: (filePath: string) => Promise<Uint8Array>
+      makeConvertOutputFolder: () => Promise<string>
+      writeImageFile: (args: { dataUrl: string; outputFolder: string; fileName: string }) => Promise<string>
+      copyImageToClipboard: (filePath: string) => Promise<void>
     }
   }
 }

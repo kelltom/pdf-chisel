@@ -171,6 +171,52 @@ app.whenReady().then(() => {
     if (err) console.error('shell.openPath error:', err)
   })
 
+  // CONV-03: Read raw PDF bytes and return to renderer for pdfjs rendering.
+  // The renderer process cannot access the filesystem directly (nodeIntegration: false).
+  // Returns a Buffer (serialized as Uint8Array over IPC).
+  ipcMain.handle('file:read-bytes', async (_event, filePath: string) => {
+    const { readFile: readFileBytes } = await import('fs/promises')
+    return readFileBytes(filePath)
+  })
+
+  // CONV-03: Write a rendered image data URL to disk as an image file.
+  // Called once per page during conversion — sequential, not parallel (IPC message size management).
+  // dataUrl: 'data:image/png;base64,...' or 'data:image/jpeg;base64,...'
+  // outputFolder: absolute path to the timestamped output folder (created by main if needed)
+  // fileName: e.g. 'page-01.png'
+  // Returns the absolute output file path on success.
+  ipcMain.handle('pdf:write-image', async (_event, args: { dataUrl: string; outputFolder: string; fileName: string }) => {
+    const { mkdir: mkdirImg, writeFile: writeFileImg } = await import('fs/promises')
+    const { join: joinImg } = await import('path')
+    await mkdirImg(args.outputFolder, { recursive: true })
+    const base64 = args.dataUrl.replace(/^data:image\/\w+;base64,/, '')
+    const buffer = Buffer.from(base64, 'base64')
+    const filePath = joinImg(args.outputFolder, args.fileName)
+    await writeFileImg(filePath, buffer)
+    return filePath
+  })
+
+  // CONV-03: Create and return a timestamped output folder for image conversion.
+  // Pattern matches other modes: {documents}/PDF Chisel/{timestamp}-convert/
+  ipcMain.handle('pdf:make-convert-folder', async () => {
+    const { mkdir: mkdirConv } = await import('fs/promises')
+    const baseDir = join(app.getPath('documents'), 'PDF Chisel')
+    const outputFolder = makeOutputFolder(baseDir, 'convert')
+    await mkdirConv(outputFolder, { recursive: true })
+    return outputFolder
+  })
+
+  // REVW-03: Read an image file from disk and write it to the system clipboard.
+  // Takes a file path (not a data URL) — avoids IPC message size issues for 300 DPI images.
+  // Uses nativeImage.createFromBuffer — works for both PNG and JPEG files.
+  ipcMain.handle('clipboard:write-image', async (_event, filePath: string) => {
+    const { clipboard, nativeImage } = await import('electron')
+    const { readFile: readFileClip } = await import('fs/promises')
+    const buffer = await readFileClip(filePath)
+    const image = nativeImage.createFromBuffer(buffer)
+    clipboard.writeImage(image)
+  })
+
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })

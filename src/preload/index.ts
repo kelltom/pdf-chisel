@@ -59,6 +59,22 @@ const api = {
     ipcRenderer.on('pdf:progress', handler)
     return () => ipcRenderer.removeListener('pdf:progress', handler)
   },
+
+  // CONV-03: Read raw PDF file bytes (for pdfjs-dist getDocument in renderer)
+  readFileBytes: (filePath: string): Promise<Uint8Array> =>
+    ipcRenderer.invoke('file:read-bytes', filePath),
+
+  // CONV-03: Create timestamped convert output folder; returns absolute folder path
+  makeConvertOutputFolder: (): Promise<string> =>
+    ipcRenderer.invoke('pdf:make-convert-folder'),
+
+  // CONV-03: Write rendered image data URL to disk; returns absolute file path
+  writeImageFile: (args: { dataUrl: string; outputFolder: string; fileName: string }): Promise<string> =>
+    ipcRenderer.invoke('pdf:write-image', args),
+
+  // REVW-03: Copy image at filePath to system clipboard
+  copyImageToClipboard: (filePath: string): Promise<void> =>
+    ipcRenderer.invoke('clipboard:write-image', filePath),
 }
 
 // Honor contextIsolation setting: expose via contextBridge if isolated, fall back otherwise.
