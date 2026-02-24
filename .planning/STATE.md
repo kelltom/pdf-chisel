@@ -86,7 +86,7 @@ Recent decisions affecting current work:
 
 ### Roadmap Evolution
 
-- Phase 04.1 inserted after Phase 4: Improve the developer experience for cloning and running the application on other devices. We need to add a README that details exactly how to configure a development environment capable of running this app. (URGENT)
+- Phase 04.1 inserted after Phase 4: Add Developer README — document prerequisites and steps to clone, install, and run in dev on Windows. (URGENT)
 
 ### Pending Todos
 

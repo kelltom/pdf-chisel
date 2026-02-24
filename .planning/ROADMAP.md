@@ -86,9 +86,9 @@ Plans:
 - [x] 04-01-PLAN.md — Install electron-conf, add IPC handlers, refactor hardcoded output paths in main + preload
 - [ ] 04-02-PLAN.md — Settings UI, settingsState store, per-mode persistence, auto-open gating + verification checkpoint
 
-### Phase 04.1: Improve the developer experience for cloning and running the application on other devices. We need to add a README that details exactly how to configure a development environment capable of running this app. (INSERTED)
+### Phase 04.1: Add Developer README (INSERTED)
 
-**Goal:** [Urgent work - to be planned]
+**Goal:** Add a README.md that documents prerequisites and exact steps to clone, install, and run PDF Chisel in development on Windows
 **Depends on:** Phase 4
 **Plans:** 0 plans
 
