@@ -1,9 +1,8 @@
 import * as pdfjsLib from 'pdfjs-dist'
 
 // Worker config: new URL pattern — more reliable than ?url import in electron-vite production builds.
-// Reference: pdfjs Discussion #19520 — confirmed working for pdfjs v4+ with Vite.
-// If production build fails with "Setting up fake worker" warning, fall back to copying
-// the worker to src/renderer/public/pdf.worker.min.mjs and setting workerSrc = '/pdf.worker.min.mjs'.
+// pdfjs-dist v4 is used deliberately (v5 calls Uint8Array.prototype.toHex() which is absent in
+// Electron's Chromium worker context, causing "a.toHex is not a function" on every PDF).
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url
