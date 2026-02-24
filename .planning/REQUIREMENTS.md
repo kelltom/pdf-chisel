@@ -116,8 +116,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SPLT-02 | Phase 2 | Complete |
 | SPLT-03 | Phase 2 | Complete |
 | CONV-01 | Phase 3 | Pending |
-| CONV-02 | Phase 3 | Pending |
-| CONV-03 | Phase 3 | Pending |
+| CONV-02 | Phase 3 | In Progress (03-01: IPC + renderer utility; UI in 03-02) |
+| CONV-03 | Phase 3 | In Progress (03-01: IPC + renderer utility; UI in 03-02) |
 | REVW-01 | Phase 3 | Pending |
 | REVW-02 | Phase 3 | Pending |
 | REVW-03 | Phase 3 | Pending |
@@ -145,4 +145,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-22*
-*Last updated: 2026-02-22 after 01-03 renderer UI complete — Phase 1 all 7 requirements verified*
+*Last updated: 2026-02-24 after 03-01 PDF rendering infrastructure — CONV-02/CONV-03 in progress*

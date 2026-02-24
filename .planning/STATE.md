@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 2 — Core PDF Operations (in progress)
+**Current focus:** Phase 3 — Convert to Images + Review Workflow (in progress)
 
 ## Current Position
 
-Phase: 2 of 5 (Core PDF Operations) — IN PROGRESS
-Plan: 5 of 5 in current phase
-Status: Plan 02-05 complete — MergeMode fully implemented; all mode UIs done; awaiting 02-03/02-04 backfill or phase complete
-Last activity: 2026-02-23 — Plan 02-05 complete: MergeMode.svelte with drag-to-reorder, multi-file picker, OperationLayout
+Phase: 3 of 5 (Convert to Images + Review Workflow) — IN PROGRESS
+Plan: 1 of 4 in current phase
+Status: Plan 03-01 complete — pdfjs-dist installed, pdf-renderer.ts utility created, four IPC channels wired
+Last activity: 2026-02-24 — Plan 03-01 complete: pdfjs-dist v5.4.624 + renderPageToDataUrl() + file:read-bytes / pdf:write-image / pdf:make-convert-folder / clipboard:write-image IPC channels
 
-Progress: [████████░░] 70%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -29,6 +29,7 @@ Progress: [████████░░] 70%
 |-------|-------|-------|----------|
 | 01-electron-foundation | 3 | ~21 min | ~7 min |
 | 02-core-pdf-operations | 4 | ~13 min | ~3.3 min |
+| 03-convert-to-images-review | 1 | ~6 min | ~6 min |
 
 **Recent Trend:**
 - Last 5 plans: 6 min, 2 min, ~15 min, ~3 min, ~2 min
@@ -65,6 +66,9 @@ Recent decisions affecting current work:
 - [02-02]: Execute button lives in the actions snippet slot owned by the mode component — keeps label (Extract/Split/Merge) mode-controlled, not layout-controlled
 - [02-05]: crypto.randomUUID() for stable FileItem id — keyed {#each} uses (file.id) not index to prevent Svelte DOM tracking bugs during drag-to-reorder
 - [02-05]: Dual drag handlers (list item reorder + external drop zone) do not conflict — list drag has empty dataTransfer.files; Explorer drag has null dragIndex
+- [03-01]: pdfjs-dist v5.4.624 used (v5, not v4) — Chromium V8 supports Promise.withResolvers natively; no downgrade needed
+- [03-01]: new URL() worker config chosen over static file fallback — electron-vite build passed cleanly; no fake-worker warnings
+- [03-01]: Dynamic imports used inside IPC handlers to avoid shadowing top-level readFile import
 
 ### Pending Todos
 
@@ -72,11 +76,11 @@ None yet.
 
 ### Blockers/Concerns
 
-- [Phase 3 ahead]: pdfjs-dist worker bundling with electron-vite's `?url` import syntax has low confidence — needs targeted research spike before Phase 3 implementation starts
+- [Resolved — 03-01]: pdfjs-dist worker bundling resolved — new URL() pattern works in electron-vite builds without fake-worker warnings
 - [Phase 5 ahead]: Code signing certificate (OV minimum) must be procured before Phase 5 begins; start procurement at Phase 4 kickoff to avoid blocking delay
 
 ## Session Continuity
 
-Last session: 2026-02-23
-Stopped at: Completed 02-core-pdf-operations plan 05 — MergeMode.svelte fully implemented with drag-to-reorder list, multi-file picker, external drag-drop, OperationLayout integration
+Last session: 2026-02-24
+Stopped at: Completed 03-convert-to-images-review plan 01 — pdfjs-dist v5.4.624 installed, pdf-renderer.ts with renderPageToDataUrl() created, four IPC channels (file:read-bytes, pdf:write-image, pdf:make-convert-folder, clipboard:write-image) wired in main and preload
 Resume file: None
