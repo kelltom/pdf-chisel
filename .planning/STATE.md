@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-22)
 ## Current Position
 
 Phase: 3 of 5 (Convert to Images + Review Workflow) — IN PROGRESS
-Plan: 1 of 4 in current phase
-Status: Plan 03-01 complete — pdfjs-dist installed, pdf-renderer.ts utility created, four IPC channels wired
-Last activity: 2026-02-24 — Plan 03-01 complete: pdfjs-dist v5.4.624 + renderPageToDataUrl() + file:read-bytes / pdf:write-image / pdf:make-convert-folder / clipboard:write-image IPC channels
+Plan: 2 of 4 in current phase
+Status: Plan 03-02 complete — ConvertMode.svelte fully implemented: PNG/JPEG toggle, DPI presets (96 default), live Page N of M progress, custom results panel with Start Review button
+Last activity: 2026-02-24 — Plan 03-02 complete: ConvertMode.svelte full form view, Buffer-to-Uint8Array IPC guard, custom results section with Start Review, reviewState machine stub for Plan 03-03
 
-Progress: [████████░░] 75%
+Progress: [████████░░] 78%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
-- Average duration: ~5 min
-- Total execution time: ~0.43 hours
+- Total plans completed: 7
+- Average duration: ~4.9 min
+- Total execution time: ~0.57 hours
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [████████░░] 75%
 |-------|-------|-------|----------|
 | 01-electron-foundation | 3 | ~21 min | ~7 min |
 | 02-core-pdf-operations | 4 | ~13 min | ~3.3 min |
-| 03-convert-to-images-review | 1 | ~6 min | ~6 min |
+| 03-convert-to-images-review | 2 | ~8 min | ~4 min |
 
 **Recent Trend:**
-- Last 5 plans: 6 min, 2 min, ~15 min, ~3 min, ~2 min
+- Last 5 plans: 2 min, 6 min, 2 min, ~15 min, ~3 min
 - Trend: Accelerating
 
 *Updated after each plan completion*
@@ -69,6 +69,9 @@ Recent decisions affecting current work:
 - [03-01]: pdfjs-dist v5.4.624 used (v5, not v4) — Chromium V8 supports Promise.withResolvers natively; no downgrade needed
 - [03-01]: new URL() worker config chosen over static file fallback — electron-vite build passed cleanly; no fake-worker warnings
 - [03-01]: Dynamic imports used inside IPC handlers to avoid shadowing top-level readFile import
+- [03-02]: Custom results section used instead of OperationLayout ResultsSummary — OperationLayout has no slot for Start Review; custom section is self-contained without modifying shared components
+- [03-02]: Buffer-to-Uint8Array instanceof guard applied at IPC boundary — plain object fallback via Object.values prevents silent renderPageToDataUrl failures
+- [03-02]: DPI selector uses two-line segmented buttons (value + hint stacked) matching Split mode CSS pattern extended with flex-column dpi-btn layout
 
 ### Pending Todos
 
@@ -82,5 +85,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 03-convert-to-images-review plan 01 — pdfjs-dist v5.4.624 installed, pdf-renderer.ts with renderPageToDataUrl() created, four IPC channels (file:read-bytes, pdf:write-image, pdf:make-convert-folder, clipboard:write-image) wired in main and preload
+Stopped at: Completed 03-convert-to-images-review plan 02 — ConvertMode.svelte full form view implemented: PNG/JPEG toggle, four DPI presets (96 default), live Page N of M progress, custom results section with Start Review button, reviewState machine stubs for Plan 03-03
 Resume file: None

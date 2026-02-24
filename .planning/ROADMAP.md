@@ -69,7 +69,7 @@ Plans:
 
 Plans:
 - [x] 03-01-PLAN.md — Install pdfjs-dist, spike worker config, add IPC channels (file:read-bytes, pdf:write-image, clipboard:write-image)
-- [ ] 03-02-PLAN.md — ConvertMode UI: format selector, DPI presets, conversion loop with live progress, results summary with Start Review
+- [x] 03-02-PLAN.md — ConvertMode UI: format selector, DPI presets, conversion loop with live progress, results summary with Start Review
 - [ ] 03-03-PLAN.md — Review workflow: image display, Copy-and-Next with clipboard + flash, Back navigation, keyboard shortcuts, completion screen
 
 ### Phase 4: Settings + Persistence
@@ -101,6 +101,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Electron Foundation | 3/3 | Complete | 2026-02-22 |
 | 2. Core PDF Operations | 4/5 | In Progress|  |
-| 3. Convert to Images + Review | 1/3 | In Progress | - |
+| 3. Convert to Images + Review | 2/3 | In Progress | - |
 | 4. Settings + Persistence | 0/? | Not started | - |
 | 5. Distribution + Auto-Update | 0/? | Not started | - |

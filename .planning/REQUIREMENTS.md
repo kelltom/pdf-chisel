@@ -31,13 +31,13 @@
 
 ### Convert to Images
 
-- [ ] **CONV-01**: User can select output image format (PNG or JPEG) with a clear explanation of the difference shown in the UI
-- [ ] **CONV-02**: User can set the output DPI/resolution before conversion
-- [ ] **CONV-03**: User can execute conversion to receive one image file per PDF page in the output subfolder
+- [x] **CONV-01**: User can select output image format (PNG or JPEG) with a clear explanation of the difference shown in the UI
+- [x] **CONV-02**: User can set the output DPI/resolution before conversion
+- [x] **CONV-03**: User can execute conversion to receive one image file per PDF page in the output subfolder
 
 ### Review Workflow
 
-- [ ] **REVW-01**: After image conversion completes, user can enter the review workflow
+- [x] **REVW-01**: After image conversion completes, user can enter the review workflow
 - [ ] **REVW-02**: In review mode, the current image is displayed with the user's position shown (e.g. "3 / 12")
 - [ ] **REVW-03**: User can click "Copy and Next" to copy the current image to the clipboard and advance to the next image
 - [ ] **REVW-04**: User can go back one image at a time in review mode (in case of accidental skip)
@@ -115,10 +115,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SPLT-01 | Phase 2 | Complete |
 | SPLT-02 | Phase 2 | Complete |
 | SPLT-03 | Phase 2 | Complete |
-| CONV-01 | Phase 3 | Pending |
-| CONV-02 | Phase 3 | In Progress (03-01: IPC + renderer utility; UI in 03-02) |
-| CONV-03 | Phase 3 | In Progress (03-01: IPC + renderer utility; UI in 03-02) |
-| REVW-01 | Phase 3 | Pending |
+| CONV-01 | Phase 3 | Complete (03-02) |
+| CONV-02 | Phase 3 | Complete (03-02) |
+| CONV-03 | Phase 3 | Complete (03-02) |
+| REVW-01 | Phase 3 | Complete (03-02: Start Review button + reviewState transition) |
 | REVW-02 | Phase 3 | Pending |
 | REVW-03 | Phase 3 | Pending |
 | REVW-04 | Phase 3 | Pending |
@@ -141,8 +141,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v1 requirements: 33 total
 - Mapped to phases: 33
 - Unmapped: 0
-- Complete: 7 (APP-01–04, FILE-01–03)
+- Complete: 18 (APP-01–04, FILE-01–03, EXTR-01–02, SPLT-01–03, CONV-01–03, REVW-01, MERG-01–03)
 
 ---
 *Requirements defined: 2026-02-22*
-*Last updated: 2026-02-24 after 03-01 PDF rendering infrastructure — CONV-02/CONV-03 in progress*
+*Last updated: 2026-02-24 after 03-02 ConvertMode UI — CONV-01, CONV-02, CONV-03, REVW-01 complete*
