@@ -4,7 +4,7 @@
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
   import ProgressSpinner from '../ProgressSpinner.svelte'
-  import { renderPageToDataUrl } from '../../utils/pdf-renderer'
+  import { loadPdfDocument, renderPageFromDoc } from '../../utils/pdf-renderer'
 
   type ReviewState = 'form' | 'reviewing' | 'complete'
 
@@ -75,13 +75,18 @@
       const padWidth = totalPages > 99 ? 3 : totalPages > 9 ? 2 : 1
       const ext = format === 'jpeg' ? 'jpg' : 'png'
 
-      for (let i = 1; i <= totalPages; i++) {
-        progressCurrent = i
-        const dataUrl = await renderPageToDataUrl(pdfBytes, i, dpi, format)
-        const fileName = `page-${String(i).padStart(padWidth, '0')}.${ext}`
-        const filePath = await window.api.writeImageFile({ dataUrl, outputFolder: folder, fileName })
-        outputFiles = [...outputFiles, filePath]
-        outputFileNames = [...outputFileNames, fileName]
+      const pdf = await loadPdfDocument(pdfBytes)
+      try {
+        for (let i = 1; i <= totalPages; i++) {
+          progressCurrent = i
+          const dataUrl = await renderPageFromDoc(pdf, i, dpi, format)
+          const fileName = `page-${String(i).padStart(padWidth, '0')}.${ext}`
+          const filePath = await window.api.writeImageFile({ dataUrl, outputFolder: folder, fileName })
+          outputFiles = [...outputFiles, filePath]
+          outputFileNames = [...outputFileNames, fileName]
+        }
+      } finally {
+        pdf.destroy()
       }
 
       hasConversionResult = true

@@ -1,4 +1,5 @@
 import * as pdfjsLib from 'pdfjs-dist'
+import type { PDFDocumentProxy } from 'pdfjs-dist'
 
 // Worker config: new URL pattern — more reliable than ?url import in electron-vite production builds.
 // pdfjs-dist v4 is used deliberately (v5 calls Uint8Array.prototype.toHex() which is absent in
@@ -13,25 +14,33 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
 // e.g. 96 DPI → 1.333; 150 DPI → 2.083; 300 DPI → 4.167
 
 /**
- * Render a single PDF page to a data URL.
+ * Load a PDF document from raw bytes.
+ * Call once per file, then pass the returned document to renderPageFromDoc for each page.
+ * The caller must call pdf.destroy() when done to free worker memory.
+ */
+export async function loadPdfDocument(pdfBytes: Uint8Array): Promise<PDFDocumentProxy> {
+  // pdfjs transfers the ArrayBuffer to the worker on getDocument(), detaching the original.
+  // slice() copies the bytes so the caller's buffer is unaffected and safe to discard.
+  const loadingTask = pdfjsLib.getDocument({ data: pdfBytes.slice() })
+  return loadingTask.promise
+}
+
+/**
+ * Render a single page from an already-loaded PDF document to a data URL.
  * Must run in the renderer process — browser canvas API required.
- * Do NOT call from a Node.js Worker Thread (no document.createElement there).
  *
- * @param pdfBytes  Raw bytes of the PDF file
+ * @param pdf       Document returned by loadPdfDocument()
  * @param pageNumber  1-indexed page number
  * @param dpi  Target DPI (72 | 96 | 150 | 300)
  * @param format  Output image format
  * @returns Data URL string (e.g. 'data:image/png;base64,...')
  */
-export async function renderPageToDataUrl(
-  pdfBytes: Uint8Array,
+export async function renderPageFromDoc(
+  pdf: PDFDocumentProxy,
   pageNumber: number,
   dpi: number,
   format: 'png' | 'jpeg'
 ): Promise<string> {
-  const loadingTask = pdfjsLib.getDocument({ data: pdfBytes })
-  const pdf = await loadingTask.promise
-
   const page = await pdf.getPage(pageNumber)
 
   const scale = dpi / 72
