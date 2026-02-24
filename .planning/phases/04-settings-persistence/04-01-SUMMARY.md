@@ -75,7 +75,7 @@ Each task was committed atomically:
 
 1. **Task 1: Install electron-conf and wire persistence backend in main + preload** - `4c9cdc7` (feat)
 
-**Plan metadata:** (to be added after final docs commit)
+**Plan metadata:** `75012cb` (docs: complete settings persistence backend plan)
 
 ## Files Created/Modified
 
