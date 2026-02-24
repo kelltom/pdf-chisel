@@ -30,20 +30,35 @@
 </script>
 
 <nav class="nav-rail" aria-label="Mode navigation">
-  {#each modes as mode}
+  <div class="nav-main">
+    {#each modes as mode}
+      <button
+        class="nav-item"
+        class:active={appState.currentMode === mode.id}
+        title={mode.label}
+        aria-label={mode.label}
+        aria-pressed={appState.currentMode === mode.id}
+        disabled={appState.isProcessing}
+        onclick={() => appState.currentMode = mode.id}
+      >
+        {@html mode.icon}
+        <span class="nav-label">{mode.label}</span>
+      </button>
+    {/each}
+  </div>
+  <div class="nav-footer">
     <button
       class="nav-item"
-      class:active={appState.currentMode === mode.id}
-      title={mode.label}
-      aria-label={mode.label}
-      aria-pressed={appState.currentMode === mode.id}
-      disabled={appState.isProcessing}
-      onclick={() => appState.currentMode = mode.id}
+      class:active={appState.currentMode === 'settings'}
+      title="Settings"
+      aria-label="Settings"
+      aria-pressed={appState.currentMode === 'settings'}
+      onclick={() => appState.currentMode = 'settings'}
     >
-      {@html mode.icon}
-      <span class="nav-label">{mode.label}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span class="nav-label">Settings</span>
     </button>
-  {/each}
+  </div>
 </nav>
 
 <style>
@@ -52,11 +67,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
     padding: 8px 4px;
     background: var(--color-surface);
     border-right: 1px solid var(--color-surface-2);
     flex-shrink: 0;
+  }
+  .nav-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+  .nav-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 4px;
   }
   .nav-item {
     display: flex;
