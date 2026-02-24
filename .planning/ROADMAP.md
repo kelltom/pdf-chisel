@@ -86,6 +86,15 @@ Plans:
 - [x] 04-01-PLAN.md — Install electron-conf, add IPC handlers, refactor hardcoded output paths in main + preload
 - [ ] 04-02-PLAN.md — Settings UI, settingsState store, per-mode persistence, auto-open gating + verification checkpoint
 
+### Phase 04.1: Improve the developer experience for cloning and running the application on other devices. We need to add a README that details exactly how to configure a development environment capable of running this app. (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Depends on:** Phase 4
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 04.1 to break down)
+
 ### Phase 5: Distribution + Auto-Update
 **Goal**: PDF Chisel ships as a code-signed Windows NSIS installer via GitHub Releases and silently auto-updates itself when new versions are published
 **Depends on**: Phase 4

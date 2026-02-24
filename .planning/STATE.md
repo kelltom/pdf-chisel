@@ -84,6 +84,10 @@ Recent decisions affecting current work:
 - [04-02]: auto-open gated in both ResultsSummary and ConvertMode — both code paths need the guard; manual Open Folder button always available regardless of toggle
 - [04-02]: per-mode persistence uses onMount load + execute() save — transparent to user; last-used values silently restored each launch without dedicated UI
 
+### Roadmap Evolution
+
+- Phase 04.1 inserted after Phase 4: Improve the developer experience for cloning and running the application on other devices. We need to add a README that details exactly how to configure a development environment capable of running this app. (URGENT)
+
 ### Pending Todos
 
 None yet.
