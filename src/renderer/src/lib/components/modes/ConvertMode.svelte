@@ -27,6 +27,22 @@
   let reviewState = $state<ReviewState>('form')
   let hasConversionResult = $state(false)
 
+  // Review workflow state
+  let currentIndex = $state(0)
+  let isFlashing = $state(false)
+  let imageLoadError = $state(false)
+
+  // currentImagePath: absolute path of the currently-displayed image
+  // Windows paths use backslashes; file:// needs forward slashes
+  const currentImagePath = $derived(
+    outputFiles.length > 0
+      ? outputFiles[currentIndex].replace(/\\/g, '/')
+      : ''
+  )
+
+  // Reset imageLoadError when index changes
+  $effect(() => { currentIndex; imageLoadError = false })
+
   // Clear state when navigating away from convert mode
   $effect(() => {
     if (appState.currentMode !== 'convert') {
@@ -83,6 +99,45 @@
     }
   }
 
+  async function copyAndNext(): Promise<void> {
+    if (!currentImagePath || isConverting) return
+
+    // Flash animation: set true, reset after 200ms
+    isFlashing = true
+    setTimeout(() => { isFlashing = false }, 200)
+
+    // Copy current image to clipboard via IPC (pass file path, not data URL)
+    try {
+      await window.api.copyImageToClipboard(outputFiles[currentIndex])
+    } catch (err) {
+      console.error('Clipboard write failed:', err)
+      // Continue advancing even if clipboard fails — don't block review flow
+    }
+
+    if (currentIndex >= outputFiles.length - 1) {
+      // Last image reached — transition to completion screen
+      reviewState = 'complete'
+    } else {
+      currentIndex++
+    }
+  }
+
+  function goBack(): void {
+    if (currentIndex > 0) {
+      currentIndex--
+    }
+  }
+
+  function startReview(): void {
+    currentIndex = 0
+    reviewState = 'reviewing'
+  }
+
+  function closeReview(): void {
+    // Return to form view; results summary remains visible
+    reviewState = 'form'
+  }
+
   function reset() {
     format = 'png'
     dpi = 96
@@ -95,12 +150,22 @@
     conversionError = null
     reviewState = 'form'
     hasConversionResult = false
+    currentIndex = 0
+    isFlashing = false
+    imageLoadError = false
   }
 
   onDestroy(() => {
     if (isConverting) appState.isProcessing = false
   })
 </script>
+
+<svelte:window onkeydown={(e) => {
+  if (reviewState === 'reviewing' && (e.key === ' ' || e.key === 'Enter')) {
+    e.preventDefault()
+    copyAndNext()
+  }
+}} />
 
 <div class="mode-view">
   {#if reviewState === 'form'}
@@ -200,7 +265,7 @@
               <button class="btn btn-secondary" onclick={() => window.api.openOutputFolder(outputFolder)}>
                 Open Folder
               </button>
-              <button class="btn btn-primary-sm" onclick={() => reviewState = 'reviewing'}>
+              <button class="btn btn-primary-sm" onclick={startReview}>
                 Start Review
               </button>
             </div>
@@ -211,15 +276,54 @@
     {/if}
 
   {:else if reviewState === 'reviewing'}
-    <!-- Review workflow — implemented in Plan 03-03 -->
-    <div class="placeholder-view">
-      <p class="placeholder-text">Review workflow coming in Plan 03-03</p>
+    <div class="review-container">
+      <div class="review-header">
+        <span class="review-position">{currentIndex + 1} / {outputFiles.length}</span>
+      </div>
+
+      <div class="review-image-area">
+        {#if currentImagePath}
+          <img
+            src="file://{currentImagePath}"
+            alt="Page {currentIndex + 1}"
+            class="review-image"
+            class:flash={isFlashing}
+            onerror={() => imageLoadError = true}
+            style={imageLoadError ? 'display: none' : ''}
+          />
+          {#if imageLoadError}
+            <div class="review-placeholder">Image could not be loaded</div>
+          {/if}
+        {:else}
+          <div class="review-placeholder">No image available</div>
+        {/if}
+      </div>
+
+      <div class="review-actions">
+        <button
+          class="btn btn-secondary"
+          onclick={goBack}
+          disabled={currentIndex === 0}
+        >
+          Back
+        </button>
+        <button
+          class="btn btn-primary"
+          onclick={copyAndNext}
+        >
+          Copy and Next
+        </button>
+      </div>
     </div>
 
   {:else if reviewState === 'complete'}
-    <!-- Completion screen — implemented in Plan 03-03 -->
-    <div class="placeholder-view">
-      <p class="placeholder-text">Completion screen coming in Plan 03-03</p>
+    <div class="complete-container">
+      <div class="complete-content">
+        <p class="complete-message">Review complete — {outputFiles.length} image{outputFiles.length !== 1 ? 's' : ''} copied</p>
+        <button class="btn btn-secondary" onclick={closeReview}>
+          Close
+        </button>
+      </div>
     </div>
   {/if}
 </div>
@@ -499,9 +603,14 @@
     color: var(--color-text);
   }
 
-  .btn-secondary:hover {
+  .btn-secondary:hover:not(:disabled) {
     background: var(--color-accent);
     color: var(--color-bg);
+  }
+
+  .btn-secondary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 
   .btn-reset {
@@ -516,17 +625,90 @@
     border-color: var(--color-text-muted);
   }
 
-  /* Placeholder views for review/complete states (Plan 03-03) */
-  .placeholder-view {
+  /* Review container: fills the mode-view, nav rail stays visible */
+  .review-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .review-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
-    padding: 40px 20px;
+    padding: 12px 20px;
+    flex-shrink: 0;
   }
 
-  .placeholder-text {
+  .review-position {
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--color-text-muted);
-    font-size: 0.9375rem;
+  }
+
+  /* Image area: grows to fill available space, centers image */
+  .review-image-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 8px 20px;
+    min-height: 0;  /* Required for flex child to shrink below content size */
+  }
+
+  .review-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+  }
+
+  /* Flash animation for Copy confirmation */
+  .review-image.flash {
+    animation: flash-anim 0.2s ease-out;
+  }
+
+  @keyframes flash-anim {
+    0%   { opacity: 1; }
+    50%  { opacity: 0.35; }
+    100% { opacity: 1; }
+  }
+
+  .review-placeholder {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .review-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 20px;
+    flex-shrink: 0;
+  }
+
+  /* Completion screen */
+  .complete-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .complete-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .complete-message {
+    font-size: 1rem;
+    color: var(--color-text);
   }
 </style>
