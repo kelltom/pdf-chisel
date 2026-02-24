@@ -13,6 +13,9 @@ PDF-to-image conversion: user selects format (PNG/JPEG) and DPI preset, converts
 <decisions>
 ## Implementation Decisions
 
+### UI layout
+- Make sure UI is consistent with other features in terms of component sizing, padding, margins, spacing, etc.
+
 ### Format selector
 - Segmented button / toggle group (PNG | JPEG) — consistent with Phase 2 toggle pattern (e.g. parts/max-pages)
 - One-liner beneath each option: PNG: lossless, larger files | JPEG: compressed, smaller
@@ -31,6 +34,7 @@ PDF-to-image conversion: user selects format (PNG/JPEG) and DPI preset, converts
 ### Results summary (post-conversion)
 - Same summary pattern as other modes: "X files created in [folder]" + filename list
 - No extras (no total file size)
+- Show button to open output folder in system file explorer
 - "Start Review" button shown alongside the summary
 
 ### Review workflow layout
@@ -85,7 +89,6 @@ PDF-to-image conversion: user selects format (PNG/JPEG) and DPI preset, converts
 ## Deferred Ideas
 
 - Configurable default DPI via app settings — Phase 4 (per-mode last-used values persistence)
-- "Open output folder" shortcut from results summary — could be added to Phase 4 or as a Phase 3 nice-to-have if already present in other modes
 
 </deferred>
 
