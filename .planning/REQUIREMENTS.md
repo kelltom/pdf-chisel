@@ -130,9 +130,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | OUTP-02 | Phase 2 | Complete |
 | OUTP-03 | Phase 2 | Complete |
 | OUTP-04 | Phase 2 | Complete |
-| SETT-01 | Phase 4 | Complete (04-01) |
-| SETT-02 | Phase 4 | Complete (04-01) |
-| SETT-03 | Phase 4 | Complete (04-01) |
+| SETT-01 | Phase 4 | Complete (04-01 backend + 04-02 UI) |
+| SETT-02 | Phase 4 | Complete (04-01 backend + 04-02 UI) |
+| SETT-03 | Phase 4 | Complete (04-01 backend + 04-02 UI) |
 | SETT-04 | Phase 5 | Pending |
 | UX-01 | Phase 2 | Complete |
 | UX-02 | Phase 2 | Complete |
@@ -145,4 +145,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-22*
-*Last updated: 2026-02-24 after 04-01 persistence backend — SETT-01, SETT-02, SETT-03 complete (backend wired; UI in 04-02)*
+*Last updated: 2026-02-24 after 04-02 settings UI — SETT-01, SETT-02, SETT-03 fully verified end-to-end (backend 04-01 + UI 04-02)*

@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-22)
 ## Current Position
 
 Phase: 4 of 5 (Settings + Persistence) — IN PROGRESS
-Plan: 2 of 3 in current phase (plan 04-02 task 1 complete, paused at checkpoint:human-verify)
-Status: Plan 04-02 task 1 committed (d16fe12) — settingsState store added, App.svelte loads settings on mount, SettingsMode.svelte fully implemented, auto-open gated in ResultsSummary + ConvertMode, SplitMode + ConvertMode persist and restore last-used values. Awaiting human verify.
-Last activity: 2026-02-24 — Plan 04-02 task 1: settingsState reactive store, full SettingsMode UI, per-mode persistence for Split + Convert, auto-open gated by toggle
+Plan: 3 of 3 in current phase (plan 04-02 complete — human-verify approved)
+Status: Plan 04-02 complete — settingsState store, full SettingsMode UI, auto-open gated in ResultsSummary + ConvertMode, SplitMode + ConvertMode persist and restore last-used values. All SETT-01–03 verified. Ready for plan 04-03 (auto-update scaffold).
+Last activity: 2026-02-24 — Plan 04-02 complete: settings UI, per-mode persistence, auto-open toggle, version display — all verified end-to-end
 
 Progress: [█████████░] 90%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: ~4.6 min
-- Total execution time: ~0.59 hours
+- Total plans completed: 9
+- Average duration: ~4.5 min
+- Total execution time: ~0.67 hours
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [█████████░] 90%
 | 01-electron-foundation | 3 | ~21 min | ~7 min |
 | 02-core-pdf-operations | 4 | ~13 min | ~3.3 min |
 | 03-convert-to-images-review | 2 | ~8 min | ~4 min |
-| 04-settings-persistence | 1 | ~2 min | ~2 min |
+| 04-settings-persistence | 2 | ~7 min | ~3.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 2 min, 6 min, 2 min, ~15 min, ~3 min
+- Last 5 plans: 2 min, 6 min, 2 min, ~15 min, ~5 min
 - Trend: Accelerating
 
 *Updated after each plan completion*
@@ -80,6 +80,9 @@ Recent decisions affecting current work:
 - [04-01]: electron-conf Conf instances declared at module scope outside app.whenReady() — single shared instance accessible from all IPC handlers without closure coupling
 - [04-01]: getOutputBase() reads settings.get('outputPath') at call time (not cached) — always reflects live user preference without restart
 - [04-01]: settings:set accepts Partial<AppSettings> patch — live-save UI pattern can write individual fields without a full settings object
+- [04-02]: settingsState exported as $state object (not primitives) — Svelte 5 exported $state primitives are read-only from importers; object reference allows mutations to propagate across components
+- [04-02]: auto-open gated in both ResultsSummary and ConvertMode — both code paths need the guard; manual Open Folder button always available regardless of toggle
+- [04-02]: per-mode persistence uses onMount load + execute() save — transparent to user; last-used values silently restored each launch without dedicated UI
 
 ### Pending Todos
 
@@ -93,5 +96,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Plan 04-02 checkpoint:human-verify — task 1 complete (d16fe12), awaiting end-to-end verification of Settings UI, auto-open toggle, per-mode persistence (Split + Convert), and version display. Run `npm run dev` and follow verification steps in 04-02-PLAN.md task 2.
+Stopped at: Plan 04-02 complete (human-verify approved). Next: plan 04-03 — auto-update scaffold (SETT-04).
 Resume file: None
