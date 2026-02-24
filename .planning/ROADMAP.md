@@ -90,10 +90,10 @@ Plans:
 
 **Goal:** Add a README.md that documents prerequisites and exact steps to clone, install, and run PDF Chisel in development on Windows
 **Depends on:** Phase 4
-**Plans:** 0 plans
+**Plans:** 1 plan
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 04.1 to break down)
+- [ ] 04.1-01-PLAN.md — Write README.md with prerequisites, clone/install, dev mode, and build commands
 
 ### Phase 5: Distribution + Auto-Update
 **Goal**: PDF Chisel ships as a code-signed Windows NSIS installer via GitHub Releases and silently auto-updates itself when new versions are published
