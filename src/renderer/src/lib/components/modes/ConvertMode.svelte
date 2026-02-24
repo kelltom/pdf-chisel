@@ -284,6 +284,7 @@
     <div class="review-container">
       <div class="review-header">
         <span class="review-position">{currentIndex + 1} / {outputFiles.length}</span>
+        <button class="btn btn-secondary btn-close-review" onclick={closeReview}>Close</button>
       </div>
 
       <div class="review-image-area">
@@ -529,6 +530,8 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+    max-height: 280px;
+    overflow-y: auto;
   }
 
   .file-item {
@@ -641,9 +644,14 @@
   .review-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 12px 20px;
     flex-shrink: 0;
+  }
+
+  .btn-close-review {
+    padding: 4px 12px;
+    font-size: 0.8125rem;
   }
 
   .review-position {
