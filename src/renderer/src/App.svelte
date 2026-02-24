@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { appState } from './lib/stores/app.svelte.ts'
+  import { onMount } from 'svelte'
+  import { appState, settingsState } from './lib/stores/app.svelte.ts'
   import AppBar from './lib/components/AppBar.svelte'
   import NavRail from './lib/components/NavRail.svelte'
   import ExtractMode from './lib/components/modes/ExtractMode.svelte'
@@ -7,6 +8,13 @@
   import ConvertMode from './lib/components/modes/ConvertMode.svelte'
   import MergeMode from './lib/components/modes/MergeMode.svelte'
   import SettingsMode from './lib/components/modes/SettingsMode.svelte'
+
+  onMount(async () => {
+    const s = await window.api.getSettings()
+    settingsState.outputPath = s.outputPath
+    settingsState.autoOpen = s.autoOpen
+    settingsState.appVersion = await window.api.getAppVersion()
+  })
 </script>
 
 <div class="shell">

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { settingsState } from '../stores/app.svelte.ts'
+
   interface OperationResult {
     outputFiles?: string[]
     outputFolder?: string
@@ -13,9 +15,9 @@
     onReset: () => void
   } = $props()
 
-  // Auto-open output folder on success (Phase 2 always auto-opens; toggle added in Phase 4 via SETT-02)
+  // Auto-open output folder on success — gated by user's auto-open setting (SETT-02)
   $effect(() => {
-    if (result?.outputFolder && !result.error) {
+    if (result?.outputFolder && !result.error && settingsState.autoOpen) {
       window.api.openOutputFolder(result.outputFolder)
     }
   })

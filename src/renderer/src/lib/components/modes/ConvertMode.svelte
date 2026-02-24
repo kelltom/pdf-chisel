@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte'
-  import { appState } from '../../stores/app.svelte.ts'
+  import { onMount, onDestroy } from 'svelte'
+  import { appState, settingsState } from '../../stores/app.svelte.ts'
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
   import ProgressSpinner from '../ProgressSpinner.svelte'
@@ -61,6 +61,9 @@
     conversionError = null
     hasConversionResult = false
 
+    // Persist last-used convert settings silently
+    await window.api.setConvertState({ format, dpi })
+
     try {
       const folder = await window.api.makeConvertOutputFolder()
       outputFolder = folder
@@ -90,8 +93,10 @@
       }
 
       hasConversionResult = true
-      // Auto-open output folder (matches Phase 2 ResultsSummary behavior)
-      window.api.openOutputFolder(folder)
+      // Auto-open output folder — gated by user's auto-open setting (SETT-02)
+      if (settingsState.autoOpen) {
+        window.api.openOutputFolder(folder)
+      }
     } catch (err) {
       conversionError = {
         cause: err instanceof Error ? err.message : String(err),
@@ -159,6 +164,12 @@
     isFlashing = false
     imageLoadError = false
   }
+
+  onMount(async () => {
+    const saved = await window.api.getConvertState()
+    format = saved.format
+    dpi = saved.dpi
+  })
 
   onDestroy(() => {
     if (isConverting) appState.isProcessing = false

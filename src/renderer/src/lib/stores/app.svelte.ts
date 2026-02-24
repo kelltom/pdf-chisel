@@ -12,3 +12,9 @@ export const appState = $state({
   currentFile: null as FileInfo | null,
   isProcessing: false,
 })
+
+export const settingsState = $state({
+  outputPath: '',
+  autoOpen: false,
+  appVersion: '',
+})

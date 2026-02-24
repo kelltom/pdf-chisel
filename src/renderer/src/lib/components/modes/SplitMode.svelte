@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import { appState } from '../../stores/app.svelte.ts'
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
@@ -22,6 +22,12 @@
     }
   })
 
+  onMount(async () => {
+    const saved = await window.api.getSplitState()
+    splitMode = saved.mode
+    splitValue = saved.value
+  })
+
   let cleanupProgress: (() => void) | null = null
 
   async function execute() {
@@ -29,6 +35,9 @@
     appState.isProcessing = true
     isProcessing = true
     operationResult = null
+
+    // Persist last-used split settings silently
+    await window.api.setSplitState({ mode: splitMode, value: splitValue })
 
     cleanupProgress = window.api.onProgress((_data) => { /* indeterminate only */ })
 
