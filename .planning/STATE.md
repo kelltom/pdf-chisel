@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-02-22)
 ## Current Position
 
 Phase: 4 of 5 (Settings + Persistence) — IN PROGRESS
-Plan: 1 of 3 in current phase (plan 04-01 complete)
-Status: Plan 04-01 complete — electron-conf persistence backend wired: two typed Conf stores, getOutputBase() output-path abstraction, 8 new IPC channels + preload bindings. SETT-01, SETT-02, SETT-03 complete.
-Last activity: 2026-02-24 — Plan 04-01 complete: electron-conf installed, settings + feature-state stores, getOutputBase() replaces 4 hardcoded paths, 8 IPC handlers added
+Plan: 2 of 3 in current phase (plan 04-02 task 1 complete, paused at checkpoint:human-verify)
+Status: Plan 04-02 task 1 committed (d16fe12) — settingsState store added, App.svelte loads settings on mount, SettingsMode.svelte fully implemented, auto-open gated in ResultsSummary + ConvertMode, SplitMode + ConvertMode persist and restore last-used values. Awaiting human verify.
+Last activity: 2026-02-24 — Plan 04-02 task 1: settingsState reactive store, full SettingsMode UI, per-mode persistence for Split + Convert, auto-open gated by toggle
 
 Progress: [█████████░] 90%
 
@@ -93,5 +93,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 04-settings-persistence plan 01 — electron-conf persistence backend: two typed Conf stores, getOutputBase() output-path abstraction, 8 new IPC channels (settings:get/set/browse-folder, app:get-version, feature-state:get/set-split, feature-state:get/set-convert) with full preload bindings. Ready for Plan 04-02: Settings UI.
+Stopped at: Plan 04-02 checkpoint:human-verify — task 1 complete (d16fe12), awaiting end-to-end verification of Settings UI, auto-open toggle, per-mode persistence (Split + Convert), and version display. Run `npm run dev` and follow verification steps in 04-02-PLAN.md task 2.
 Resume file: None
