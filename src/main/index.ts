@@ -4,6 +4,33 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { readFile } from 'fs/promises'
 import { PDFDocument } from 'pdf-lib'
 import createPdfWorker from './workers/pdf-worker?nodeWorker'
+import { Conf } from 'electron-conf/main'
+
+interface AppSettings {
+  outputPath: string
+  autoOpen: boolean
+}
+
+interface FeatureState {
+  split: { mode: 'parts' | 'maxPages'; value: number }
+  convert: { format: 'png' | 'jpeg'; dpi: number }
+}
+
+const settings = new Conf<AppSettings>({
+  name: 'settings',
+  defaults: {
+    outputPath: '',   // empty = use ~/Documents/PDF Chisel at runtime
+    autoOpen: false,
+  }
+})
+
+const featureState = new Conf<FeatureState>({
+  name: 'feature-state',
+  defaults: {
+    split: { mode: 'parts', value: 2 },
+    convert: { format: 'png', dpi: 96 },
+  }
+})
 
 function createWindow(): BrowserWindow {
   const mainWindow = new BrowserWindow({
@@ -58,6 +85,13 @@ function makeOutputFolder(baseDir: string, mode: string): string {
   return join(baseDir, `${ts}-${mode}`)
 }
 
+function getOutputBase(): string {
+  const stored = settings.get('outputPath')
+  return stored && stored.length > 0
+    ? stored
+    : join(app.getPath('documents'), 'PDF Chisel')
+}
+
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.pdfchisel')
 
@@ -108,7 +142,7 @@ app.whenReady().then(() => {
 
   // EXTR-02: Extract pages operation — spawns Worker Thread
   ipcMain.handle('pdf:extract', async (event, args) => {
-    const baseDir = join(app.getPath('documents'), 'PDF Chisel')
+    const baseDir = getOutputBase()
     const outputFolder = makeOutputFolder(baseDir, 'extract')
     return new Promise((resolve) => {
       const worker = createPdfWorker({ workerData: { ...args, outputFolder } })
@@ -124,7 +158,7 @@ app.whenReady().then(() => {
 
   // SPLT-03: Split PDF operation — spawns Worker Thread
   ipcMain.handle('pdf:split', async (event, args) => {
-    const baseDir = join(app.getPath('documents'), 'PDF Chisel')
+    const baseDir = getOutputBase()
     const outputFolder = makeOutputFolder(baseDir, 'split')
     return new Promise((resolve) => {
       const worker = createPdfWorker({ workerData: { ...args, outputFolder } })
@@ -140,7 +174,7 @@ app.whenReady().then(() => {
 
   // MERG-03: Merge PDFs operation — spawns Worker Thread
   ipcMain.handle('pdf:merge', async (event, args) => {
-    const baseDir = join(app.getPath('documents'), 'PDF Chisel')
+    const baseDir = getOutputBase()
     const outputFolder = makeOutputFolder(baseDir, 'merge')
     return new Promise((resolve) => {
       const worker = createPdfWorker({ workerData: { ...args, outputFolder } })
@@ -200,7 +234,7 @@ app.whenReady().then(() => {
   // Pattern matches other modes: {documents}/PDF Chisel/{timestamp}-convert/
   ipcMain.handle('pdf:make-convert-folder', async () => {
     const { mkdir: mkdirConv } = await import('fs/promises')
-    const baseDir = join(app.getPath('documents'), 'PDF Chisel')
+    const baseDir = getOutputBase()
     const outputFolder = makeOutputFolder(baseDir, 'convert')
     await mkdirConv(outputFolder, { recursive: true })
     return outputFolder
@@ -215,6 +249,40 @@ app.whenReady().then(() => {
     const buffer = await readFileClip(filePath)
     const image = nativeImage.createFromBuffer(buffer)
     clipboard.writeImage(image)
+  })
+
+  // SETT-01: Get all settings as one object
+  ipcMain.handle('settings:get', () => settings.store)
+
+  // SETT-01: Patch settings (partial update — only keys present in patch are written)
+  ipcMain.handle('settings:set', (_event, patch: Partial<AppSettings>) => {
+    settings.set(patch)
+  })
+
+  // SETT-01: Native folder picker for Browse button
+  ipcMain.handle('settings:browse-folder', async () => {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      title: 'Select Output Folder',
+      defaultPath: settings.get('outputPath') || app.getPath('documents'),
+      properties: ['openDirectory'],
+    })
+    if (canceled || filePaths.length === 0) return null
+    return filePaths[0]
+  })
+
+  // SETT-03: App version from package.json (works in dev and production)
+  ipcMain.handle('app:get-version', () => app.getVersion())
+
+  // Per-mode feature state (Split)
+  ipcMain.handle('feature-state:get-split', () => featureState.get('split'))
+  ipcMain.handle('feature-state:set-split', (_event, val: { mode: 'parts' | 'maxPages'; value: number }) => {
+    featureState.set('split', val)
+  })
+
+  // Per-mode feature state (Convert)
+  ipcMain.handle('feature-state:get-convert', () => featureState.get('convert'))
+  ipcMain.handle('feature-state:set-convert', (_event, val: { format: 'png' | 'jpeg'; dpi: number }) => {
+    featureState.set('convert', val)
   })
 
   app.on('activate', function () {

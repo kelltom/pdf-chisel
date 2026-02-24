@@ -75,6 +75,34 @@ const api = {
   // REVW-03: Copy image at filePath to system clipboard
   copyImageToClipboard: (filePath: string): Promise<void> =>
     ipcRenderer.invoke('clipboard:write-image', filePath),
+
+  // SETT-01: Read all persisted settings
+  getSettings: (): Promise<{ outputPath: string; autoOpen: boolean }> =>
+    ipcRenderer.invoke('settings:get'),
+
+  // SETT-01: Write a partial settings update (live-save pattern)
+  setSettings: (patch: Partial<{ outputPath: string; autoOpen: boolean }>): Promise<void> =>
+    ipcRenderer.invoke('settings:set', patch),
+
+  // SETT-01: Native folder picker dialog; returns path string or null if cancelled
+  browseFolder: (): Promise<string | null> =>
+    ipcRenderer.invoke('settings:browse-folder'),
+
+  // SETT-03: Returns version string from package.json (e.g. "1.0.0")
+  getAppVersion: (): Promise<string> =>
+    ipcRenderer.invoke('app:get-version'),
+
+  // Per-mode Split persistence
+  getSplitState: (): Promise<{ mode: 'parts' | 'maxPages'; value: number }> =>
+    ipcRenderer.invoke('feature-state:get-split'),
+  setSplitState: (val: { mode: 'parts' | 'maxPages'; value: number }): Promise<void> =>
+    ipcRenderer.invoke('feature-state:set-split', val),
+
+  // Per-mode Convert persistence
+  getConvertState: (): Promise<{ format: 'png' | 'jpeg'; dpi: number }> =>
+    ipcRenderer.invoke('feature-state:get-convert'),
+  setConvertState: (val: { format: 'png' | 'jpeg'; dpi: number }): Promise<void> =>
+    ipcRenderer.invoke('feature-state:set-convert', val),
 }
 
 // Honor contextIsolation setting: expose via contextBridge if isolated, fall back otherwise.
