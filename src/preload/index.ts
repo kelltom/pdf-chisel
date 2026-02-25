@@ -16,14 +16,12 @@ export interface OperationResult {
 
 const api = {
   // FILE-01: Open native file dialog filtered to PDF files
-  openPdf: (): Promise<PdfFileInfo | null> =>
-    ipcRenderer.invoke('dialog:open-pdf'),
+  openPdf: (): Promise<PdfFileInfo | null> => ipcRenderer.invoke('dialog:open-pdf'),
 
   // FILE-02: Resolve a dragged File object to an absolute path.
   // MUST be called in preload — webUtils.getPathForFile is not available in the renderer.
   // File.path was removed in Electron 32; this is the only correct approach on Electron 34.
-  getPathForFile: (file: File): string =>
-    webUtils.getPathForFile(file),
+  getPathForFile: (file: File): string => webUtils.getPathForFile(file),
 
   // FILE-01/02/03: Get PDF metadata for a known file path.
   // Used by drag-drop flow (path from getPathForFile) and could be used to refresh metadata.
@@ -33,20 +31,25 @@ const api = {
   // Phase 2: PDF operations
 
   // EXTR-02: Extract selected pages to a new PDF
-  extractPages: (args: { operation: 'extract'; filePath: string; params: { pageIndices: number[] } }): Promise<OperationResult> =>
-    ipcRenderer.invoke('pdf:extract', args),
+  extractPages: (args: {
+    operation: 'extract'
+    filePath: string
+    params: { pageIndices: number[] }
+  }): Promise<OperationResult> => ipcRenderer.invoke('pdf:extract', args),
 
   // SPLT-03: Split PDF into parts or by max pages per chunk
-  splitPdf: (args: { operation: 'split'; filePath: string; params: { splitMode: 'parts' | 'maxPages'; splitValue: number } }): Promise<OperationResult> =>
-    ipcRenderer.invoke('pdf:split', args),
+  splitPdf: (args: {
+    operation: 'split'
+    filePath: string
+    params: { splitMode: 'parts' | 'maxPages'; splitValue: number }
+  }): Promise<OperationResult> => ipcRenderer.invoke('pdf:split', args),
 
   // MERG-03: Merge multiple PDFs into one
   mergePdfs: (args: { operation: 'merge'; filePaths: string[] }): Promise<OperationResult> =>
     ipcRenderer.invoke('pdf:merge', args),
 
   // MERG-03: Open multi-file PDF picker dialog
-  openPdfsDialog: (): Promise<string[]> =>
-    ipcRenderer.invoke('dialog:open-pdfs-multi'),
+  openPdfsDialog: (): Promise<string[]> => ipcRenderer.invoke('dialog:open-pdfs-multi'),
 
   // OUTP-03: Open output folder in Windows Explorer
   openOutputFolder: (folderPath: string): Promise<void> =>
@@ -55,7 +58,8 @@ const api = {
   // UX-01/02: Subscribe to progress events from Worker Thread.
   // Returns cleanup function — MUST be called in Svelte onDestroy to prevent listener accumulation.
   onProgress: (callback: (data: { type: string; step: string }) => void): (() => void) => {
-    const handler = (_event: Electron.IpcRendererEvent, data: { type: string; step: string }) => callback(data)
+    const handler = (_event: Electron.IpcRendererEvent, data: { type: string; step: string }) =>
+      callback(data)
     ipcRenderer.on('pdf:progress', handler)
     return () => ipcRenderer.removeListener('pdf:progress', handler)
   },
@@ -65,12 +69,14 @@ const api = {
     ipcRenderer.invoke('file:read-bytes', filePath),
 
   // CONV-03: Create timestamped convert output folder; returns absolute folder path
-  makeConvertOutputFolder: (): Promise<string> =>
-    ipcRenderer.invoke('pdf:make-convert-folder'),
+  makeConvertOutputFolder: (): Promise<string> => ipcRenderer.invoke('pdf:make-convert-folder'),
 
   // CONV-03: Write rendered image data URL to disk; returns absolute file path
-  writeImageFile: (args: { dataUrl: string; outputFolder: string; fileName: string }): Promise<string> =>
-    ipcRenderer.invoke('pdf:write-image', args),
+  writeImageFile: (args: {
+    dataUrl: string
+    outputFolder: string
+    fileName: string
+  }): Promise<string> => ipcRenderer.invoke('pdf:write-image', args),
 
   // REVW-03: Copy image at filePath to system clipboard
   copyImageToClipboard: (filePath: string): Promise<void> =>
@@ -85,12 +91,10 @@ const api = {
     ipcRenderer.invoke('settings:set', patch),
 
   // SETT-01: Native folder picker dialog; returns path string or null if cancelled
-  browseFolder: (): Promise<string | null> =>
-    ipcRenderer.invoke('settings:browse-folder'),
+  browseFolder: (): Promise<string | null> => ipcRenderer.invoke('settings:browse-folder'),
 
   // SETT-03: Returns version string from package.json (e.g. "1.0.0")
-  getAppVersion: (): Promise<string> =>
-    ipcRenderer.invoke('app:get-version'),
+  getAppVersion: (): Promise<string> => ipcRenderer.invoke('app:get-version'),
 
   // Per-mode Split persistence
   getSplitState: (): Promise<{ mode: 'parts' | 'maxPages'; value: number }> =>
@@ -102,7 +106,7 @@ const api = {
   getConvertState: (): Promise<{ format: 'png' | 'jpeg'; dpi: number }> =>
     ipcRenderer.invoke('feature-state:get-convert'),
   setConvertState: (val: { format: 'png' | 'jpeg'; dpi: number }): Promise<void> =>
-    ipcRenderer.invoke('feature-state:set-convert', val),
+    ipcRenderer.invoke('feature-state:set-convert', val)
 }
 
 // Honor contextIsolation setting: expose via contextBridge if isolated, fall back otherwise.
@@ -117,6 +121,6 @@ if (process.contextIsolated) {
 } else {
   // @ts-ignore (fallback for non-isolated contexts — should not occur in this app)
   window.electron = electronAPI
-  // @ts-ignore
+  // @ts-ignore (fallback for non-isolated contexts — should not occur in this app)
   window.api = api
 }

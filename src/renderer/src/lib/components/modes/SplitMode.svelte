@@ -34,7 +34,9 @@
     // Persist last-used split settings silently
     await window.api.setSplitState({ mode: splitMode, value: splitValue })
 
-    cleanupProgress = window.api.onProgress((_data) => { /* indeterminate only */ })
+    cleanupProgress = window.api.onProgress((_data) => {
+      /* indeterminate only */
+    })
 
     const result = await window.api.splitPdf({
       operation: 'split',
@@ -58,7 +60,7 @@
     splitMode = 'parts'
     splitValue = 2
     operationResult = null
-    appState.currentFile = null  // Reset unloads the file — returns to blank state (Phase 5 decision)
+    appState.currentFile = null // Reset unloads the file — returns to blank state (Phase 5 decision)
   }
 
   function clampSplitValue() {
@@ -73,58 +75,64 @@
   <h1 class="mode-title">Split PDF</h1>
 
   <OperationLayout {isProcessing} result={operationResult}>
-  {#snippet inputs()}
-    <FileInput />
-    <div class="split-controls">
-      <div class="mode-selector" role="group" aria-label="Split mode">
-        <button
-          class="mode-btn"
-          class:active={splitMode === 'parts'}
-          onclick={() => { splitMode = 'parts'; if (splitValue < 2) splitValue = 2 }}
-          disabled={isProcessing}
-          aria-pressed={splitMode === 'parts'}
-        >
-          By number of parts
-        </button>
-        <button
-          class="mode-btn"
-          class:active={splitMode === 'maxPages'}
-          onclick={() => { splitMode = 'maxPages'; if (splitValue < 1) splitValue = 1 }}
-          disabled={isProcessing}
-          aria-pressed={splitMode === 'maxPages'}
-        >
-          Max pages per file
-        </button>
-      </div>
+    {#snippet inputs()}
+      <FileInput />
+      <div class="split-controls">
+        <div class="mode-selector" role="group" aria-label="Split mode">
+          <button
+            class="mode-btn"
+            class:active={splitMode === 'parts'}
+            onclick={() => {
+              splitMode = 'parts'
+              if (splitValue < 2) splitValue = 2
+            }}
+            disabled={isProcessing}
+            aria-pressed={splitMode === 'parts'}
+          >
+            By number of parts
+          </button>
+          <button
+            class="mode-btn"
+            class:active={splitMode === 'maxPages'}
+            onclick={() => {
+              splitMode = 'maxPages'
+              if (splitValue < 1) splitValue = 1
+            }}
+            disabled={isProcessing}
+            aria-pressed={splitMode === 'maxPages'}
+          >
+            Max pages per file
+          </button>
+        </div>
 
-      <div class="field">
-        <label class="field-label" for="split-value">
-          {splitMode === 'parts' ? 'Number of parts' : 'Max pages per file'}
-        </label>
-        <input
-          id="split-value"
-          class="number-input"
-          type="number"
-          min={splitMode === 'parts' ? 2 : 1}
-          step="1"
-          bind:value={splitValue}
-          onblur={clampSplitValue}
-          disabled={isProcessing}
-        />
+        <div class="field">
+          <label class="field-label" for="split-value">
+            {splitMode === 'parts' ? 'Number of parts' : 'Max pages per file'}
+          </label>
+          <input
+            id="split-value"
+            class="number-input"
+            type="number"
+            min={splitMode === 'parts' ? 2 : 1}
+            step="1"
+            bind:value={splitValue}
+            onblur={clampSplitValue}
+            disabled={isProcessing}
+          />
+        </div>
       </div>
-    </div>
-  {/snippet}
+    {/snippet}
 
-  {#snippet actions()}
-    <button
-      class="btn-primary"
-      onclick={execute}
-      disabled={isProcessing || !appState.currentFile || splitValue < 1}
-    >
-      Split
-    </button>
-    <button class="btn-reset" onclick={reset}>Reset</button>
-  {/snippet}
+    {#snippet actions()}
+      <button
+        class="btn-primary"
+        onclick={execute}
+        disabled={isProcessing || !appState.currentFile || splitValue < 1}
+      >
+        Split
+      </button>
+      <button class="btn-reset" onclick={reset}>Reset</button>
+    {/snippet}
   </OperationLayout>
 </div>
 
@@ -196,7 +204,9 @@
     background: var(--color-surface);
     color: var(--color-text-muted);
     border: 1px solid var(--color-surface-2);
-    transition: color 0.15s, border-color 0.15s;
+    transition:
+      color 0.15s,
+      border-color 0.15s;
   }
 
   .btn-reset:hover {

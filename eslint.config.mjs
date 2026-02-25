@@ -8,7 +8,7 @@ export default defineConfig(
   tseslint.configs.recommended,
   eslintPluginSvelte.configs['flat/recommended'],
   {
-    files: ['**/*.svelte'],
+    files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
     languageOptions: {
       parserOptions: {
         parser: tseslint.parser
@@ -16,8 +16,17 @@ export default defineConfig(
     }
   },
   {
-    files: ['**/*.{tsx,svelte}'],
+    files: ['**/*.{ts,tsx,svelte,svelte.ts,svelte.js}'],
     rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_'
+        }
+      ],
+      'svelte/no-at-html-tags': 'off',
       'svelte/no-unused-svelte-ignore': 'off'
     }
   },

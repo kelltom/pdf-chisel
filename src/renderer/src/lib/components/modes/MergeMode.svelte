@@ -24,7 +24,7 @@
 
   async function addFiles() {
     const paths = await window.api.openPdfsDialog()
-    const newItems: FileItem[] = paths.map(p => ({
+    const newItems: FileItem[] = paths.map((p) => ({
       id: crypto.randomUUID(),
       filePath: p,
       fileName: p.split(/[\\/]/).pop() ?? p
@@ -33,7 +33,7 @@
   }
 
   function removeFile(id: string) {
-    files = files.filter(f => f.id !== id)
+    files = files.filter((f) => f.id !== id)
   }
 
   function reset() {
@@ -66,8 +66,8 @@
     e.preventDefault()
     isDragOver = false
     const droppedFiles = Array.from(e.dataTransfer?.files ?? [])
-    const pdfFiles = droppedFiles.filter(f => f.name.toLowerCase().endsWith('.pdf'))
-    const newItems: FileItem[] = pdfFiles.map(f => ({
+    const pdfFiles = droppedFiles.filter((f) => f.name.toLowerCase().endsWith('.pdf'))
+    const newItems: FileItem[] = pdfFiles.map((f) => ({
       id: crypto.randomUUID(),
       filePath: window.api.getPathForFile(f),
       fileName: f.name
@@ -85,11 +85,13 @@
     isProcessing = true
     operationResult = null
 
-    cleanupProgress = window.api.onProgress((_data) => { /* indeterminate only */ })
+    cleanupProgress = window.api.onProgress((_data) => {
+      /* indeterminate only */
+    })
 
     const result = await window.api.mergePdfs({
       operation: 'merge',
-      filePaths: files.map(f => f.filePath)
+      filePaths: files.map((f) => f.filePath)
     })
 
     cleanupProgress?.()
@@ -109,58 +111,59 @@
   <h1 class="mode-title">Merge PDFs</h1>
 
   <OperationLayout {isProcessing} result={operationResult}>
-  {#snippet inputs()}
-    <div class="merge-inputs">
-      <button onclick={addFiles} disabled={isProcessing} class="btn-secondary">
-        Add Files
-      </button>
+    {#snippet inputs()}
+      <div class="merge-inputs">
+        <button onclick={addFiles} disabled={isProcessing} class="btn-secondary">
+          Add Files
+        </button>
 
-      <div
-        class="file-list-container"
-        class:drag-over={isDragOver}
-        ondragover={(e) => { e.preventDefault(); isDragOver = true }}
-        ondragleave={() => { isDragOver = false }}
-        ondrop={onDropZone}
-      >
-        {#if files.length === 0}
-          <p class="empty-hint">No files added. Click "Add Files" or drop PDFs here.</p>
-        {:else}
-          <ol class="file-list">
-            {#each files as file, i (file.id)}
-              <li
-                class="file-item"
-                class:dragging={dragIndex === i}
-                draggable="true"
-                ondragstart={() => ondragstart(i)}
-                ondragover={(e) => ondragover(e, i)}
-                ondragend={ondragend}
-              >
-                <span class="drag-handle" aria-hidden="true">⠿</span>
-                <span class="file-name">{file.fileName}</span>
-                <button
-                  class="remove-btn"
-                  onclick={() => removeFile(file.id)}
-                  disabled={isProcessing}
-                  aria-label="Remove {file.fileName}"
-                >×</button>
-              </li>
-            {/each}
-          </ol>
-        {/if}
+        <div
+          class="file-list-container"
+          class:drag-over={isDragOver}
+          ondragover={(e) => {
+            e.preventDefault()
+            isDragOver = true
+          }}
+          ondragleave={() => {
+            isDragOver = false
+          }}
+          ondrop={onDropZone}
+        >
+          {#if files.length === 0}
+            <p class="empty-hint">No files added. Click "Add Files" or drop PDFs here.</p>
+          {:else}
+            <ol class="file-list">
+              {#each files as file, i (file.id)}
+                <li
+                  class="file-item"
+                  class:dragging={dragIndex === i}
+                  draggable="true"
+                  ondragstart={() => ondragstart(i)}
+                  ondragover={(e) => ondragover(e, i)}
+                  {ondragend}
+                >
+                  <span class="drag-handle" aria-hidden="true">⠿</span>
+                  <span class="file-name">{file.fileName}</span>
+                  <button
+                    class="remove-btn"
+                    onclick={() => removeFile(file.id)}
+                    disabled={isProcessing}
+                    aria-label="Remove {file.fileName}">×</button
+                  >
+                </li>
+              {/each}
+            </ol>
+          {/if}
+        </div>
       </div>
-    </div>
-  {/snippet}
+    {/snippet}
 
-  {#snippet actions()}
-    <button
-      onclick={execute}
-      disabled={isProcessing || files.length < 2}
-      class="btn-primary"
-    >
-      Merge
-    </button>
-    <button class="btn-reset" onclick={reset}>Reset</button>
-  {/snippet}
+    {#snippet actions()}
+      <button onclick={execute} disabled={isProcessing || files.length < 2} class="btn-primary">
+        Merge
+      </button>
+      <button class="btn-reset" onclick={reset}>Reset</button>
+    {/snippet}
   </OperationLayout>
 </div>
 
@@ -185,7 +188,9 @@
     color: var(--color-text);
     font-size: 0.875rem;
     font-weight: 500;
-    transition: background 0.15s, opacity 0.15s;
+    transition:
+      background 0.15s,
+      opacity 0.15s;
   }
 
   .btn-secondary:hover:not(:disabled) {
@@ -208,7 +213,9 @@
     background: var(--color-surface);
     color: var(--color-text-muted);
     border: 1px solid var(--color-surface-2);
-    transition: color 0.15s, border-color 0.15s;
+    transition:
+      color 0.15s,
+      border-color 0.15s;
   }
 
   .btn-reset:hover {
@@ -221,7 +228,9 @@
     border: 2px dashed var(--color-surface-2);
     border-radius: 8px;
     padding: 8px;
-    transition: border-color 0.15s, background 0.15s;
+    transition:
+      border-color 0.15s,
+      background 0.15s;
   }
 
   .file-list-container.drag-over {
@@ -258,7 +267,10 @@
     border: 1px solid transparent;
     cursor: grab;
     user-select: none;
-    transition: background 0.1s, border-color 0.1s, opacity 0.1s;
+    transition:
+      background 0.1s,
+      border-color 0.1s,
+      opacity 0.1s;
   }
 
   .file-item:hover {
@@ -304,7 +316,9 @@
     color: var(--color-text-muted);
     font-size: 1rem;
     line-height: 1;
-    transition: color 0.1s, background 0.1s;
+    transition:
+      color 0.1s,
+      background 0.1s;
   }
 
   .remove-btn:hover:not(:disabled) {

@@ -19,8 +19,8 @@ interface FeatureState {
 const settings = new Conf<AppSettings>({
   name: 'settings',
   defaults: {
-    outputPath: '',   // empty = use ~/Documents/PDF Chisel at runtime
-    autoOpen: false,
+    outputPath: '', // empty = use ~/Documents/PDF Chisel at runtime
+    autoOpen: false
   }
 })
 
@@ -28,7 +28,7 @@ const featureState = new Conf<FeatureState>({
   name: 'feature-state',
   defaults: {
     split: { mode: 'parts', value: 2 },
-    convert: { format: 'png', dpi: 96 },
+    convert: { format: 'png', dpi: 96 }
   }
 })
 
@@ -48,9 +48,9 @@ function createWindow(): BrowserWindow {
     },
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,          // Required for @electron-toolkit/preload
-      contextIsolation: true,  // Default since Electron 12; explicit for security audit
-      nodeIntegration: false   // Default since Electron 5; explicit for security audit
+      sandbox: false, // Required for @electron-toolkit/preload
+      contextIsolation: true, // Default since Electron 12; explicit for security audit
+      nodeIntegration: false // Default since Electron 5; explicit for security audit
     }
   })
 
@@ -87,9 +87,7 @@ function makeOutputFolder(baseDir: string, mode: string): string {
 
 function getOutputBase(): string {
   const stored = settings.get('outputPath')
-  return stored && stored.length > 0
-    ? stored
-    : join(app.getPath('documents'), 'PDF Chisel')
+  return stored && stored.length > 0 ? stored : join(app.getPath('documents'), 'PDF Chisel')
 }
 
 app.whenReady().then(() => {
@@ -120,7 +118,12 @@ app.whenReady().then(() => {
         pageCount: doc.getPageCount()
       }
     } catch (err) {
-      return { filePath: filePaths[0], fileName: filePaths[0].split(/[\\/]/).pop() ?? filePaths[0], pageCount: 0, error: String(err) }
+      return {
+        filePath: filePaths[0],
+        fileName: filePaths[0].split(/[\\/]/).pop() ?? filePaths[0],
+        pageCount: 0,
+        error: String(err)
+      }
     }
   })
 
@@ -136,7 +139,12 @@ app.whenReady().then(() => {
         pageCount: doc.getPageCount()
       }
     } catch (err) {
-      return { filePath, fileName: filePath.split(/[\\/]/).pop() ?? filePath, pageCount: 0, error: String(err) }
+      return {
+        filePath,
+        fileName: filePath.split(/[\\/]/).pop() ?? filePath,
+        pageCount: 0,
+        error: String(err)
+      }
     }
   })
 
@@ -151,8 +159,13 @@ app.whenReady().then(() => {
         else if (msg.type === 'complete') resolve(msg.result)
         else if (msg.type === 'error') resolve({ error: msg.error })
       })
-      worker.on('error', (err) => resolve({ error: { cause: err.message, fix: 'Try a different PDF file.' } }))
-      worker.on('exit', (code) => { if (code !== 0) resolve({ error: { cause: `Worker exited with code ${code}`, fix: 'Restart the app.' } }) })
+      worker.on('error', (err) =>
+        resolve({ error: { cause: err.message, fix: 'Try a different PDF file.' } })
+      )
+      worker.on('exit', (code) => {
+        if (code !== 0)
+          resolve({ error: { cause: `Worker exited with code ${code}`, fix: 'Restart the app.' } })
+      })
     })
   })
 
@@ -167,8 +180,13 @@ app.whenReady().then(() => {
         else if (msg.type === 'complete') resolve(msg.result)
         else if (msg.type === 'error') resolve({ error: msg.error })
       })
-      worker.on('error', (err) => resolve({ error: { cause: err.message, fix: 'Try a different PDF file.' } }))
-      worker.on('exit', (code) => { if (code !== 0) resolve({ error: { cause: `Worker exited with code ${code}`, fix: 'Restart the app.' } }) })
+      worker.on('error', (err) =>
+        resolve({ error: { cause: err.message, fix: 'Try a different PDF file.' } })
+      )
+      worker.on('exit', (code) => {
+        if (code !== 0)
+          resolve({ error: { cause: `Worker exited with code ${code}`, fix: 'Restart the app.' } })
+      })
     })
   })
 
@@ -183,8 +201,13 @@ app.whenReady().then(() => {
         else if (msg.type === 'complete') resolve(msg.result)
         else if (msg.type === 'error') resolve({ error: msg.error })
       })
-      worker.on('error', (err) => resolve({ error: { cause: err.message, fix: 'Try a different PDF file.' } }))
-      worker.on('exit', (code) => { if (code !== 0) resolve({ error: { cause: `Worker exited with code ${code}`, fix: 'Restart the app.' } }) })
+      worker.on('error', (err) =>
+        resolve({ error: { cause: err.message, fix: 'Try a different PDF file.' } })
+      )
+      worker.on('exit', (code) => {
+        if (code !== 0)
+          resolve({ error: { cause: `Worker exited with code ${code}`, fix: 'Restart the app.' } })
+      })
     })
   })
 
@@ -219,16 +242,19 @@ app.whenReady().then(() => {
   // outputFolder: absolute path to the timestamped output folder (created by main if needed)
   // fileName: e.g. 'page-01.png'
   // Returns the absolute output file path on success.
-  ipcMain.handle('pdf:write-image', async (_event, args: { dataUrl: string; outputFolder: string; fileName: string }) => {
-    const { mkdir: mkdirImg, writeFile: writeFileImg } = await import('fs/promises')
-    const { join: joinImg } = await import('path')
-    await mkdirImg(args.outputFolder, { recursive: true })
-    const base64 = args.dataUrl.replace(/^data:image\/\w+;base64,/, '')
-    const buffer = Buffer.from(base64, 'base64')
-    const filePath = joinImg(args.outputFolder, args.fileName)
-    await writeFileImg(filePath, buffer)
-    return filePath
-  })
+  ipcMain.handle(
+    'pdf:write-image',
+    async (_event, args: { dataUrl: string; outputFolder: string; fileName: string }) => {
+      const { mkdir: mkdirImg, writeFile: writeFileImg } = await import('fs/promises')
+      const { join: joinImg } = await import('path')
+      await mkdirImg(args.outputFolder, { recursive: true })
+      const base64 = args.dataUrl.replace(/^data:image\/\w+;base64,/, '')
+      const buffer = Buffer.from(base64, 'base64')
+      const filePath = joinImg(args.outputFolder, args.fileName)
+      await writeFileImg(filePath, buffer)
+      return filePath
+    }
+  )
 
   // CONV-03: Create and return a timestamped output folder for image conversion.
   // Pattern matches other modes: {documents}/PDF Chisel/{timestamp}-convert/
@@ -264,7 +290,7 @@ app.whenReady().then(() => {
     const { canceled, filePaths } = await dialog.showOpenDialog({
       title: 'Select Output Folder',
       defaultPath: settings.get('outputPath') || app.getPath('documents'),
-      properties: ['openDirectory'],
+      properties: ['openDirectory']
     })
     if (canceled || filePaths.length === 0) return null
     return filePaths[0]
@@ -275,15 +301,21 @@ app.whenReady().then(() => {
 
   // Per-mode feature state (Split)
   ipcMain.handle('feature-state:get-split', () => featureState.get('split'))
-  ipcMain.handle('feature-state:set-split', (_event, val: { mode: 'parts' | 'maxPages'; value: number }) => {
-    featureState.set('split', val)
-  })
+  ipcMain.handle(
+    'feature-state:set-split',
+    (_event, val: { mode: 'parts' | 'maxPages'; value: number }) => {
+      featureState.set('split', val)
+    }
+  )
 
   // Per-mode feature state (Convert)
   ipcMain.handle('feature-state:get-convert', () => featureState.get('convert'))
-  ipcMain.handle('feature-state:set-convert', (_event, val: { format: 'png' | 'jpeg'; dpi: number }) => {
-    featureState.set('convert', val)
-  })
+  ipcMain.handle(
+    'feature-state:set-convert',
+    (_event, val: { format: 'png' | 'jpeg'; dpi: number }) => {
+      featureState.set('convert', val)
+    }
+  )
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()

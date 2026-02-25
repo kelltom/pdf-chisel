@@ -35,10 +35,7 @@ declare global {
         params: { splitMode: 'parts' | 'maxPages'; splitValue: number }
       }) => Promise<OperationResult>
 
-      mergePdfs: (args: {
-        operation: 'merge'
-        filePaths: string[]
-      }) => Promise<OperationResult>
+      mergePdfs: (args: { operation: 'merge'; filePaths: string[] }) => Promise<OperationResult>
 
       openPdfsDialog: () => Promise<string[]>
 
@@ -50,7 +47,11 @@ declare global {
       // Phase 3: Convert to Images
       readFileBytes: (filePath: string) => Promise<Uint8Array>
       makeConvertOutputFolder: () => Promise<string>
-      writeImageFile: (args: { dataUrl: string; outputFolder: string; fileName: string }) => Promise<string>
+      writeImageFile: (args: {
+        dataUrl: string
+        outputFolder: string
+        fileName: string
+      }) => Promise<string>
       copyImageToClipboard: (filePath: string) => Promise<void>
     }
   }

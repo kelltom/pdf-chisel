@@ -11,10 +11,10 @@
   type ReviewState = 'form' | 'reviewing' | 'complete'
 
   const DPI_PRESETS = [
-    { value: 72,  label: '72',  hint: 'Screen' },
-    { value: 96,  label: '96',  hint: 'Web' },
+    { value: 72, label: '72', hint: 'Screen' },
+    { value: 96, label: '96', hint: 'Web' },
     { value: 150, label: '150', hint: 'General' },
-    { value: 300, label: '300', hint: 'Print' },
+    { value: 300, label: '300', hint: 'Print' }
   ] as const
 
   let format = $state<'png' | 'jpeg'>('png')
@@ -46,13 +46,15 @@
   // currentImagePath: absolute path of the currently-displayed image
   // Windows paths use backslashes; file:// needs forward slashes
   const currentImagePath = $derived(
-    outputFiles.length > 0
-      ? outputFiles[currentIndex].replace(/\\/g, '/')
-      : ''
+    outputFiles.length > 0 ? outputFiles[currentIndex].replace(/\\/g, '/') : ''
   )
 
   // Reset imageLoadError when index changes
-  $effect(() => { currentIndex; imageLoadError = false })
+  $effect(() => {
+    if (currentIndex >= 0) {
+      imageLoadError = false
+    }
+  })
 
   // Clear state when navigating away from convert mode
   $effect(() => {
@@ -81,9 +83,10 @@
 
       const rawBytes = await window.api.readFileBytes(appState.currentFile.filePath)
       // IPC sends a Buffer which arrives as a plain object in the renderer — convert to Uint8Array
-      const pdfBytes = rawBytes instanceof Uint8Array
-        ? rawBytes
-        : new Uint8Array(Object.values(rawBytes as unknown as Record<string, number>))
+      const pdfBytes =
+        rawBytes instanceof Uint8Array
+          ? rawBytes
+          : new Uint8Array(Object.values(rawBytes as unknown as Record<string, number>))
 
       const totalPages = appState.currentFile.pageCount
       const padWidth = totalPages > 99 ? 3 : totalPages > 9 ? 2 : 1
@@ -95,7 +98,11 @@
           progressCurrent = i
           const dataUrl = await renderPageFromDoc(pdf, i, dpi, format)
           const fileName = `page-${String(i).padStart(padWidth, '0')}.${ext}`
-          const filePath = await window.api.writeImageFile({ dataUrl, outputFolder: folder, fileName })
+          const filePath = await window.api.writeImageFile({
+            dataUrl,
+            outputFolder: folder,
+            fileName
+          })
           outputFiles = [...outputFiles, filePath]
           outputFileNames = [...outputFileNames, fileName]
         }
@@ -125,7 +132,9 @@
 
     // Flash animation: set true, reset after 200ms
     isFlashing = true
-    setTimeout(() => { isFlashing = false }, 200)
+    setTimeout(() => {
+      isFlashing = false
+    }, 200)
 
     // Copy current image to clipboard via IPC (pass file path, not data URL)
     try {
@@ -174,7 +183,7 @@
     currentIndex = 0
     isFlashing = false
     imageLoadError = false
-    appState.currentFile = null  // Reset unloads the file — returns to blank state (Phase 5 decision)
+    appState.currentFile = null // Reset unloads the file — returns to blank state (Phase 5 decision)
   }
 
   onMount(async () => {
@@ -188,12 +197,14 @@
   })
 </script>
 
-<svelte:window onkeydown={(e) => {
-  if (reviewState === 'reviewing' && (e.key === ' ' || e.key === 'Enter')) {
-    e.preventDefault()
-    copyAndNext()
-  }
-}} />
+<svelte:window
+  onkeydown={(e) => {
+    if (reviewState === 'reviewing' && (e.key === ' ' || e.key === 'Enter')) {
+      e.preventDefault()
+      copyAndNext()
+    }
+  }}
+/>
 
 <div class="mode-view">
   {#if reviewState === 'form'}
@@ -209,7 +220,7 @@
             <button
               class="mode-btn"
               class:active={format === 'png'}
-              onclick={() => format = 'png'}
+              onclick={() => (format = 'png')}
               disabled={isConverting}
               aria-pressed={format === 'png'}
             >
@@ -218,7 +229,7 @@
             <button
               class="mode-btn"
               class:active={format === 'jpeg'}
-              onclick={() => format = 'jpeg'}
+              onclick={() => (format = 'jpeg')}
               disabled={isConverting}
               aria-pressed={format === 'jpeg'}
             >
@@ -234,11 +245,11 @@
         <div class="field">
           <span class="field-label">Resolution (DPI)</span>
           <div class="dpi-selector" role="group" aria-label="DPI preset">
-            {#each DPI_PRESETS as preset}
+            {#each DPI_PRESETS as preset (preset.value)}
               <button
                 class="dpi-btn"
                 class:active={dpi === preset.value}
-                onclick={() => dpi = preset.value}
+                onclick={() => (dpi = preset.value)}
                 disabled={isConverting}
                 aria-pressed={dpi === preset.value}
               >
@@ -278,15 +289,12 @@
         <ResultsSummary result={conversionResult}>
           {#snippet extraActions()}
             {#if !conversionError}
-              <button class="btn-primary-sm" onclick={startReview}>
-                Start Review
-              </button>
+              <button class="btn-primary-sm" onclick={startReview}> Start Review </button>
             {/if}
           {/snippet}
         </ResultsSummary>
       </div>
     {/if}
-
   {:else if reviewState === 'reviewing'}
     <div class="review-container">
       <div class="review-header">
@@ -301,7 +309,7 @@
             alt="Page {currentIndex + 1}"
             class="review-image"
             class:flash={isFlashing}
-            onerror={() => imageLoadError = true}
+            onerror={() => (imageLoadError = true)}
             style={imageLoadError ? 'display: none' : ''}
           />
           {#if imageLoadError}
@@ -313,29 +321,19 @@
       </div>
 
       <div class="review-actions">
-        <button
-          class="btn btn-secondary"
-          onclick={goBack}
-          disabled={currentIndex === 0}
-        >
+        <button class="btn btn-secondary" onclick={goBack} disabled={currentIndex === 0}>
           Back
         </button>
-        <button
-          class="btn btn-primary"
-          onclick={copyAndNext}
-        >
-          Copy and Next
-        </button>
+        <button class="btn btn-primary" onclick={copyAndNext}> Copy and Next </button>
       </div>
     </div>
-
   {:else if reviewState === 'complete'}
     <div class="complete-container">
       <div class="complete-content">
-        <p class="complete-message">Review complete — {outputFiles.length} image{outputFiles.length !== 1 ? 's' : ''} copied</p>
-        <button class="btn btn-secondary" onclick={closeReview}>
-          Close
-        </button>
+        <p class="complete-message">
+          Review complete — {outputFiles.length} image{outputFiles.length !== 1 ? 's' : ''} copied
+        </p>
+        <button class="btn btn-secondary" onclick={closeReview}> Close </button>
       </div>
     </div>
   {/if}
@@ -346,8 +344,8 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    min-height: 0;       /* flex child must have min-height: 0 to scroll rather than expand */
-    overflow-y: auto;    /* ConvertMode owns its scroll region */
+    min-height: 0; /* flex child must have min-height: 0 to scroll rather than expand */
+    overflow-y: auto; /* ConvertMode owns its scroll region */
   }
 
   /* Format and DPI selectors share the Split mode segmented button pattern */
@@ -370,7 +368,9 @@
     border: none;
     border-right: 1px solid var(--color-surface-2);
     cursor: pointer;
-    transition: color 0.15s, background 0.15s;
+    transition:
+      color 0.15s,
+      background 0.15s;
   }
 
   .mode-btn:last-child {
@@ -408,7 +408,9 @@
     border: none;
     border-right: 1px solid var(--color-surface-2);
     cursor: pointer;
-    transition: color 0.15s, background 0.15s;
+    transition:
+      color 0.15s,
+      background 0.15s;
     gap: 2px;
   }
 
@@ -489,7 +491,9 @@
     border-radius: 6px;
     font-size: 0.875rem;
     font-weight: 500;
-    transition: background 0.15s, color 0.15s;
+    transition:
+      background 0.15s,
+      color 0.15s;
     cursor: pointer;
     border: none;
   }
@@ -564,7 +568,9 @@
     background: var(--color-surface);
     color: var(--color-text-muted);
     border: 1px solid var(--color-surface-2);
-    transition: color 0.15s, border-color 0.15s;
+    transition:
+      color 0.15s,
+      border-color 0.15s;
   }
 
   .btn-reset:hover {
@@ -607,7 +613,7 @@
     justify-content: center;
     overflow: hidden;
     padding: 8px 20px;
-    min-height: 0;  /* Required for flex child to shrink below content size */
+    min-height: 0; /* Required for flex child to shrink below content size */
   }
 
   .review-image {
@@ -624,9 +630,15 @@
   }
 
   @keyframes flash-anim {
-    0%   { opacity: 1; }
-    50%  { opacity: 0.35; }
-    100% { opacity: 1; }
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   .review-placeholder {

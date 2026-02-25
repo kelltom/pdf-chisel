@@ -44,7 +44,7 @@
   function reset() {
     pageRangeInput = ''
     operationResult = null
-    appState.currentFile = null  // Reset unloads the file — returns to blank state (Phase 5 decision)
+    appState.currentFile = null // Reset unloads the file — returns to blank state (Phase 5 decision)
   }
 
   function onPageRangeBlur() {
@@ -153,7 +153,9 @@
     background: var(--color-surface);
     color: var(--color-text-muted);
     border: 1px solid var(--color-surface-2);
-    transition: color 0.15s, border-color 0.15s;
+    transition:
+      color 0.15s,
+      border-color 0.15s;
   }
 
   .btn-reset:hover {

@@ -29,7 +29,7 @@
     errorMessage = null
 
     const files = Array.from(e.dataTransfer?.files ?? [])
-    const pdfFiles = files.filter(f => f.name.toLowerCase().endsWith('.pdf'))
+    const pdfFiles = files.filter((f) => f.name.toLowerCase().endsWith('.pdf'))
 
     if (pdfFiles.length === 0) {
       errorMessage = 'Please drop a PDF file.'
@@ -74,22 +74,29 @@
     <div class="file-info">
       <div class="file-icon">
         <!-- Document icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
-          <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+          <path d="M14 2v4a2 2 0 0 0 2 2h4" />
         </svg>
       </div>
       <div class="file-details">
         <span class="file-name">{appState.currentFile.fileName}</span>
-        <span class="file-meta">{appState.currentFile.pageCount} {appState.currentFile.pageCount === 1 ? 'page' : 'pages'}</span>
+        <span class="file-meta"
+          >{appState.currentFile.pageCount}
+          {appState.currentFile.pageCount === 1 ? 'page' : 'pages'}</span
+        >
       </div>
-      <button
-        class="change-btn"
-        onclick={openDialog}
-        aria-label="Change file"
-      >
-        Change
-      </button>
+      <button class="change-btn" onclick={openDialog} aria-label="Change file"> Change </button>
     </div>
   {:else}
     <div
@@ -105,14 +112,23 @@
         <span class="loading-text">Reading PDF...</span>
       {:else}
         <div class="drop-content">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-text-muted)">
-            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
-            <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="color: var(--color-text-muted)"
+          >
+            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
           </svg>
           <p class="drop-hint">Drop a PDF here or</p>
-          <button class="browse-btn" onclick={openDialog} disabled={isLoading}>
-            Browse...
-          </button>
+          <button class="browse-btn" onclick={openDialog} disabled={isLoading}> Browse... </button>
         </div>
       {/if}
     </div>
@@ -133,13 +149,15 @@
   .drop-zone {
     border: 2px dashed var(--color-surface-2);
     border-radius: 10px;
-    padding: 16px 24px;   /* reduced from 32px — min-height now controls minimum size */
+    padding: 16px 24px; /* reduced from 32px — min-height now controls minimum size */
     min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--color-surface);
-    transition: border-color 0.15s, background 0.15s;
+    transition:
+      border-color 0.15s,
+      background 0.15s;
     cursor: default;
   }
   .drop-zone.drag-over {
@@ -220,7 +238,9 @@
     font-size: 13px;
     color: var(--color-text-muted);
     background: var(--color-surface-2);
-    transition: color 0.15s, background 0.15s;
+    transition:
+      color 0.15s,
+      background 0.15s;
   }
   .change-btn:hover {
     color: var(--color-text);
@@ -229,7 +249,7 @@
 
   .error-msg {
     font-size: 13px;
-    color: #f38ba8;  /* Catppuccin red */
+    color: #f38ba8; /* Catppuccin red */
     padding: 6px 8px;
     border-radius: 4px;
     background: rgba(243, 139, 168, 0.1);

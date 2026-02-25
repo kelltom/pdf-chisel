@@ -39,7 +39,6 @@
   <h1 class="mode-title">Settings</h1>
 
   <div class="settings-body">
-
     <!-- Output section -->
     <section class="settings-section">
       <h2 class="section-heading">Output</h2>
@@ -93,11 +92,10 @@
           class="about-link"
           href="https://github.com/your-user/pdf-chisel/releases"
           target="_blank"
-          rel="noreferrer"
-        >View on GitHub</a>
+          rel="noreferrer">View on GitHub</a
+        >
       </div>
     </section>
-
   </div>
 </div>
 
@@ -202,7 +200,9 @@
     font-weight: 500;
     cursor: pointer;
     border: none;
-    transition: background 0.15s, color 0.15s;
+    transition:
+      background 0.15s,
+      color 0.15s;
     white-space: nowrap;
   }
 
@@ -263,7 +263,9 @@
     height: 18px;
     border-radius: 50%;
     background: var(--color-text-muted);
-    transition: transform 0.2s, background 0.2s;
+    transition:
+      transform 0.2s,
+      background 0.2s;
     pointer-events: none;
   }
 

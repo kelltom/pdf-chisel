@@ -36,7 +36,7 @@
     <div class="success-panel">
       <p class="success-label">Output files:</p>
       <ul class="file-list">
-        {#each result.outputFiles.slice(0, MAX_FILES) as file}
+        {#each result.outputFiles.slice(0, MAX_FILES) as file (file)}
           <li class="file-item">{file}</li>
         {/each}
         {#if result.outputFiles.length > MAX_FILES}
@@ -44,9 +44,7 @@
         {/if}
       </ul>
       <div class="summary-actions">
-        <button class="btn btn-secondary" onclick={openOutputFolder}>
-          Open Folder
-        </button>
+        <button class="btn btn-secondary" onclick={openOutputFolder}> Open Folder </button>
         {@render extraActions?.()}
       </div>
     </div>
@@ -133,7 +131,9 @@
     border-radius: 6px;
     font-size: 0.875rem;
     font-weight: 500;
-    transition: background 0.15s, color 0.15s;
+    transition:
+      background 0.15s,
+      color 0.15s;
     cursor: pointer;
     border: none;
   }

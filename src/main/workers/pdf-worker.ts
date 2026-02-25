@@ -5,13 +5,13 @@ import { PDFDocument, EncryptedPDFError } from 'pdf-lib'
 
 interface WorkerArgs {
   operation: 'extract' | 'split' | 'merge'
-  filePath?: string        // extract, split: single source file path
-  filePaths?: string[]     // merge: ordered list of source file paths
-  outputFolder: string     // pre-computed by main — worker writes here
+  filePath?: string // extract, split: single source file path
+  filePaths?: string[] // merge: ordered list of source file paths
+  outputFolder: string // pre-computed by main — worker writes here
   params: {
     pageIndices?: number[] // extract: 0-indexed page array
     splitMode?: 'parts' | 'maxPages'
-    splitValue?: number    // parts: N outputs; maxPages: N pages per chunk
+    splitValue?: number // parts: N outputs; maxPages: N pages per chunk
   }
 }
 
