@@ -355,14 +355,6 @@
     overflow-y: auto;    /* ConvertMode owns its scroll region */
   }
 
-  .mode-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--color-text);
-    padding: 20px 20px 0;
-    margin: 0;
-  }
-
   /* Format and DPI selectors share the Split mode segmented button pattern */
   .format-selector,
   .dpi-selector {
