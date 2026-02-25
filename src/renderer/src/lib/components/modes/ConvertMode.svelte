@@ -4,7 +4,9 @@
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
   import ProgressSpinner from '../ProgressSpinner.svelte'
+  import ResultsSummary from '../ResultsSummary.svelte'
   import { loadPdfDocument, renderPageFromDoc } from '../../utils/pdf-renderer'
+  import type { OperationResult } from '../../types/operation.ts'
 
   type ReviewState = 'form' | 'reviewing' | 'complete'
 
@@ -31,6 +33,15 @@
   let currentIndex = $state(0)
   let isFlashing = $state(false)
   let imageLoadError = $state(false)
+
+  // Unified result object for ResultsSummary — uses basenames for a clean display
+  const conversionResult = $derived<OperationResult | null>(
+    hasConversionResult && !isConverting
+      ? conversionError
+        ? { error: conversionError }
+        : { outputFiles: outputFileNames, outputFolder }
+      : null
+  )
 
   // currentImagePath: absolute path of the currently-displayed image
   // Windows paths use backslashes; file:// needs forward slashes
@@ -261,34 +272,18 @@
       </div>
     {/if}
 
-    <!-- Post-conversion results — custom section to accommodate Start Review button -->
+    <!-- Post-conversion results — uses shared ResultsSummary; Start Review injected via extraActions -->
     {#if hasConversionResult && !isConverting}
       <div class="convert-results">
-        {#if conversionError}
-          <div class="error-panel" role="alert">
-            <p class="error-cause">{conversionError.cause}</p>
-            <p class="error-fix">{conversionError.fix}</p>
-          </div>
-        {:else}
-          <div class="success-panel">
-            <p class="success-label">
-              {outputFileNames.length} file{outputFileNames.length !== 1 ? 's' : ''} created
-            </p>
-            <ul class="file-list">
-              {#each outputFileNames as name}
-                <li class="file-item">{name}</li>
-              {/each}
-            </ul>
-            <div class="result-actions">
-              <button class="btn btn-secondary" onclick={() => window.api.openOutputFolder(outputFolder)}>
-                Open Folder
-              </button>
-              <button class="btn btn-primary-sm" onclick={startReview}>
+        <ResultsSummary result={conversionResult}>
+          {#snippet extraActions()}
+            {#if !conversionError}
+              <button class="btn-primary-sm" onclick={startReview}>
                 Start Review
               </button>
-            </div>
-          </div>
-        {/if}
+            {/if}
+          {/snippet}
+        </ResultsSummary>
       </div>
     {/if}
 
@@ -481,81 +476,9 @@
     color: var(--color-text-muted);
   }
 
-  /* Custom results section (below OperationLayout) */
+  /* Results section wrapper — provides padding, ResultsSummary handles internal layout */
   .convert-results {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     padding: 0 20px 20px;
-  }
-
-  .error-panel {
-    background: color-mix(in srgb, #f38ba8 12%, var(--color-surface));
-    border: 1px solid color-mix(in srgb, #f38ba8 40%, transparent);
-    border-radius: 6px;
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .error-cause {
-    color: #f38ba8;
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin: 0;
-  }
-
-  .error-fix {
-    color: var(--color-text-muted);
-    font-size: 0.8125rem;
-    margin: 0;
-  }
-
-  .success-panel {
-    background: color-mix(in srgb, #a6e3a1 8%, var(--color-surface));
-    border: 1px solid color-mix(in srgb, #a6e3a1 30%, transparent);
-    border-radius: 6px;
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .success-label {
-    font-size: 0.8125rem;
-    color: var(--color-text-muted);
-    font-weight: 500;
-    margin: 0;
-  }
-
-  .file-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    max-height: 280px;
-    overflow-y: auto;
-  }
-
-  .file-item {
-    font-size: 0.8125rem;
-    color: var(--color-text);
-    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding: 5px 8px;
-    border-radius: 4px;
-    line-height: 1.4;
-  }
-
-  .result-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
   }
 
   .btn {

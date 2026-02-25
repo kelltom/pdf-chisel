@@ -2,10 +2,14 @@
   import { settingsState } from '../stores/app.svelte.ts'
   import type { OperationResult } from '../types/operation.ts'
 
+  const MAX_FILES = 5
+
   let {
-    result = null
+    result = null,
+    extraActions
   }: {
     result?: OperationResult | null
+    extraActions?: import('svelte').Snippet
   } = $props()
 
   // Auto-open output folder on success — gated by user's auto-open setting (SETT-02)
@@ -32,13 +36,19 @@
     <div class="success-panel">
       <p class="success-label">Output files:</p>
       <ul class="file-list">
-        {#each result.outputFiles as file}
+        {#each result.outputFiles.slice(0, MAX_FILES) as file}
           <li class="file-item">{file}</li>
         {/each}
+        {#if result.outputFiles.length > MAX_FILES}
+          <li class="file-more">... and {result.outputFiles.length - MAX_FILES} more</li>
+        {/if}
       </ul>
-      <button class="btn btn-secondary" onclick={openOutputFolder}>
-        Open Folder
-      </button>
+      <div class="summary-actions">
+        <button class="btn btn-secondary" onclick={openOutputFolder}>
+          Open Folder
+        </button>
+        {@render extraActions?.()}
+      </div>
     </div>
   {/if}
 </div>
@@ -103,6 +113,18 @@
     white-space: nowrap;
   }
 
+  .file-more {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .summary-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;
@@ -119,7 +141,6 @@
   .btn-secondary {
     background: var(--color-surface-2);
     color: var(--color-text);
-    align-self: flex-start;
   }
 
   .btn-secondary:hover {
