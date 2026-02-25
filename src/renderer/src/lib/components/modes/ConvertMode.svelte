@@ -535,7 +535,7 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
     max-height: 280px;
     overflow-y: auto;
   }
@@ -547,6 +547,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding: 5px 8px;
+    border-radius: 4px;
+    line-height: 1.4;
   }
 
   .result-actions {
