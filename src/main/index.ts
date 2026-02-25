@@ -34,7 +34,7 @@ const featureState = new Conf<FeatureState>({
 
 function createWindow(): BrowserWindow {
   const mainWindow = new BrowserWindow({
-    width: 1100,
+    width: 800,
     height: 730,
     minWidth: 800,
     minHeight: 500,
