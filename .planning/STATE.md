@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 4.1 complete — Developer README added. Ready to resume Phase 4 plan 03 (auto-update scaffold, SETT-04).
+**Current focus:** Phase 5 UI improvements in progress — Plan 02 complete (FileInput height consistency). Next: Plan 03.
 
 ## Current Position
 
-Phase: 4.1 of 4 (Add Developer README) — COMPLETE
-Plan: 1 of 1 in phase 04.1 (plan 04.1-01 complete)
-Status: README.md created at repository root. All 6 required content strings verified. Phase 4.1 complete. Next: Phase 4 plan 03 — auto-update scaffold (SETT-04).
-Last activity: 2026-02-24 — Plan 04.1-01 complete: developer README with nvm-windows setup, Node 22 LTS, dev/build commands, inline warnings
+Phase: 5 of 5 (UI improvement) — In Progress
+Plan: 2 of 4 in phase 05 (plan 05-02 complete)
+Status: FileInput.svelte height stabilized — min-height 80px on both .drop-zone and .file-info. No layout shift between empty/loaded states.
+Last activity: 2026-02-25 — Plan 05-02 complete: FileInput height consistency fix (CSS-only, TypeScript clean)
 
 Progress: [█████████░] 92%
 
@@ -38,6 +38,7 @@ Progress: [█████████░] 92%
 
 *Updated after each plan completion*
 | Phase 04.1-add-developer-readme P01 | 1 | 1 tasks | 1 files |
+| Phase 05-ui-improvement P02 | 1 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -86,6 +87,8 @@ Recent decisions affecting current work:
 - [04-02]: per-mode persistence uses onMount load + execute() save — transparent to user; last-used values silently restored each launch without dedicated UI
 - [Phase 04.1-add-developer-readme]: Node 22 LTS pinned via nvm-windows — satisfies electron-vite requirement of ^20.19.0 || >=22.12.0
 - [Phase 04.1-add-developer-readme]: GitHub-flavored [!WARNING] and [!NOTE] callouts chosen — renders natively on GitHub with colored badges
+- [Phase 05-ui-improvement]: min-height: 80px applied to both .drop-zone and .file-info — prevents layout shift between empty/loaded states
+- [Phase 05-ui-improvement]: .drop-zone padding reduced from 32px to 16px — min-height now owns minimum vertical size
 
 ### Roadmap Evolution
 
@@ -103,6 +106,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-24
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-ui-improvement/05-CONTEXT.md
+Last session: 2026-02-25
+Stopped at: Completed 05-02-PLAN.md
+Resume file: .planning/phases/05-ui-improvement/05-03-PLAN.md
