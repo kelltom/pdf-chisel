@@ -1,12 +1,7 @@
 <script lang="ts">
   import ProgressSpinner from './ProgressSpinner.svelte'
   import ResultsSummary from './ResultsSummary.svelte'
-
-  interface OperationResult {
-    outputFiles?: string[]
-    outputFolder?: string
-    error?: { cause: string; fix: string }
-  }
+  import type { OperationResult } from '../types/operation.ts'
 
   let {
     isProcessing = false,

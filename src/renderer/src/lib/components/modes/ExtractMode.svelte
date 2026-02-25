@@ -4,12 +4,7 @@
   import { parsePageRange } from '../../utils/page-range.ts'
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
-
-  interface OperationResult {
-    outputFiles?: string[]
-    outputFolder?: string
-    error?: { cause: string; fix: string }
-  }
+  import type { OperationResult } from '../../types/operation.ts'
 
   let pageRangeInput = $state('')
   let operationResult = $state<OperationResult | null>(null)
@@ -104,14 +99,6 @@
     height: 100%;
   }
 
-  .mode-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--color-text);
-    padding: 20px 20px 0;
-    margin: 0;
-  }
-
   .field {
     display: flex;
     flex-direction: column;
@@ -153,30 +140,6 @@
     font-size: 0.8125rem;
     color: var(--color-text-muted);
     margin: 0;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 7px 18px;
-    border-radius: 6px;
-    background: var(--color-accent);
-    color: var(--color-bg);
-    font-size: 0.875rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-
-  .btn-primary:hover:not(:disabled) {
-    opacity: 0.88;
-  }
-
-  .btn-primary:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
   }
 
   .btn-reset {

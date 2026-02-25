@@ -2,17 +2,12 @@
   import { appState } from '../../stores/app.svelte.ts'
   import { onDestroy } from 'svelte'
   import OperationLayout from '../OperationLayout.svelte'
+  import type { OperationResult } from '../../types/operation.ts'
 
   interface FileItem {
     id: string
     filePath: string
     fileName: string
-  }
-
-  interface OperationResult {
-    outputFiles?: string[]
-    outputFolder?: string
-    error?: { cause: string; fix: string }
   }
 
   let files = $state<FileItem[]>([])
@@ -176,14 +171,6 @@
     height: 100%;
   }
 
-  .mode-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--color-text);
-    padding: 20px 20px 0;
-    margin: 0;
-  }
-
   .merge-inputs {
     display: flex;
     flex-direction: column;
@@ -207,25 +194,6 @@
 
   .btn-secondary:disabled {
     opacity: 0.45;
-    cursor: not-allowed;
-  }
-
-  .btn-primary {
-    padding: 6px 18px;
-    border-radius: 6px;
-    background: var(--color-accent);
-    color: var(--color-bg);
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: background 0.15s, opacity 0.15s;
-  }
-
-  .btn-primary:hover:not(:disabled) {
-    background: var(--color-accent-hover);
-  }
-
-  .btn-primary:disabled {
-    opacity: 0.4;
     cursor: not-allowed;
   }
 

@@ -1,11 +1,6 @@
 <script lang="ts">
   import { settingsState } from '../stores/app.svelte.ts'
-
-  interface OperationResult {
-    outputFiles?: string[]
-    outputFolder?: string
-    error?: { cause: string; fix: string }
-  }
+  import type { OperationResult } from '../types/operation.ts'
 
   let {
     result = null

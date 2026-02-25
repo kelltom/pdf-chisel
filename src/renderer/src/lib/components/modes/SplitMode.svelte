@@ -3,12 +3,7 @@
   import { appState } from '../../stores/app.svelte.ts'
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
-
-  interface OperationResult {
-    outputFiles?: string[]
-    outputFolder?: string
-    error?: { cause: string; fix: string }
-  }
+  import type { OperationResult } from '../../types/operation.ts'
 
   let splitMode = $state<'parts' | 'maxPages'>('parts')
   let splitValue = $state<number>(2)
@@ -140,14 +135,6 @@
     height: 100%;
   }
 
-  .mode-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--color-text);
-    padding: 20px 20px 0;
-    margin: 0;
-  }
-
   .split-controls {
     display: flex;
     flex-direction: column;
@@ -161,41 +148,6 @@
     overflow: hidden;
     border: 1px solid var(--color-surface-2);
     width: fit-content;
-  }
-
-  .mode-btn {
-    padding: 8px 16px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    background: var(--color-surface);
-    border: none;
-    cursor: pointer;
-    transition: color 0.15s, background 0.15s;
-    border-right: 1px solid var(--color-surface-2);
-  }
-
-  .mode-btn:last-child {
-    border-right: none;
-  }
-
-  .mode-btn:hover:not(:disabled) {
-    color: var(--color-text);
-    background: var(--color-surface-2);
-  }
-
-  .mode-btn.active {
-    color: var(--color-bg);
-    background: var(--color-accent);
-  }
-
-  .mode-btn.active:hover:not(:disabled) {
-    background: var(--color-accent-hover);
-  }
-
-  .mode-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
 
   .field {
@@ -230,30 +182,6 @@
 
   .number-input:disabled {
     opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 20px;
-    border-radius: 6px;
-    background: var(--color-accent);
-    color: var(--color-bg);
-    font-size: 0.875rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-
-  .btn-primary:hover:not(:disabled) {
-    background: var(--color-accent-hover);
-  }
-
-  .btn-primary:disabled {
-    opacity: 0.4;
     cursor: not-allowed;
   }
 
