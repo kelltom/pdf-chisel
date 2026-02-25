@@ -70,6 +70,7 @@
           class:on={autoOpen}
           role="switch"
           aria-checked={autoOpen}
+          aria-label="Toggle auto-open output folder"
           onclick={handleAutoOpenToggle}
         >
           <span class="toggle-thumb"></span>
