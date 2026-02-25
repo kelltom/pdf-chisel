@@ -98,10 +98,10 @@ Plans:
 
 **Goal:** Fix four known visual/UX bugs (ResultsSummary overflow, Reset button consolidation, Reset unloads PDF, FileInput height instability) and extract duplicated CSS/type patterns into shared sources
 **Depends on:** Phase 4
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans executed
 
 Plans:
 - [x] 05-01-PLAN.md — Fix ResultsSummary layout overflow, consolidate Reset button to mode actions, reset() clears currentFile
 - [x] 05-02-PLAN.md — Fix FileInput height consistency (min-height: 80px on drop zone and file-info)
 - [x] 05-03-PLAN.md — Extract shared OperationResult type; move .mode-title/.btn-primary/.mode-btn to app.css
-- [ ] 05-04-PLAN.md — Human verification checkpoint: confirm all four bug fixes in running app
+- [x] 05-04-PLAN.md — Human verification checkpoint: confirm all four bug fixes in running app

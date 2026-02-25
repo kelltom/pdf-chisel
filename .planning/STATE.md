@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 5 UI improvements in progress — Plans 01, 02, and 03 complete. Next: Plan 04.
+**Current focus:** Phase 5 complete — all four bug fixes verified and approved. Verification pending.
 
 ## Current Position
 
-Phase: 5 of 5 (UI improvement) — In Progress
-Plan: 3 of 4 in phase 05 (plans 05-01, 05-02, and 05-03 complete)
-Status: Shared OperationResult type extracted to lib/types/operation.ts; global .mode-title, .btn-primary, .mode-btn CSS rules added to app.css; local copies removed from Extract/Split/Merge/Convert modes.
-Last activity: 2026-02-24 — Plan 05-03 complete: shared types + global CSS deduplication (8 files, TypeScript clean)
+Phase: 5 of 5 (UI improvement) — Verification pending
+Plan: 4 of 4 in phase 05 (all plans complete)
+Status: All four bug fixes verified in running app. ConvertMode results unified with shared ResultsSummary; file list capped at 5.
+Last activity: 2026-02-24 — Plan 05-04 complete: human verification passed; in-session ResultsSummary fix applied
 
 Progress: [█████████░] 92%
 
