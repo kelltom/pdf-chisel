@@ -93,3 +93,15 @@ Plans:
 
 Plans:
 - [ ] 04.1-01-PLAN.md — Write README.md with prerequisites, clone/install, dev mode, and build commands
+
+### Phase 5: UI improvement
+
+**Goal:** Fix four known visual/UX bugs (ResultsSummary overflow, Reset button consolidation, Reset unloads PDF, FileInput height instability) and extract duplicated CSS/type patterns into shared sources
+**Depends on:** Phase 4
+**Plans:** 4 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Fix ResultsSummary layout overflow, consolidate Reset button to mode actions, reset() clears currentFile
+- [ ] 05-02-PLAN.md — Fix FileInput height consistency (min-height: 80px on drop zone and file-info)
+- [ ] 05-03-PLAN.md — Extract shared OperationResult type; move .mode-title/.btn-primary/.mode-btn to app.css
+- [ ] 05-04-PLAN.md — Human verification checkpoint: confirm all four bug fixes in running app
