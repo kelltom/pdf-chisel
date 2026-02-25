@@ -13,7 +13,7 @@ PDF Chisel is built in five phases that follow a strict dependency order. The se
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Electron Foundation** - Secure app shell with mode navigation, file input, and shared UI components
-- [ ] **Phase 2: Core PDF Operations** - Extract, Split, and Merge modes fully functional with Worker Thread pattern
+- [x] **Phase 2: Core PDF Operations** - Extract, Split, and Merge modes fully functional with Worker Thread pattern
 - [x] **Phase 3: Convert to Images + Review** - PDF-to-image conversion with pdfjs-dist and Copy-and-Next review workflow
 - [x] **Phase 4: Settings + Persistence** - electron-store integration, settings page, and per-mode persistence (completed 2005-02-24)
 - [x] **Phase 6: Convert mode bugfix** - Convert mode bugfix (completed 2026-02-25)
@@ -52,8 +52,8 @@ Plans:
 Plans:
 - [x] 02-01-PLAN.md — IPC handlers and Worker Thread infrastructure for Extract, Split, Merge
 - [x] 02-02-PLAN.md — Shared renderer components: parsePageRange, ProgressSpinner, ResultsSummary, OperationLayout
-- [ ] 02-03-PLAN.md — Extract mode UI
-- [ ] 02-04-PLAN.md — Split mode UI
+- [x] 02-03-PLAN.md — Extract mode UI
+- [x] 02-04-PLAN.md — Split mode UI
 - [x] 02-05-PLAN.md — Merge mode UI
 
 ### Phase 3: Convert to Images + Review
@@ -84,7 +84,7 @@ Plans:
 
 Plans:
 - [x] 04-01-PLAN.md — Install electron-conf, add IPC handlers, refactor hardcoded output paths in main + preload
-- [ ] 04-02-PLAN.md — Settings UI, settingsState store, per-mode persistence, auto-open gating + verification checkpoint
+- [x] 04-02-PLAN.md — Settings UI, settingsState store, per-mode persistence, auto-open gating + verification checkpoint
 
 ### Phase 04.1: Add Developer README (INSERTED)
 
@@ -93,7 +93,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 04.1-01-PLAN.md — Write README.md with prerequisites, clone/install, dev mode, and build commands
+- [x] 04.1-01-PLAN.md — Write README.md with prerequisites, clone/install, dev mode, and build commands
 
 ### Phase 5: UI improvement
 
