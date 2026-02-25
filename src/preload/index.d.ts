@@ -53,6 +53,18 @@ declare global {
         fileName: string
       }) => Promise<string>
       copyImageToClipboard: (filePath: string) => Promise<void>
+
+      // Settings
+      getSettings: () => Promise<{ outputPath: string; autoOpen: boolean }>
+      setSettings: (patch: Partial<{ outputPath: string; autoOpen: boolean }>) => Promise<void>
+      browseFolder: () => Promise<string | null>
+      getAppVersion: () => Promise<string>
+
+      // Per-mode state persistence
+      getSplitState: () => Promise<{ mode: 'parts' | 'maxPages'; value: number }>
+      setSplitState: (val: { mode: 'parts' | 'maxPages'; value: number }) => Promise<void>
+      getConvertState: () => Promise<{ format: 'png' | 'jpeg'; dpi: number }>
+      setConvertState: (val: { format: 'png' | 'jpeg'; dpi: number }) => Promise<void>
     }
   }
 }
