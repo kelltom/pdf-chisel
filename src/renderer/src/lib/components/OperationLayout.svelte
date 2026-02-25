@@ -11,13 +11,11 @@
   let {
     isProcessing = false,
     result = null,
-    onReset,
     inputs,
     actions
   }: {
     isProcessing?: boolean
     result?: OperationResult | null
-    onReset: () => void
     inputs?: import('svelte').Snippet
     actions?: import('svelte').Snippet
   } = $props()
@@ -40,7 +38,7 @@
   {/if}
 
   <div class="results-area">
-    <ResultsSummary {result} {onReset} />
+    <ResultsSummary {result} />
   </div>
 </div>
 
@@ -50,8 +48,8 @@
     flex-direction: column;
     gap: 16px;
     padding: 20px;
-    height: 100%;
-    overflow-y: auto;
+    /* height: 100% and overflow-y: auto removed — these fight the parent scroll model.
+       The parent main.content in App.svelte owns the scroll region. */
   }
 
   .inputs-area {

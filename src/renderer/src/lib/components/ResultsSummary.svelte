@@ -8,11 +8,9 @@
   }
 
   let {
-    result = null,
-    onReset
+    result = null
   }: {
     result?: OperationResult | null
-    onReset: () => void
   } = $props()
 
   // Auto-open output folder on success — gated by user's auto-open setting (SETT-02)
@@ -48,10 +46,6 @@
       </button>
     </div>
   {/if}
-
-  <button class="btn btn-reset" onclick={onReset}>
-    Reset
-  </button>
 </div>
 
 <style>
@@ -136,17 +130,5 @@
   .btn-secondary:hover {
     background: var(--color-accent);
     color: var(--color-bg);
-  }
-
-  .btn-reset {
-    background: var(--color-surface);
-    color: var(--color-text-muted);
-    align-self: flex-start;
-    border: 1px solid var(--color-surface-2);
-  }
-
-  .btn-reset:hover {
-    color: var(--color-text);
-    border-color: var(--color-text-muted);
   }
 </style>
