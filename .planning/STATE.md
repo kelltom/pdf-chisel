@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 5 UI improvements in progress — Plan 02 complete (FileInput height consistency). Next: Plan 03.
+**Current focus:** Phase 5 UI improvements in progress — Plans 01 and 02 complete. Next: Plan 03.
 
 ## Current Position
 
 Phase: 5 of 5 (UI improvement) — In Progress
-Plan: 2 of 4 in phase 05 (plan 05-02 complete)
-Status: FileInput.svelte height stabilized — min-height 80px on both .drop-zone and .file-info. No layout shift between empty/loaded states.
-Last activity: 2026-02-25 — Plan 05-02 complete: FileInput height consistency fix (CSS-only, TypeScript clean)
+Plan: 2 of 4 in phase 05 (plans 05-01 and 05-02 complete)
+Status: Reset button consolidated per mode, ResultsSummary display-only, ConvertMode overflow fixed, FileInput height stabilized.
+Last activity: 2026-02-24 — Plan 05-01 complete: Reset button consolidation + overflow fix (6 files, TypeScript clean)
 
 Progress: [█████████░] 92%
 
@@ -39,6 +39,7 @@ Progress: [█████████░] 92%
 *Updated after each plan completion*
 | Phase 04.1-add-developer-readme P01 | 1 | 1 tasks | 1 files |
 | Phase 05-ui-improvement P02 | 1 | 1 tasks | 1 files |
+| Phase 05-ui-improvement P01 | 4 min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,7 @@ Recent decisions affecting current work:
 - [Phase 04.1-add-developer-readme]: GitHub-flavored [!WARNING] and [!NOTE] callouts chosen — renders natively on GitHub with colored badges
 - [Phase 05-ui-improvement]: min-height: 80px applied to both .drop-zone and .file-info — prevents layout shift between empty/loaded states
 - [Phase 05-ui-improvement]: .drop-zone padding reduced from 32px to 16px — min-height now owns minimum vertical size
+- [Phase 05-ui-improvement]: ResultsSummary is display-only; Reset moved to mode actions snippets; reset() sets appState.currentFile = null in Extract/Split/Convert; MergeMode reset does not touch currentFile; OperationLayout height: 100% removed; ConvertMode .mode-view uses flex: 1 min-height: 0 overflow-y: auto
 
 ### Roadmap Evolution
 
@@ -106,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-25
-Stopped at: Completed 05-02-PLAN.md
+Last session: 2026-02-24
+Stopped at: Completed 05-01-PLAN.md (Reset consolidation + overflow fix)
 Resume file: .planning/phases/05-ui-improvement/05-03-PLAN.md

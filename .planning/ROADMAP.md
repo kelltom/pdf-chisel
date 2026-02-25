@@ -98,7 +98,7 @@ Plans:
 
 **Goal:** Fix four known visual/UX bugs (ResultsSummary overflow, Reset button consolidation, Reset unloads PDF, FileInput height instability) and extract duplicated CSS/type patterns into shared sources
 **Depends on:** Phase 4
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 
 Plans:
 - [ ] 05-01-PLAN.md — Fix ResultsSummary layout overflow, consolidate Reset button to mode actions, reset() clears currentFile
