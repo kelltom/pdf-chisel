@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 5 UI improvements in progress — Plans 01 and 02 complete. Next: Plan 03.
+**Current focus:** Phase 5 UI improvements in progress — Plans 01, 02, and 03 complete. Next: Plan 04.
 
 ## Current Position
 
 Phase: 5 of 5 (UI improvement) — In Progress
-Plan: 2 of 4 in phase 05 (plans 05-01 and 05-02 complete)
-Status: Reset button consolidated per mode, ResultsSummary display-only, ConvertMode overflow fixed, FileInput height stabilized.
-Last activity: 2026-02-24 — Plan 05-01 complete: Reset button consolidation + overflow fix (6 files, TypeScript clean)
+Plan: 3 of 4 in phase 05 (plans 05-01, 05-02, and 05-03 complete)
+Status: Shared OperationResult type extracted to lib/types/operation.ts; global .mode-title, .btn-primary, .mode-btn CSS rules added to app.css; local copies removed from Extract/Split/Merge/Convert modes.
+Last activity: 2026-02-24 — Plan 05-03 complete: shared types + global CSS deduplication (8 files, TypeScript clean)
 
 Progress: [█████████░] 92%
 
@@ -40,6 +40,7 @@ Progress: [█████████░] 92%
 | Phase 04.1-add-developer-readme P01 | 1 | 1 tasks | 1 files |
 | Phase 05-ui-improvement P02 | 1 | 1 tasks | 1 files |
 | Phase 05-ui-improvement P01 | 4 min | 2 tasks | 6 files |
+| Phase 05-ui-improvement P03 | ~5 min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -91,6 +92,8 @@ Recent decisions affecting current work:
 - [Phase 05-ui-improvement]: min-height: 80px applied to both .drop-zone and .file-info — prevents layout shift between empty/loaded states
 - [Phase 05-ui-improvement]: .drop-zone padding reduced from 32px to 16px — min-height now owns minimum vertical size
 - [Phase 05-ui-improvement]: ResultsSummary is display-only; Reset moved to mode actions snippets; reset() sets appState.currentFile = null in Extract/Split/Convert; MergeMode reset does not touch currentFile; OperationLayout height: 100% removed; ConvertMode .mode-view uses flex: 1 min-height: 0 overflow-y: auto
+- [05-03]: OperationResult interface extracted to lib/types/operation.ts — single source of truth; all 5 consumers import from shared file
+- [05-03]: Global .mode-title, .btn-primary, .mode-btn added to app.css; local copies removed from Extract/Split/Merge/Convert (ConvertMode keeps .btn-primary and .mode-btn due to complex local button hierarchy)
 
 ### Roadmap Evolution
 
@@ -109,5 +112,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 05-01-PLAN.md (Reset consolidation + overflow fix)
-Resume file: .planning/phases/05-ui-improvement/05-03-PLAN.md
+Stopped at: Completed 05-03-PLAN.md (Shared types + global CSS deduplication)
+Resume file: .planning/phases/05-ui-improvement/05-04-PLAN.md
