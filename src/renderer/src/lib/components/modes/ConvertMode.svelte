@@ -206,7 +206,7 @@
   }}
 />
 
-<div class="mode-view">
+<div class="mode-view" class:mode-view--review={reviewState !== 'form'}>
   {#if reviewState === 'form'}
     <h1 class="mode-title">Convert to Images</h1>
     <OperationLayout isProcessing={false} result={null}>
@@ -346,6 +346,12 @@
     flex: 1;
     min-height: 0; /* flex child must have min-height: 0 to scroll rather than expand */
     overflow-y: auto; /* ConvertMode owns its scroll region */
+  }
+
+  /* Applied when in reviewing or complete state — image must fill without overflow */
+  .mode-view--review {
+    overflow: hidden;
+    height: 100%;
   }
 
   /* Format and DPI selectors share the Split mode segmented button pattern */
