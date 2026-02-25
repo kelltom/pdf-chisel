@@ -63,6 +63,7 @@
     splitMode = 'parts'
     splitValue = 2
     operationResult = null
+    appState.currentFile = null  // Reset unloads the file — returns to blank state (Phase 5 decision)
   }
 
   function clampSplitValue() {
@@ -76,7 +77,7 @@
 <div class="mode-view">
   <h1 class="mode-title">Split PDF</h1>
 
-  <OperationLayout {isProcessing} result={operationResult} onReset={reset}>
+  <OperationLayout {isProcessing} result={operationResult}>
   {#snippet inputs()}
     <FileInput />
     <div class="split-controls">
@@ -127,6 +128,7 @@
     >
       Split
     </button>
+    <button class="btn-reset" onclick={reset}>Reset</button>
   {/snippet}
   </OperationLayout>
 </div>
@@ -253,5 +255,24 @@
   .btn-primary:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+  }
+
+  .btn-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-surface-2);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .btn-reset:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
   }
 </style>

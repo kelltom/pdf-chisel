@@ -44,6 +44,8 @@
   function reset() {
     files = []
     operationResult = null
+    // MergeMode does not use appState.currentFile — it manages its own files array.
+    // Do NOT clear appState.currentFile here (intentional per Phase 5 plan).
   }
 
   function ondragstart(i: number) {
@@ -111,7 +113,7 @@
 <div class="mode-view">
   <h1 class="mode-title">Merge PDFs</h1>
 
-  <OperationLayout {isProcessing} result={operationResult} onReset={reset}>
+  <OperationLayout {isProcessing} result={operationResult}>
   {#snippet inputs()}
     <div class="merge-inputs">
       <button onclick={addFiles} disabled={isProcessing} class="btn-secondary">
@@ -162,6 +164,7 @@
     >
       Merge
     </button>
+    <button class="btn-reset" onclick={reset}>Reset</button>
   {/snippet}
   </OperationLayout>
 </div>
@@ -224,6 +227,25 @@
   .btn-primary:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+  }
+
+  .btn-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-surface-2);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .btn-reset:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
   }
 
   .file-list-container {

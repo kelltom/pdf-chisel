@@ -163,6 +163,7 @@
     currentIndex = 0
     isFlashing = false
     imageLoadError = false
+    appState.currentFile = null  // Reset unloads the file — returns to blank state (Phase 5 decision)
   }
 
   onMount(async () => {
@@ -186,7 +187,7 @@
 <div class="mode-view">
   {#if reviewState === 'form'}
     <h1 class="mode-title">Convert to Images</h1>
-    <OperationLayout isProcessing={false} result={null} onReset={reset}>
+    <OperationLayout isProcessing={false} result={null}>
       {#snippet inputs()}
         <FileInput />
 
@@ -246,6 +247,7 @@
         >
           Convert
         </button>
+        <button class="btn-reset" onclick={reset}>Reset</button>
       {/snippet}
     </OperationLayout>
 
@@ -287,7 +289,6 @@
             </div>
           </div>
         {/if}
-        <button class="btn btn-reset" onclick={reset}>Reset</button>
       </div>
     {/if}
 
@@ -349,7 +350,9 @@
   .mode-view {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex: 1;
+    min-height: 0;       /* flex child must have min-height: 0 to scroll rather than expand */
+    overflow-y: auto;    /* ConvertMode owns its scroll region */
   }
 
   .mode-title {
@@ -633,10 +636,17 @@
   }
 
   .btn-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
     background: var(--color-surface);
     color: var(--color-text-muted);
-    align-self: flex-start;
     border: 1px solid var(--color-surface-2);
+    transition: color 0.15s, border-color 0.15s;
   }
 
   .btn-reset:hover {
