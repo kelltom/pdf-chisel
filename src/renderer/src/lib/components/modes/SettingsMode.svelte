@@ -90,7 +90,7 @@
         <span class="about-label">Releases</span>
         <a
           class="about-link"
-          href="https://github.com/your-user/pdf-chisel/releases"
+          href="https://github.com/kelltom/pdf-chisel/releases"
           target="_blank"
           rel="noreferrer">View on GitHub</a
         >
