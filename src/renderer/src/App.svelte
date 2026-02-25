@@ -51,7 +51,7 @@
   .content {
     flex: 1;
     overflow-y: auto;
-    padding: 24px;
     background: var(--color-bg);
+    /* padding removed — each mode component owns its own internal padding */
   }
 </style>
