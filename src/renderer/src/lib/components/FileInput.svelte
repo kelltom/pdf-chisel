@@ -133,7 +133,8 @@
   .drop-zone {
     border: 2px dashed var(--color-surface-2);
     border-radius: 10px;
-    padding: 32px 24px;
+    padding: 16px 24px;   /* reduced from 32px — min-height now controls minimum size */
+    min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -185,6 +186,7 @@
     gap: 12px;
     padding: 12px 16px;
     border-radius: 10px;
+    min-height: 80px;
     background: var(--color-surface);
     border: 1px solid var(--color-surface-2);
   }
