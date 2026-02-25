@@ -16,6 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Core PDF Operations** - Extract, Split, and Merge modes fully functional with Worker Thread pattern
 - [x] **Phase 3: Convert to Images + Review** - PDF-to-image conversion with pdfjs-dist and Copy-and-Next review workflow
 - [x] **Phase 4: Settings + Persistence** - electron-store integration, settings page, and per-mode persistence (completed 2005-02-24)
+- [x] **Phase 6: Convert mode bugfix** - Convert mode bugfix (completed 2026-02-25)
 
 ## Phase Details
 
@@ -105,3 +106,13 @@ Plans:
 - [x] 05-02-PLAN.md — Fix FileInput height consistency (min-height: 80px on drop zone and file-info)
 - [x] 05-03-PLAN.md — Extract shared OperationResult type; move .mode-title/.btn-primary/.mode-btn to app.css
 - [x] 05-04-PLAN.md — Human verification checkpoint: confirm all four bug fixes in running app
+
+### Phase 6: Convert mode bugfix
+**Goal**: Fix review workflow image overflow — image preview scales to fit the view without causing overflow scrolling
+**Depends on**: Phase 5
+**Requirements**: CONV-03, REVW-01, REVW-02, REVW-03, REVW-04, REVW-05
+**Plans**: 2 plans
+
+Plans:
+- [x] 06-01-PLAN.md — Remove padding from App.svelte .content; add conditional overflow class to ConvertMode .mode-view for review state
+- [x] 06-02-PLAN.md — Human verification checkpoint: confirm review image fits in view, no padding regressions in other modes

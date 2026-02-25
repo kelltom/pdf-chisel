@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-22)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 5 complete — all four bug fixes verified and approved. Verification pending.
+**Current focus:** Phase 6 complete — Convert mode review overflow fixed and human-verified.
 
 ## Current Position
 
-Phase: 5 of 5 (UI improvement) — Verification pending
-Plan: 4 of 4 in phase 05 (all plans complete)
-Status: All four bug fixes verified in running app. ConvertMode results unified with shared ResultsSummary; file list capped at 5.
-Last activity: 2026-02-24 — Plan 05-04 complete: human verification passed; in-session ResultsSummary fix applied
+Phase: 6 of 6 (Convert mode bugfix) — COMPLETE
+Plan: 2 of 2 in phase 06 (both plans complete)
+Status: Phase 6 complete. CSS-only fix applied and human-verified. Verification passed 5/5. All 6 requirements satisfied.
+Last activity: 2026-02-25 — Phase 6 complete; human verification approved all 5 tests
 
-Progress: [█████████░] 92%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -94,11 +94,14 @@ Recent decisions affecting current work:
 - [Phase 05-ui-improvement]: ResultsSummary is display-only; Reset moved to mode actions snippets; reset() sets appState.currentFile = null in Extract/Split/Convert; MergeMode reset does not touch currentFile; OperationLayout height: 100% removed; ConvertMode .mode-view uses flex: 1 min-height: 0 overflow-y: auto
 - [05-03]: OperationResult interface extracted to lib/types/operation.ts — single source of truth; all 5 consumers import from shared file
 - [05-03]: Global .mode-title, .btn-primary, .mode-btn added to app.css; local copies removed from Extract/Split/Merge/Convert (ConvertMode keeps .btn-primary and .mode-btn due to complex local button hierarchy)
+- [06-01]: padding removed from App.svelte .content — all mode components already self-pad via OperationLayout (20px) and ConvertMode review sections (12-16px per area)
+- [06-01]: Svelte class: directive used for .mode-view--review — reactive add/remove without JS; overflow: hidden + height: 100% enables .review-container height: 100% to resolve to viewport-bounded parent rather than natural image height
 
 ### Roadmap Evolution
 
 - Phase 04.1 inserted after Phase 4: Add Developer README — document prerequisites and steps to clone, install, and run in dev on Windows. (URGENT)
 - Phase 5 added: UI improvement
+- Phase 6 added: Convert mode bugfix
 
 ### Pending Todos
 
@@ -111,6 +114,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-24
-Stopped at: Completed 05-03-PLAN.md (Shared types + global CSS deduplication)
-Resume file: .planning/phases/05-ui-improvement/05-04-PLAN.md
+Last session: 2026-02-25
+Stopped at: Phase 6 complete — all planned work for this milestone done
+Resume file: None — milestone complete
