@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settingsState } from '../stores/app.svelte.ts'
+  import { settingsState } from '../stores/app.svelte'
   import type { OperationResult } from '../types/operation.ts'
 
   const MAX_FILES = 5

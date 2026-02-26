@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { appState } from '../../stores/app.svelte.ts'
-  import { parsePageRange } from '../../utils/page-range.ts'
+  import { appState } from '../../stores/app.svelte'
+  import { parsePageRange } from '../../utils/page-range'
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
   import type { OperationResult } from '../../types/operation.ts'

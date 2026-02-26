@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { appState, type Mode } from '../stores/app.svelte.ts'
+  import { appState, type Mode } from '../stores/app.svelte'
 
   const modes: { id: Mode; label: string; icon: string }[] = [
     {

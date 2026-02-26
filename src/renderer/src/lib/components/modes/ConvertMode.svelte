@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
-  import { appState, settingsState } from '../../stores/app.svelte.ts'
+  import { appState, settingsState } from '../../stores/app.svelte'
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
   import ProgressSpinner from '../ProgressSpinner.svelte'

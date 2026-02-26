@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
-  import { appState } from '../../stores/app.svelte.ts'
+  import { appState } from '../../stores/app.svelte'
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
   import type { OperationResult } from '../../types/operation.ts'

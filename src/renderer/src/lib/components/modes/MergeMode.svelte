@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { appState } from '../../stores/app.svelte.ts'
+  import { appState } from '../../stores/app.svelte'
   import { onDestroy } from 'svelte'
   import OperationLayout from '../OperationLayout.svelte'
   import type { OperationResult } from '../../types/operation.ts'

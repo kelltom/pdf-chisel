@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { appState } from '../stores/app.svelte.ts'
+  import { appState } from '../stores/app.svelte'
 
   let isDragOver = $state(false)
   let isLoading = $state(false)

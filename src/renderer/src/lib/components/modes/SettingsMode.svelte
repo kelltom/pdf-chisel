@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { settingsState } from '../../stores/app.svelte.ts'
+  import { settingsState } from '../../stores/app.svelte'
 
   let outputPath = $state('')
   let autoOpen = $state(false)

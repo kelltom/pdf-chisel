@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { appState } from '../stores/app.svelte.ts'
+  import { appState } from '../stores/app.svelte'
 </script>
 
 <header class="app-bar">
