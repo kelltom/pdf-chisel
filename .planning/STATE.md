@@ -2,118 +2,42 @@
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-02-22)
+See: .planning/PROJECT.md (updated 2026-02-26)
 
 **Core value:** Every operation completes locally, privately, and without friction — users pick a mode, pick files, and get results.
-**Current focus:** Phase 6 complete — Convert mode review overflow fixed and human-verified.
+**Current focus:** Planning next milestone (v1.1 Distribution — code signing + auto-update)
 
 ## Current Position
 
-Phase: 6 of 6 (Convert mode bugfix) — COMPLETE
-Plan: 2 of 2 in phase 06 (both plans complete)
-Status: Phase 6 complete. CSS-only fix applied and human-verified. Verification passed 5/5. All 6 requirements satisfied.
-Last activity: 2026-02-25 — Phase 6 complete; human verification approved all 5 tests
+Milestone: v1.0.0 MVP — SHIPPED 2026-02-26
+Status: All 7 phases complete, 20 plans executed. Milestone archived.
+Last activity: 2026-02-26 — v1.0.0 milestone archived
 
-Progress: [██████████] 100%
-
-## Performance Metrics
-
-**Velocity:**
-- Total plans completed: 9
-- Average duration: ~4.5 min
-- Total execution time: ~0.67 hours
-
-**By Phase:**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 01-electron-foundation | 3 | ~21 min | ~7 min |
-| 02-core-pdf-operations | 4 | ~13 min | ~3.3 min |
-| 03-convert-to-images-review | 2 | ~8 min | ~4 min |
-| 04-settings-persistence | 2 | ~7 min | ~3.5 min |
-
-**Recent Trend:**
-- Last 5 plans: 2 min, 6 min, 2 min, ~15 min, ~5 min
-- Trend: Accelerating
-
-*Updated after each plan completion*
-| Phase 04.1-add-developer-readme P01 | 1 | 1 tasks | 1 files |
-| Phase 05-ui-improvement P02 | 1 | 1 tasks | 1 files |
-| Phase 05-ui-improvement P01 | 4 min | 2 tasks | 6 files |
-| Phase 05-ui-improvement P03 | ~5 min | 2 tasks | 8 files |
+Progress: [██████████] 100% — milestone complete
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
+Full decisions log in PROJECT.md Key Decisions table.
 
-- [Setup]: Electron + Svelte chosen; builder is new to Electron stack — handholding expected in Phase 1
-- [Setup]: contextBridge/ipcMain.handle is the only permitted IPC pattern — nodeIntegration must be disabled from scaffold
-- [Setup]: All PDF work runs in Worker Threads — never on main or renderer thread
-- [01-01]: Scaffolded manually from npm cache (CLI interactive-only, no --yes flag) — identical output to CLI scaffold
-- [01-01]: electron-builder.yml stripped to Windows/NSIS only — Mac and Linux targets removed per Windows-only scope
-- [01-01]: Catppuccin Mocha palette (#1e1e2e / #cdd6f4) chosen for titleBarOverlay — dark theme consistency
-- [01-02]: ignoreEncryption:false in PDFDocument.load — password-protected PDFs return error field, not crash
-- [01-02]: ipcMain.handle used (not ipcMain.on) to prevent listener accumulation on window recreation
-- [01-02]: webUtils.getPathForFile is the only correct drag-drop path API on Electron 34 (File.path removed in Electron 32)
-- [01-03]: appState exported as $state({}) object — exported $state primitives are read-only from importers in Svelte 5; object reference allows mutations to propagate
-- [01-03]: Mode stubs all import FileInput — consistent file-load UX in every mode from day one
-- [01-03]: handleDragOver must call e.preventDefault() to allow ondrop to fire — browser blocks drop without this
-- [02-01]: Output folder path computed in main (makeOutputFolder) — worker receives pre-computed outputFolder via workerData; no __dirname in worker
-- [02-01]: Split zero-padding: 1 digit for <=9 parts, 2 digits for >9 parts — pre-computed from numChunks before write loop
-- [02-01]: Worker spawned fresh per operation via ?nodeWorker factory — no shared worker state between operations
-- [02-01]: onProgress returns cleanup function — callers MUST invoke in Svelte onDestroy to prevent ipcRenderer listener accumulation
-- [02-01]: Progress messages are indeterminate steps (reading/processing/writing) — no percentages per locked Phase 1 decision
-- [02-02]: OperationResult interface redeclared locally in renderer components — preload types cross process boundaries; renderer TypeScript does not import from main/preload
-- [02-02]: Reset button rendered unconditionally in ResultsSummary — always visible per locked Phase 2 decision
-- [02-02]: Execute button lives in the actions snippet slot owned by the mode component — keeps label (Extract/Split/Merge) mode-controlled, not layout-controlled
-- [02-05]: crypto.randomUUID() for stable FileItem id — keyed {#each} uses (file.id) not index to prevent Svelte DOM tracking bugs during drag-to-reorder
-- [02-05]: Dual drag handlers (list item reorder + external drop zone) do not conflict — list drag has empty dataTransfer.files; Explorer drag has null dragIndex
-- [03-01]: pdfjs-dist v5.4.624 used (v5, not v4) — Chromium V8 supports Promise.withResolvers natively; no downgrade needed
-- [03-01]: new URL() worker config chosen over static file fallback — electron-vite build passed cleanly; no fake-worker warnings
-- [03-01]: Dynamic imports used inside IPC handlers to avoid shadowing top-level readFile import
-- [03-02]: Custom results section used instead of OperationLayout ResultsSummary — OperationLayout has no slot for Start Review; custom section is self-contained without modifying shared components
-- [03-02]: Buffer-to-Uint8Array instanceof guard applied at IPC boundary — plain object fallback via Object.values prevents silent renderPageToDataUrl failures
-- [03-02]: DPI selector uses two-line segmented buttons (value + hint stacked) matching Split mode CSS pattern extended with flex-column dpi-btn layout
-- [03-03]: pdfjs-dist downgraded v5→v4 (v4.10.38) — v5 calls Uint8Array.prototype.toHex() unconditionally in worker context (ES2024, absent in Electron's Chromium); v4 guards the call with a manual fallback
-- [03-03]: PDF loaded once per conversion via loadPdfDocument() + renderPageFromDoc() — pdfjs transfers ArrayBuffer to worker on getDocument(), detaching the original; calling getDocument() in a loop caused 'ArrayBuffer already detached' crash on page 2+
-- [03-03]: file:// image src with backslash-to-forward-slash conversion for Windows paths — path.replace(/\\/g, '/') applied in $derived currentImagePath before 'file://' prefix
-- [03-03]: svelte:window onkeydown guarded by reviewState === 'reviewing' — no focus management required; e.preventDefault() suppresses page scroll (Space) and form submit (Enter)
-- [04-01]: electron-conf Conf instances declared at module scope outside app.whenReady() — single shared instance accessible from all IPC handlers without closure coupling
-- [04-01]: getOutputBase() reads settings.get('outputPath') at call time (not cached) — always reflects live user preference without restart
-- [04-01]: settings:set accepts Partial<AppSettings> patch — live-save UI pattern can write individual fields without a full settings object
-- [04-02]: settingsState exported as $state object (not primitives) — Svelte 5 exported $state primitives are read-only from importers; object reference allows mutations to propagate across components
-- [04-02]: auto-open gated in both ResultsSummary and ConvertMode — both code paths need the guard; manual Open Folder button always available regardless of toggle
-- [04-02]: per-mode persistence uses onMount load + execute() save — transparent to user; last-used values silently restored each launch without dedicated UI
-- [Phase 04.1-add-developer-readme]: Node 22 LTS pinned via nvm-windows — satisfies electron-vite requirement of ^20.19.0 || >=22.12.0
-- [Phase 04.1-add-developer-readme]: GitHub-flavored [!WARNING] and [!NOTE] callouts chosen — renders natively on GitHub with colored badges
-- [Phase 05-ui-improvement]: min-height: 80px applied to both .drop-zone and .file-info — prevents layout shift between empty/loaded states
-- [Phase 05-ui-improvement]: .drop-zone padding reduced from 32px to 16px — min-height now owns minimum vertical size
-- [Phase 05-ui-improvement]: ResultsSummary is display-only; Reset moved to mode actions snippets; reset() sets appState.currentFile = null in Extract/Split/Convert; MergeMode reset does not touch currentFile; OperationLayout height: 100% removed; ConvertMode .mode-view uses flex: 1 min-height: 0 overflow-y: auto
-- [05-03]: OperationResult interface extracted to lib/types/operation.ts — single source of truth; all 5 consumers import from shared file
-- [05-03]: Global .mode-title, .btn-primary, .mode-btn added to app.css; local copies removed from Extract/Split/Merge/Convert (ConvertMode keeps .btn-primary and .mode-btn due to complex local button hierarchy)
-- [06-01]: padding removed from App.svelte .content — all mode components already self-pad via OperationLayout (20px) and ConvertMode review sections (12-16px per area)
-- [06-01]: Svelte class: directive used for .mode-view--review — reactive add/remove without JS; overflow: hidden + height: 100% enables .review-container height: 100% to resolve to viewport-bounded parent rather than natural image height
-
-### Roadmap Evolution
-
-- Phase 04.1 inserted after Phase 4: Add Developer README — document prerequisites and steps to clone, install, and run in dev on Windows. (URGENT)
-- Phase 5 added: UI improvement
-- Phase 6 added: Convert mode bugfix
-
-### Pending Todos
-
-None yet.
+Key architectural decisions that carry forward:
+- contextBridge/ipcMain.handle is the only permitted IPC pattern — nodeIntegration always disabled
+- All PDF work runs in Worker Threads — never on main or renderer thread
+- pdfjs-dist pinned to v4 (v4.10.38) — v5 has ES2024 incompatibility in Electron's Chromium V8
+- electron-conf (not electron-store) for persistence
+- Svelte 5 runes: `$state({})` object export (not primitives) for shared reactive state
 
 ### Blockers/Concerns
 
-- [Resolved — 03-01]: pdfjs-dist worker bundling resolved — new URL() pattern works in electron-vite builds without fake-worker warnings
-- [Phase 5 ahead]: Code signing certificate (OV minimum) must be procured before Phase 5 begins; start procurement at Phase 4 kickoff to avoid blocking delay
+- **Open:** SETT-04 (auto-update) blocked on OV code signing certificate — must procure before v1.1 can ship; start procurement immediately
+
+### Pending Todos
+
+None.
 
 ## Session Continuity
 
-Last session: 2026-02-25
-Stopped at: Phase 6 complete — all planned work for this milestone done
-Resume file: None — milestone complete
+Last session: 2026-02-26
+Stopped at: v1.0.0 milestone archived — ready to start next milestone
+Resume file: None — use `/gsd:new-milestone` to begin v1.1 planning

@@ -2,7 +2,7 @@
 
 ## What This Is
 
-PDF Chisel is a lightweight, open-source desktop utility for reshaping existing PDF files locally on a user's machine. It provides fast, predictable file restructuring across four core modes — extract pages, split into parts, convert to images, and merge — without uploading documents to any cloud service. Built with Electron + Svelte, distributed via GitHub Releases, targeting Windows users who value privacy and simplicity over feature bloat.
+PDF Chisel is a lightweight, open-source Windows desktop utility for reshaping existing PDF files locally. It ships four core modes — extract pages, split into parts, merge multiple PDFs, and convert pages to images — plus a copy-and-review workflow for stepping through converted images. Built with Electron 34 + Svelte 5, distributed via GitHub Releases, targeting Windows users who value privacy and simplicity over feature bloat. v1.0.0 shipped as a fully working desktop app with settings persistence and an electron-vite + electron-builder packaging pipeline.
 
 ## Core Value
 
@@ -12,56 +12,75 @@ Every operation completes locally, privately, and without friction — users pic
 
 ### Validated
 
-(None yet — ship to validate)
+- ✓ App displays top app-bar with "PDF Chisel" title and settings gear icon — v1.0.0
+- ✓ Vertical mode selector on left edge with icons for Extract, Split, Convert, Merge — v1.0.0
+- ✓ Selecting a mode renders that mode's view in the main area — v1.0.0
+- ✓ User can select PDF file(s) via native file dialog or drag-and-drop — v1.0.0
+- ✓ App displays file name and page count after loading — v1.0.0
+- ✓ Extract: page range syntax (e.g. "1-5, 8, 12-15") produces one new PDF — v1.0.0
+- ✓ Split by number of parts or max pages per part — v1.0.0
+- ✓ Merge multiple PDFs with drag-to-reorder — v1.0.0
+- ✓ Convert PDF pages to images (PNG or JPEG, 72/96/150/300 DPI) — v1.0.0
+- ✓ Copy-and-Next review workflow: clipboard write, back navigation, keyboard shortcuts, completion screen — v1.0.0
+- ✓ Timestamped `{timestamp}-{mode}` output subfolders — v1.0.0
+- ✓ Success summary lists created files after each operation — v1.0.0
+- ✓ Output folder auto-opens after execution (if auto-open enabled) — v1.0.0
+- ✓ Settings: default output path, auto-open toggle, app version display — v1.0.0
+- ✓ Settings persist across restarts (electron-conf) — v1.0.0
+- ✓ Per-mode last-used values restored on launch — v1.0.0
+- ✓ Progress indicator during PDF processing — v1.0.0
+- ✓ Human-readable error messages for corrupt/password-protected PDFs — v1.0.0
 
 ### Active
 
-- [ ] User can extract selected pages from a PDF into a new single PDF
-- [ ] User can split a PDF into evenly sized parts (by number of parts or max pages per part)
-- [ ] User can convert PDF pages to images (PNG or JPEG, user's choice with format explanation)
-- [ ] User can merge multiple PDFs into one, with drag-to-reorder before merging
-- [ ] After PDF-to-image conversion, user can enter a review workflow: cycle through images with "Copy and Next" (copies image to clipboard, advances to next)
-- [ ] Each execution produces output in a `{timestamp}-{mode}` subfolder within the user's chosen destination
-- [ ] Output destination persists across uses and sessions
-- [ ] App auto-updates via GitHub Releases (Electron auto-updater)
-- [ ] Settings page: default output path, auto-open output folder toggle, color theme (v2), app update
-- [ ] UI: top app-bar (title + settings gear), vertical mode selector on left edge, shared UI components across modes
+- [ ] App auto-updates via GitHub Releases (electron-updater) — SETT-04, requires OV code signing certificate
+- [ ] Thumbnail strip showing page previews for page range selection (pdfjs-dist) — VISU-01
+- [ ] Page thumbnail click to jump to specific page reference — VISU-02
+- [ ] Unlock and process password-protected PDFs by entering password — FILE-04
 
 ### Out of Scope
 
 - Cloud upload or remote processing — privacy is a core principle
-- Login or accounts — no fluff
-- Payments — open-source, free
+- Login, accounts, payments — no fluff, open-source free
 - Mac/Linux support — Windows-only for v1 (simplifies packaging)
-- Color theme customization — deferred to a later phase (settings placeholder in v1)
-- Per-page extraction (multiple output PDFs) — extract always produces one PDF
+- Color theme customization — deferred to a later milestone (settings placeholder exists)
+- Per-page extraction to separate PDFs — extract always produces one combined PDF
 - Default image DPI as a global setting — DPI configured per-conversion in the mode UI
+- PDF editing (text, annotations, forms) — not a PDF editor
+- PDF viewer/reader — out of product scope
+- OCR — high complexity, not core
+- Batch job queue — over-engineering for v1 usage patterns
 
 ## Context
 
-- Builder is new to the Electron stack — environment setup and handholding will be needed during early phases
-- Tech stack chosen: Electron + Svelte (web-based desktop, Electron for OS integration and auto-update, Svelte for lightweight UI)
-- PDF processing will use JS libraries (e.g. pdf-lib for manipulation, pdfjs-dist for rendering/thumbnails)
-- Image conversion from PDF requires rendering PDF pages — needs DPI/resolution configuration per conversion
-- Shared UI components across modes (file picker, page range selector, output destination picker) will need to be modular from the start
-- Open-source project, hosted on GitHub, distributed as Windows installer via GitHub Releases
+- v1.0.0 shipped 2026-02-26: ~3,225 LOC TypeScript + Svelte, 111 files, 7 phases, 20 plans
+- Tech stack: Electron 34 + Svelte 5, electron-vite, electron-builder (NSIS), electron-conf
+- PDF libs: pdf-lib (manipulation), pdfjs-dist v4 (rendering) — both pure JS, no native binaries
+- pdfjs-dist pinned to v4 (v4.10.38): v5 calls `Uint8Array.prototype.toHex()` unconditionally in worker context (ES2024, absent in Electron's Chromium V8 at build time)
+- All PDF processing runs in Worker Threads; main process handles file I/O only
+- Renderer process handles pdfjs rendering (browser canvas); IPC crosses process boundary via contextBridge
+- Auto-update (SETT-04) blocked on OV code signing certificate — must procure before v1.1
 
 ## Constraints
 
-- **Platform**: Windows only — simplifies packaging, testing, and distribution for v1
-- **Tech Stack**: Electron + Svelte — user chose Electron for its ecosystem/documentation advantages
-- **Privacy**: All operations must be entirely local — no network calls for file processing
-- **Scope**: No login, no payments, no accounts — pure utility
+- **Platform**: Windows only — simplifies packaging, testing, and distribution
+- **Tech Stack**: Electron + Svelte — chosen for ecosystem/documentation advantages and minimal boilerplate
+- **Privacy**: All operations entirely local — no network calls for file processing
+- **Scope**: No login, payments, or accounts — pure utility
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Electron over Tauri | User is new to the stack; Electron has more tutorials, examples, and community resources | — Pending |
-| Svelte for UI | Lightweight, minimal boilerplate — good fit for a focused utility app | — Pending |
-| GitHub Releases for distribution | Standard for Electron open-source; Electron's auto-updater integrates natively | — Pending |
-| Extract always produces one PDF | Simplifies UX; per-page output deferred as out-of-scope for v1 | — Pending |
-| Timestamp-based output subfolders | Prevents overwriting previous runs, gives natural audit trail | — Pending |
+| Electron over Tauri | User is new to the stack; Electron has more tutorials, examples, and community resources | ✓ Good — scaffolding was smooth, ecosystem worked as expected |
+| Svelte for UI | Lightweight, minimal boilerplate — good fit for a focused utility app | ✓ Good — Svelte 5 runes patterns (`$state({})` object export) worked cleanly |
+| GitHub Releases for distribution | Standard for Electron open-source; auto-updater integrates natively | — Pending (SETT-04 blocked on code signing) |
+| Extract always produces one PDF | Simplifies UX; per-page output deferred as out-of-scope for v1 | ✓ Good — no user pushback |
+| Timestamp-based output subfolders | Prevents overwriting previous runs, gives natural audit trail | ✓ Good — clean UX, no conflicts |
+| Worker Thread per operation | Prevents main thread blocking; fresh spawn per op avoids shared state | ✓ Good — no state leakage issues |
+| pdfjs-dist v4 (not v5) | v5 calls `Uint8Array.prototype.toHex()` unconditionally (ES2024, absent in Electron's Chromium) | ✓ Good — v4 guards the call; no workaround needed |
+| electron-conf for persistence | electron-store was the original plan; electron-conf is its modern successor with identical API | ✓ Good — drop-in, cleaner |
+| CSS-only fix for review image overflow | Class directive toggle on `.mode-view`; no JS sizing logic | ✓ Good — reactive, zero JS overhead |
 
 ---
-*Last updated: 2026-02-22 after initialization*
+*Last updated: 2026-02-26 after v1.0.0 milestone*
