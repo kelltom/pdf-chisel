@@ -365,43 +365,6 @@
     width: fit-content;
   }
 
-  .mode-btn {
-    padding: 8px 16px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    background: var(--color-surface);
-    border: none;
-    border-right: 1px solid var(--color-surface-2);
-    cursor: pointer;
-    transition:
-      color 0.15s,
-      background 0.15s;
-  }
-
-  .mode-btn:last-child {
-    border-right: none;
-  }
-
-  .mode-btn:hover:not(:disabled) {
-    color: var(--color-text);
-    background: var(--color-surface-2);
-  }
-
-  .mode-btn.active {
-    color: var(--color-bg);
-    background: var(--color-accent);
-  }
-
-  .mode-btn.active:hover:not(:disabled) {
-    background: var(--color-accent-hover);
-  }
-
-  .mode-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
   /* DPI buttons: two-line layout (value + hint stacked) */
   .dpi-btn {
     display: flex;
@@ -453,18 +416,6 @@
     opacity: 0.8;
   }
 
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .field-label {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-  }
-
   .format-hint {
     font-size: 0.8125rem;
     color: var(--color-text-muted);
@@ -487,21 +438,6 @@
   /* Results section wrapper — provides padding, ResultsSummary handles internal layout */
   .convert-results {
     padding: 0 20px 20px;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition:
-      background 0.15s,
-      color 0.15s;
-    cursor: pointer;
-    border: none;
   }
 
   .btn-primary {
@@ -546,42 +482,6 @@
 
   .btn-primary-sm:hover {
     background: var(--color-accent-hover);
-  }
-
-  .btn-secondary {
-    background: var(--color-surface-2);
-    color: var(--color-text);
-  }
-
-  .btn-secondary:hover:not(:disabled) {
-    background: var(--color-accent);
-    color: var(--color-bg);
-  }
-
-  .btn-secondary:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  .btn-reset {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background: var(--color-surface);
-    color: var(--color-text-muted);
-    border: 1px solid var(--color-surface-2);
-    transition:
-      color 0.15s,
-      border-color 0.15s;
-  }
-
-  .btn-reset:hover {
-    color: var(--color-text);
-    border-color: var(--color-text-muted);
   }
 
   /* Review container: fills the mode-view, nav rail stays visible */

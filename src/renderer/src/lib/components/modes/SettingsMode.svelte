@@ -108,10 +108,6 @@
   }
 
   .mode-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--color-text);
-    padding: 20px 20px 0;
     margin: 0 0 24px;
   }
 
@@ -143,12 +139,6 @@
     height: 1px;
     background: var(--color-surface-2);
     margin-bottom: 24px;
-  }
-
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
   }
 
   .field-label {
@@ -192,29 +182,7 @@
   }
 
   .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    transition:
-      background 0.15s,
-      color 0.15s;
     white-space: nowrap;
-  }
-
-  .btn-secondary {
-    background: var(--color-surface-2);
-    color: var(--color-text);
-  }
-
-  .btn-secondary:hover {
-    background: var(--color-accent);
-    color: var(--color-bg);
   }
 
   .toggle-row {

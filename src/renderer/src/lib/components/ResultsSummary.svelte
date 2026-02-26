@@ -123,28 +123,4 @@
     gap: 8px;
   }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition:
-      background 0.15s,
-      color 0.15s;
-    cursor: pointer;
-    border: none;
-  }
-
-  .btn-secondary {
-    background: var(--color-surface-2);
-    color: var(--color-text);
-  }
-
-  .btn-secondary:hover {
-    background: var(--color-accent);
-    color: var(--color-bg);
-  }
 </style>

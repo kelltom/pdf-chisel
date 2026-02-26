@@ -99,12 +99,6 @@
     height: 100%;
   }
 
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
   label {
     font-size: 0.875rem;
     font-weight: 500;
@@ -142,24 +136,4 @@
     margin: 0;
   }
 
-  .btn-reset {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background: var(--color-surface);
-    color: var(--color-text-muted);
-    border: 1px solid var(--color-surface-2);
-    transition:
-      color 0.15s,
-      border-color 0.15s;
-  }
-
-  .btn-reset:hover {
-    color: var(--color-text);
-    border-color: var(--color-text-muted);
-  }
 </style>

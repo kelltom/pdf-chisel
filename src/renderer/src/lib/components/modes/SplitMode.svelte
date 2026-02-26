@@ -159,16 +159,7 @@
   }
 
   .field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
     width: fit-content;
-  }
-
-  .field-label {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
   }
 
   .number-input {
@@ -193,24 +184,4 @@
     cursor: not-allowed;
   }
 
-  .btn-reset {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background: var(--color-surface);
-    color: var(--color-text-muted);
-    border: 1px solid var(--color-surface-2);
-    transition:
-      color 0.15s,
-      border-color 0.15s;
-  }
-
-  .btn-reset:hover {
-    color: var(--color-text);
-    border-color: var(--color-text-muted);
-  }
 </style>
