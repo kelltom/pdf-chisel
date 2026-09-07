@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
+  import { prefixFileName } from '../../../../../shared/file-name'
   import { appState, settingsState } from '../../stores/app.svelte'
   import OperationLayout from '../OperationLayout.svelte'
   import FileInput from '../FileInput.svelte'
@@ -66,6 +67,7 @@
   async function execute() {
     if (!appState.currentFile) return
     appState.isProcessing = true
+    const filePrefix = appState.filePrefix
     isConverting = true
     progressCurrent = 0
     progressTotal = appState.currentFile.pageCount
@@ -97,7 +99,7 @@
         for (let i = 1; i <= totalPages; i++) {
           progressCurrent = i
           const dataUrl = await renderPageFromDoc(pdf, i, dpi, format)
-          const fileName = `page-${String(i).padStart(padWidth, '0')}.${ext}`
+          const fileName = prefixFileName(`page-${String(i).padStart(padWidth, '0')}.${ext}`, filePrefix)
           const filePath = await window.api.writeImageFile({
             dataUrl,
             outputFolder: folder,

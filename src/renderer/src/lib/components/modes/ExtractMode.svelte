@@ -31,6 +31,7 @@
     const pageIndices = parsePageRange(pageRangeInput, appState.currentFile.pageCount)
     const result = await window.api.extractPages({
       operation: 'extract',
+      filePrefix: appState.filePrefix,
       filePath: appState.currentFile.filePath,
       params: { pageIndices }
     })

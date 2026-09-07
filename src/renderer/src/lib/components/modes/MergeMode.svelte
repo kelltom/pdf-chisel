@@ -91,6 +91,7 @@
 
     const result = await window.api.mergePdfs({
       operation: 'merge',
+      filePrefix: appState.filePrefix,
       filePaths: files.map((f) => f.filePath)
     })
 

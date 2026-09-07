@@ -10,6 +10,7 @@ export interface FileInfo {
 export const appState = $state({
   currentMode: 'extract' as Mode,
   currentFile: null as FileInfo | null,
+  filePrefix: '',
   isProcessing: false
 })
 

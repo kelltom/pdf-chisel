@@ -2,9 +2,11 @@ import { workerData, parentPort } from 'worker_threads'
 import { mkdir, readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { PDFDocument, EncryptedPDFError } from 'pdf-lib'
+import { prefixFileName } from '../../shared/file-name'
 
 interface WorkerArgs {
   operation: 'extract' | 'split' | 'merge'
+  filePrefix?: string
   filePath?: string // extract, split: single source file path
   filePaths?: string[] // merge: ordered list of source file paths
   outputFolder: string // pre-computed by main — worker writes here
@@ -71,7 +73,7 @@ async function run(): Promise<void> {
       const outBytes = await newDoc.save()
       parentPort!.postMessage({ type: 'progress', step: 'processing' })
 
-      const outFile = 'extracted.pdf'
+      const outFile = prefixFileName('extracted.pdf', args.filePrefix)
       await writeFile(join(outputFolder, outFile), outBytes)
       parentPort!.postMessage({ type: 'progress', step: 'writing' })
 
@@ -122,7 +124,10 @@ async function run(): Promise<void> {
         parentPort!.postMessage({ type: 'progress', step: 'processing' })
 
         partIndex++
-        const partName = `part-${String(partIndex).padStart(padWidth, '0')}.pdf`
+        const partName = prefixFileName(
+          `part-${String(partIndex).padStart(padWidth, '0')}.pdf`,
+          args.filePrefix
+        )
         await writeFile(join(outputFolder, partName), partBytes)
         outputFiles.push(partName)
         pageIndex = end
@@ -150,7 +155,7 @@ async function run(): Promise<void> {
       parentPort!.postMessage({ type: 'progress', step: 'processing' })
 
       const outBytes = await mergedDoc.save()
-      const outFile = 'merged.pdf'
+      const outFile = prefixFileName('merged.pdf', args.filePrefix)
       await writeFile(join(outputFolder, outFile), outBytes)
       parentPort!.postMessage({ type: 'progress', step: 'writing' })
 

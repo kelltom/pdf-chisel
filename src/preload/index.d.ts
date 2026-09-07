@@ -25,17 +25,23 @@ declare global {
       // Phase 2: PDF operations
       extractPages: (args: {
         operation: 'extract'
+        filePrefix?: string
         filePath: string
         params: { pageIndices: number[] }
       }) => Promise<OperationResult>
 
       splitPdf: (args: {
         operation: 'split'
+        filePrefix?: string
         filePath: string
         params: { splitMode: 'parts' | 'maxPages'; splitValue: number }
       }) => Promise<OperationResult>
 
-      mergePdfs: (args: { operation: 'merge'; filePaths: string[] }) => Promise<OperationResult>
+      mergePdfs: (args: {
+        operation: 'merge'
+        filePaths: string[]
+        filePrefix?: string
+      }) => Promise<OperationResult>
 
       openPdfsDialog: () => Promise<string[]>
 

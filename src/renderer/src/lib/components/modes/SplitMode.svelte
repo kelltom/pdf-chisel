@@ -40,6 +40,7 @@
 
     const result = await window.api.splitPdf({
       operation: 'split',
+      filePrefix: appState.filePrefix,
       filePath: appState.currentFile.filePath,
       params: { splitMode, splitValue }
     })

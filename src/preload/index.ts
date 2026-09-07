@@ -33,6 +33,7 @@ const api = {
   // EXTR-02: Extract selected pages to a new PDF
   extractPages: (args: {
     operation: 'extract'
+    filePrefix?: string
     filePath: string
     params: { pageIndices: number[] }
   }): Promise<OperationResult> => ipcRenderer.invoke('pdf:extract', args),
@@ -40,13 +41,17 @@ const api = {
   // SPLT-03: Split PDF into parts or by max pages per chunk
   splitPdf: (args: {
     operation: 'split'
+    filePrefix?: string
     filePath: string
     params: { splitMode: 'parts' | 'maxPages'; splitValue: number }
   }): Promise<OperationResult> => ipcRenderer.invoke('pdf:split', args),
 
   // MERG-03: Merge multiple PDFs into one
-  mergePdfs: (args: { operation: 'merge'; filePaths: string[] }): Promise<OperationResult> =>
-    ipcRenderer.invoke('pdf:merge', args),
+  mergePdfs: (args: {
+    operation: 'merge'
+    filePaths: string[]
+    filePrefix?: string
+  }): Promise<OperationResult> => ipcRenderer.invoke('pdf:merge', args),
 
   // MERG-03: Open multi-file PDF picker dialog
   openPdfsDialog: (): Promise<string[]> => ipcRenderer.invoke('dialog:open-pdfs-multi'),

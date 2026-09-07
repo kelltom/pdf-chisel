@@ -19,6 +19,7 @@ interface FeatureState {
 
 interface PdfOperationArgs {
   operation: 'extract' | 'split' | 'merge'
+  filePrefix?: string
   filePath?: string
   filePaths?: string[]
   params: {
